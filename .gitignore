@@ -1,0 +1,19 @@
+# System
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*~
+
+# Video files (too big for GitHub — kept in parent folder)
+*.mp4
+*.mov
+
+# Office temp files
+~$*
+
+# Logs
+*.log

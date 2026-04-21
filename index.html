@@ -1,0 +1,2864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Congress, Unfiltered — A Hype Guide to the Legislative Branch</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo+Black&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a14;
+    --bg-2: #12122a;
+    --ink: #f4f4f8;
+    --muted: #9a9ab0;
+    --red: #ff3d6e;
+    --blue: #3da5ff;
+    --yellow: #ffe03d;
+    --mint: #5eead4;
+    --purple: #b985ff;
+    --grid: rgba(255,255,255,0.06);
+    --card: rgba(255,255,255,0.04);
+    --card-br: rgba(255,255,255,0.09);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(1200px 600px at 10% -10%, rgba(255,61,110,0.15), transparent 60%),
+      radial-gradient(1000px 700px at 110% 10%, rgba(61,165,255,0.18), transparent 60%),
+      radial-gradient(900px 500px at 50% 120%, rgba(185,133,255,0.15), transparent 60%);
+  }
+
+  ::selection { background: var(--yellow); color: #000; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 14px 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    backdrop-filter: blur(14px);
+    background: rgba(10,10,20,0.6);
+    border-bottom: 1px solid var(--card-br);
+    z-index: 100;
+  }
+  nav .logo {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 18px; letter-spacing: -0.5px;
+  }
+  nav .logo span { color: var(--red); }
+  nav ul { display: flex; gap: 22px; list-style: none; flex-wrap: wrap; }
+  nav a {
+    color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--ink); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 140px 28px 80px;
+    display: flex; flex-direction: column; justify-content: center;
+    max-width: 1200px; margin: 0 auto;
+    position: relative;
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--yellow); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow .dot {
+    width: 10px; height: 10px; background: var(--red); border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  h1.mega {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(48px, 9vw, 140px);
+    line-height: 0.9;
+    letter-spacing: -3px;
+    margin-bottom: 28px;
+  }
+  h1.mega .red { color: var(--red); }
+  h1.mega .outline {
+    -webkit-text-stroke: 2px var(--ink);
+    color: transparent;
+  }
+  h1.mega .shift {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--blue), var(--purple), var(--red));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 22px);
+    color: var(--muted);
+    max-width: 640px;
+    margin-bottom: 40px;
+  }
+  .hero-sub strong { color: var(--ink); }
+
+  .hero-cta {
+    display: flex; gap: 14px; flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 26px; border-radius: 100px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: 15px;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary {
+    background: var(--yellow); color: #000;
+    box-shadow: 0 10px 40px rgba(255,224,61,0.3);
+  }
+  .btn-primary:hover { box-shadow: 0 14px 48px rgba(255,224,61,0.5); }
+  .btn-ghost {
+    background: transparent; color: var(--ink);
+    border: 1px solid var(--card-br);
+  }
+  .btn-ghost:hover { border-color: var(--ink); }
+
+  /* SECTIONS */
+  section {
+    padding: 100px 28px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--mint); margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(36px, 5.5vw, 72px);
+    line-height: 1; letter-spacing: -2px;
+    margin-bottom: 24px;
+  }
+  .section-intro {
+    font-size: 18px; color: var(--muted);
+    max-width: 680px; margin-bottom: 56px;
+  }
+
+  /* BENTO GRID */
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 18px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 28px;
+    transition: transform 0.3s, border-color 0.3s, background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.06);
+  }
+  .card h3 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 22px; letter-spacing: -0.5px;
+    margin-bottom: 10px;
+  }
+  .card p { color: var(--muted); font-size: 15px; }
+  .card .stat {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(44px, 6vw, 88px);
+    line-height: 1; letter-spacing: -2px;
+    margin-bottom: 8px;
+  }
+  .card.wide { grid-column: span 4; }
+  .card.half { grid-column: span 3; }
+  .card.third { grid-column: span 2; }
+  .card.full { grid-column: span 6; }
+  .card.tall { grid-row: span 2; }
+
+  .card-house {
+    background: linear-gradient(135deg, rgba(61,165,255,0.15), rgba(61,165,255,0.02));
+    border-color: rgba(61,165,255,0.3);
+  }
+  .card-senate {
+    background: linear-gradient(135deg, rgba(255,61,110,0.15), rgba(255,61,110,0.02));
+    border-color: rgba(255,61,110,0.3);
+  }
+  .card-yellow {
+    background: linear-gradient(135deg, rgba(255,224,61,0.15), rgba(255,224,61,0.02));
+    border-color: rgba(255,224,61,0.3);
+  }
+  .card-mint {
+    background: linear-gradient(135deg, rgba(94,234,212,0.15), rgba(94,234,212,0.02));
+    border-color: rgba(94,234,212,0.3);
+  }
+  .card-purple {
+    background: linear-gradient(135deg, rgba(185,133,255,0.15), rgba(185,133,255,0.02));
+    border-color: rgba(185,133,255,0.3);
+  }
+
+  .card .tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px;
+    padding: 4px 10px; border-radius: 100px;
+    background: rgba(255,255,255,0.08);
+    margin-bottom: 14px;
+  }
+
+  /* BILL FLOW */
+  .bill-flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .flow-step {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 20px;
+    padding: 24px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .flow-step:hover {
+    border-color: var(--yellow);
+    transform: translateY(-4px);
+  }
+  .flow-step .num {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 14px;
+    color: var(--yellow);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+  .flow-step h4 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 20px;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+  }
+  .flow-step p { color: var(--muted); font-size: 14px; }
+  .flow-step .hot-take {
+    margin-top: 14px;
+    padding: 10px 12px;
+    background: rgba(255,224,61,0.1);
+    border-left: 3px solid var(--yellow);
+    font-size: 13px;
+    border-radius: 4px;
+    color: var(--yellow);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* VOCAB CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 16px;
+    padding: 20px;
+    cursor: pointer;
+    min-height: 140px;
+    perspective: 1000px;
+    position: relative;
+    transition: transform 0.3s;
+  }
+  .vocab:hover { transform: translateY(-3px); }
+  .vocab .term {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 18px; letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .vocab .hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  .vocab .def {
+    display: none;
+    font-size: 14px;
+    color: var(--ink);
+    margin-top: 10px;
+  }
+  .vocab.flipped .def { display: block; }
+  .vocab.flipped .hint { color: var(--mint); }
+  .vocab.flipped { border-color: var(--mint); }
+
+  /* QUIZ */
+  .quiz {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 24px;
+    padding: 40px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .quiz .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 2px; color: var(--yellow);
+    margin-bottom: 14px;
+  }
+  .quiz .q-text {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 24px;
+    line-height: 1.2;
+    margin-bottom: 28px;
+    letter-spacing: -0.5px;
+  }
+  .quiz .options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz .opt {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--card-br);
+    border-radius: 14px;
+    padding: 16px 20px;
+    text-align: left;
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .quiz .opt:hover:not(:disabled) {
+    background: rgba(255,255,255,0.07);
+    border-color: var(--ink);
+  }
+  .quiz .opt.correct {
+    background: rgba(94,234,212,0.15);
+    border-color: var(--mint);
+    color: var(--mint);
+  }
+  .quiz .opt.wrong {
+    background: rgba(255,61,110,0.15);
+    border-color: var(--red);
+    color: var(--red);
+  }
+  .quiz .opt:disabled { cursor: default; }
+  .quiz-footer {
+    margin-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .progress-bar {
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 100px;
+    overflow: hidden;
+    margin-top: 14px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--yellow), var(--red));
+    transition: width 0.4s;
+  }
+  .score-display {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .quiz-done {
+    text-align: center;
+    padding: 20px 0;
+  }
+  .quiz-done .big-score {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 80px;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--yellow), var(--red));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* DIRTY SECTION */
+  .dirty-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .dirty-card {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .dirty-card .big-emoji {
+    font-size: 50px;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .dirty-card h3 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 26px;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  .dirty-card p { color: var(--muted); font-size: 15px; margin-bottom: 14px; }
+  .dirty-card .pill {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  .pill-sus { background: rgba(255,61,110,0.15); color: var(--red); border: 1px solid rgba(255,61,110,0.3); }
+
+  /* FOOTER */
+  footer {
+    padding: 80px 28px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-top: 1px solid var(--card-br);
+    text-align: center;
+  }
+  footer p { color: var(--muted); font-size: 14px; }
+  footer .foot-logo {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+  footer .foot-logo span { color: var(--red); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    nav ul { display: none; }
+    .card.wide, .card.half, .card.third, .card.full { grid-column: span 6; }
+    .dirty-grid { grid-template-columns: 1fr; }
+    section { padding: 60px 20px; }
+    .hero { padding: 110px 20px 60px; }
+  }
+
+  /* GERRYMANDER DEEP DIVE */
+  .map-wrap {
+    margin: 0 auto 60px;
+    max-width: 1100px;
+  }
+  .map-frame {
+    background: linear-gradient(135deg, rgba(255,61,110,0.08), rgba(61,165,255,0.06));
+    border: 1px solid var(--card-br);
+    border-radius: 28px;
+    padding: 36px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 36px;
+    align-items: center;
+  }
+  .map-frame img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    background: #fff;
+    padding: 18px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .map-caption p {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  @media (max-width: 768px) {
+    .map-frame { grid-template-columns: 1fr; padding: 20px; }
+  }
+
+  /* ORIGIN */
+  .origin {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 40px;
+    align-items: center;
+    margin: 60px 0;
+    padding: 40px;
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 28px;
+  }
+  .salamander {
+    text-align: center;
+    padding: 30px;
+    background: radial-gradient(circle at center, rgba(255,224,61,0.15), transparent 70%);
+    border-radius: 20px;
+  }
+  .sal-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--yellow);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .sal-art {
+    font-size: 140px;
+    line-height: 1;
+    filter: drop-shadow(0 10px 20px rgba(255,224,61,0.3));
+    animation: wobble 3s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes wobble {
+    0%, 100% { transform: rotate(-8deg); }
+    50% { transform: rotate(12deg); }
+  }
+  .sal-sub {
+    margin-top: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  @media (max-width: 768px) {
+    .origin { grid-template-columns: 1fr; padding: 24px; }
+  }
+
+  /* PACKING VS CRACKING */
+  .pc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 60px;
+  }
+  .pc-card {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 24px;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .pc-card:hover { transform: translateY(-4px); }
+  .pc-fair { border-color: rgba(94,234,212,0.3); }
+  .pc-pack { border-color: rgba(255,61,110,0.3); }
+  .pc-crack { border-color: rgba(255,224,61,0.3); }
+  .pc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--mint);
+    margin-bottom: 10px;
+  }
+  .pc-card h4 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+    margin-bottom: 18px;
+  }
+  .pc-viz {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 3px;
+    margin-bottom: 18px;
+    padding: 10px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 12px;
+  }
+  .pc-cell {
+    aspect-ratio: 1;
+    border-radius: 3px;
+    transition: transform 0.2s;
+  }
+  .pc-cell.blue { background: var(--blue); }
+  .pc-cell.red { background: var(--red); }
+  .pc-cell:hover { transform: scale(1.3); z-index: 2; }
+  .pc-viz.bordered { position: relative; }
+  .pc-district {
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 6px;
+    padding: 2px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+    background: rgba(255,255,255,0.04);
+  }
+  .pc-row {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-bottom: 18px;
+  }
+  .pc-district-row {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 3px;
+    padding: 4px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.03);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    position: relative;
+  }
+  .pc-district-row.win-blue { border-color: rgba(61,165,255,0.8); }
+  .pc-district-row.win-red { border-color: rgba(255,61,110,0.8); }
+  .pc-district-row::after {
+    content: attr(data-result);
+    position: absolute;
+    right: -4px; top: 50%;
+    transform: translate(100%, -50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    padding-left: 10px;
+    white-space: nowrap;
+  }
+  .pc-result {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 12px 14px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 10px;
+    border-left: 3px solid var(--yellow);
+  }
+  .pc-result strong { color: var(--ink); }
+  @media (max-width: 900px) {
+    .pc-grid { grid-template-columns: 1fr; }
+  }
+
+  /* VIDEO */
+  .video-wrap {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 32px;
+    margin: 40px 0 60px;
+  }
+  .video-wrap video {
+    width: 100%;
+    border-radius: 14px;
+    background: #000;
+  }
+
+  /* TAKEAWAY */
+  .takeaway {
+    background: linear-gradient(135deg, rgba(94,234,212,0.08), rgba(185,133,255,0.06));
+    border: 1px solid var(--card-br);
+    border-radius: 28px;
+    padding: 40px;
+  }
+  .take-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+  }
+  .take-grid > div {
+    padding: 20px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 14px;
+    border: 1px solid var(--card-br);
+  }
+  .take-grid strong {
+    display: block;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+  }
+  .take-grid p { color: var(--muted); font-size: 14px; }
+  @media (max-width: 768px) {
+    .take-grid { grid-template-columns: 1fr; }
+    .takeaway { padding: 24px; }
+  }
+
+  /* PORK HALL OF SHAME */
+  .pork-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 60px;
+  }
+  .pork-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .pork-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--red), var(--yellow));
+    opacity: 0.6;
+  }
+  .pork-card:hover {
+    transform: translateY(-5px) rotate(-0.5deg);
+    border-color: rgba(255,255,255,0.2);
+  }
+  .pork-card.pork-hof {
+    background: linear-gradient(180deg, rgba(255,224,61,0.12), rgba(255,61,110,0.05));
+    border-color: rgba(255,224,61,0.35);
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .pork-card.pork-hof::before {
+    height: 6px;
+    background: linear-gradient(90deg, var(--yellow), var(--red), var(--purple));
+  }
+  .pork-card.pork-hof .pork-amount {
+    font-size: clamp(80px, 10vw, 140px);
+  }
+  .pork-card.pork-total {
+    background: linear-gradient(180deg, rgba(255,61,110,0.15), rgba(255,61,110,0.02));
+    border-color: rgba(255,61,110,0.4);
+    grid-column: span 2;
+  }
+  .pork-card.pork-total .pork-amount { font-size: clamp(70px, 9vw, 110px); }
+  .pork-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.08);
+    color: var(--ink);
+    margin-bottom: 14px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .pork-amount {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(56px, 7vw, 80px);
+    line-height: 1;
+    letter-spacing: -3px;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--yellow), var(--red));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .pork-amount span {
+    font-size: 0.5em;
+    vertical-align: super;
+    margin-left: 2px;
+    letter-spacing: -1px;
+  }
+  .pork-card h3 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 22px;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .pork-card.pork-hof h3 { font-size: 32px; }
+  .pork-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+  }
+  .pork-card p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .pork-card.pork-hof p, .pork-card.pork-total p { font-size: 16px; }
+
+  @media (max-width: 900px) {
+    .pork-grid { grid-template-columns: repeat(2, 1fr); }
+    .pork-card.pork-hof, .pork-card.pork-total { grid-column: span 2; grid-row: auto; }
+  }
+  @media (max-width: 600px) {
+    .pork-grid { grid-template-columns: 1fr; }
+    .pork-card.pork-hof, .pork-card.pork-total { grid-column: span 1; }
+  }
+
+  /* LOGROLLING QUOTE */
+  .logroll {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 36px;
+    align-items: center;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(255,224,61,0.08), rgba(185,133,255,0.05));
+    border: 1px solid var(--card-br);
+    border-radius: 28px;
+  }
+  .quote-box {
+    position: relative;
+    padding: 36px 28px 28px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .quote-mark {
+    position: absolute;
+    top: -20px; left: 20px;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 100px;
+    line-height: 1;
+    color: var(--yellow);
+    opacity: 0.7;
+  }
+  .quote-box p {
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .quote-box em { color: var(--yellow); font-style: italic; }
+  .quote-cite {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  @media (max-width: 768px) {
+    .logroll { grid-template-columns: 1fr; padding: 24px; }
+  }
+
+  /* LIVE DEBT */
+  .debt-hero {
+    background: linear-gradient(135deg, rgba(255,61,110,0.18), rgba(0,0,0,0.4));
+    border: 2px solid rgba(255,61,110,0.3);
+    border-radius: 28px;
+    padding: 44px 36px;
+    margin-bottom: 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .debt-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(255,61,110,0.2), transparent 60%);
+    pointer-events: none;
+  }
+  .debt-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    color: var(--red);
+    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .live-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 0 0 rgba(255,61,110,0.6);
+    animation: live 1.5s infinite;
+  }
+  @keyframes live {
+    0% { box-shadow: 0 0 0 0 rgba(255,61,110,0.7); }
+    70% { box-shadow: 0 0 0 14px rgba(255,61,110,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,61,110,0); }
+  }
+  .debt-counter {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(36px, 7.5vw, 96px);
+    letter-spacing: -3px;
+    line-height: 1;
+    margin-bottom: 14px;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(135deg, #fff, var(--red));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 60px rgba(255,61,110,0.2);
+  }
+  .debt-sub {
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  .debt-bars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  .bar-item {
+    background: rgba(0,0,0,0.3);
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--card-br);
+  }
+  .bar-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .bar-val {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 28px;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+  .bar-fill {
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .bar-fill div { height: 100%; border-radius: 100px; transition: width 1s; }
+  @media (max-width: 700px) {
+    .debt-bars { grid-template-columns: 1fr; }
+  }
+
+  /* COUNTER GRID */
+  .counter-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+  .counter-card {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 18px;
+    padding: 22px;
+    transition: transform 0.3s;
+  }
+  .counter-card:hover { transform: translateY(-4px); }
+  .counter-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 12px;
+  }
+  .counter-val {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(26px, 3vw, 38px);
+    letter-spacing: -1.5px;
+    line-height: 1;
+    margin-bottom: 10px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+  .counter-sub { color: var(--muted); font-size: 14px; }
+  @media (max-width: 900px) {
+    .counter-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .counter-grid { grid-template-columns: 1fr; }
+  }
+
+  /* BUDGET PIE */
+  .budget-box {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 24px;
+    padding: 36px;
+    margin-bottom: 40px;
+  }
+  .pie-rows { display: flex; flex-direction: column; gap: 14px; }
+  .pie-row {
+    display: grid;
+    grid-template-columns: 1.6fr 2fr 60px;
+    gap: 16px;
+    align-items: center;
+  }
+  .pie-label {
+    display: flex; flex-direction: column;
+  }
+  .pie-label strong { font-size: 16px; margin-bottom: 2px; }
+  .pie-label span { font-size: 13px; color: var(--muted); }
+  .pie-bar {
+    height: 16px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .pie-fill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 1.5s ease-out;
+    width: 0;
+  }
+  .pie-pct {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 20px;
+    text-align: right;
+    letter-spacing: -0.5px;
+  }
+  @media (max-width: 700px) {
+    .pie-row { grid-template-columns: 1fr; gap: 6px; }
+    .pie-pct { text-align: left; }
+    .budget-box { padding: 22px; }
+  }
+
+  /* CONTEXT ROW */
+  .context-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .ctx-card {
+    background: linear-gradient(135deg, rgba(255,224,61,0.08), rgba(185,133,255,0.05));
+    border: 1px solid var(--card-br);
+    border-radius: 20px;
+    padding: 26px;
+  }
+  .ctx-num {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(48px, 5vw, 64px);
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 14px;
+    background: linear-gradient(135deg, var(--yellow), var(--red));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .ctx-desc { color: var(--muted); font-size: 14px; line-height: 1.55; }
+  .ctx-desc strong { color: var(--ink); }
+  @media (max-width: 768px) {
+    .context-row { grid-template-columns: 1fr; }
+  }
+
+  /* YOUR REPS */
+  .print-link { color: var(--yellow) !important; }
+  .senators-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+  .senator-card {
+    background: linear-gradient(135deg, rgba(61,165,255,0.12), rgba(185,133,255,0.05));
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 32px;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .senator-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.2); }
+  .sen-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 14px;
+  }
+  .sen-name {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(32px, 4vw, 44px);
+    letter-spacing: -1.5px;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .sen-party {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+  }
+  .party-D { background: rgba(61,165,255,0.15); color: var(--blue); border: 1px solid rgba(61,165,255,0.3); }
+  .party-R { background: rgba(255,61,110,0.15); color: var(--red); border: 1px solid rgba(255,61,110,0.3); }
+  .senator-card p { color: var(--muted); font-size: 15px; margin-bottom: 16px; }
+  .sen-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--yellow);
+    text-decoration: none;
+    padding: 8px 14px;
+    background: rgba(255,224,61,0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(255,224,61,0.3);
+    transition: background 0.2s;
+  }
+  .sen-link:hover { background: rgba(255,224,61,0.2); }
+  @media (max-width: 768px) {
+    .senators-row { grid-template-columns: 1fr; }
+  }
+
+  .rep-lookup {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 32px;
+    align-items: center;
+    padding: 36px;
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    margin-bottom: 28px;
+  }
+  .zip-form {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .zip-form label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .zip-form input {
+    padding: 16px 20px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--card-br);
+    border-radius: 14px;
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    letter-spacing: 4px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+  .zip-form input:focus {
+    outline: none;
+    border-color: var(--yellow);
+    background: rgba(255,224,61,0.05);
+  }
+  @media (max-width: 768px) {
+    .rep-lookup { grid-template-columns: 1fr; padding: 24px; }
+  }
+
+  .action-box {
+    background: linear-gradient(135deg, rgba(94,234,212,0.1), rgba(185,133,255,0.05));
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 36px;
+  }
+  .action-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+  .action-grid > div {
+    padding: 18px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 14px;
+    border: 1px solid var(--card-br);
+  }
+  .action-grid strong {
+    display: block;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 16px;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+  }
+  .action-grid p { color: var(--muted); font-size: 14px; }
+  @media (max-width: 900px) {
+    .action-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .action-grid { grid-template-columns: 1fr; }
+  }
+
+  /* BILL GAME */
+  .game-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 24px;
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 100px;
+    margin-bottom: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .game-status strong { color: var(--yellow); font-size: 15px; }
+  .game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .game-card {
+    background: var(--card);
+    border: 2px solid var(--card-br);
+    border-radius: 18px;
+    padding: 22px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    user-select: none;
+  }
+  .game-card:hover:not(.locked) {
+    border-color: var(--yellow);
+    transform: translateY(-4px);
+  }
+  .game-card h4 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+    line-height: 1.1;
+  }
+  .game-card p { color: var(--muted); font-size: 13px; }
+  .game-card.correct {
+    border-color: var(--mint);
+    background: rgba(94,234,212,0.12);
+    cursor: default;
+  }
+  .game-card.correct::after {
+    content: attr(data-order);
+    position: absolute;
+    top: 10px; right: 14px;
+    font-family: 'Archivo Black', sans-serif;
+    color: var(--mint);
+    font-size: 20px;
+  }
+  .game-card.wrong {
+    animation: shake 0.4s;
+    border-color: var(--red);
+    background: rgba(255,61,110,0.15);
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+  .game-win {
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(94,234,212,0.15), rgba(255,224,61,0.1));
+    border: 2px solid var(--mint);
+    border-radius: 22px;
+    margin-top: 24px;
+  }
+  .win-burst {
+    font-size: 80px;
+    margin-bottom: 14px;
+    animation: spin 2s ease-in-out infinite;
+    display: inline-block;
+  }
+  @keyframes spin {
+    0%, 100% { transform: rotate(-10deg) scale(1); }
+    50% { transform: rotate(10deg) scale(1.1); }
+  }
+  .game-win h3 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 32px;
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+  }
+  .game-win p { color: var(--muted); margin-bottom: 20px; }
+
+  /* LOBBYING */
+  .lobby-spenders {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 36px;
+    margin-bottom: 28px;
+  }
+  .lobby-bars { display: flex; flex-direction: column; gap: 10px; }
+  .lobby-row {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+  .lobby-name {
+    font-size: 14px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .lobby-bar {
+    height: 32px;
+    width: var(--w, 100%);
+    background: linear-gradient(90deg, var(--red), var(--yellow));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 14px;
+    color: #000;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 14px;
+    transition: width 1.2s ease-out;
+  }
+  .lobby-bar span { white-space: nowrap; }
+  @media (max-width: 600px) {
+    .lobby-row { grid-template-columns: 1fr; gap: 4px; }
+  }
+
+  .revolve {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 36px;
+    align-items: center;
+    padding: 36px;
+    background: linear-gradient(135deg, rgba(185,133,255,0.1), rgba(61,165,255,0.05));
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    margin-bottom: 28px;
+  }
+  .revolve-ring {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
+    gap: 8px;
+    align-items: center;
+    justify-items: center;
+  }
+  .ring-item {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--card-br);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    font-size: 36px;
+    min-width: 90px;
+  }
+  .ring-item span {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+  .ring-gov { border-color: rgba(61,165,255,0.4); }
+  .ring-lobby { border-color: rgba(255,224,61,0.4); }
+  .ring-back { border-color: rgba(94,234,212,0.4); }
+  .ring-congress { border-color: rgba(185,133,255,0.4); }
+  .ring-arrow {
+    font-size: 28px;
+    color: var(--yellow);
+    font-family: 'Archivo Black', sans-serif;
+    animation: arrowpulse 2s infinite;
+  }
+  .ring-arrow-1 { grid-column: 2; grid-row: 1; }
+  .ring-arrow-2 { grid-column: 3; grid-row: 2; }
+  .ring-arrow-3 { grid-column: 2; grid-row: 3; }
+  @keyframes arrowpulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+  @media (max-width: 768px) {
+    .revolve { grid-template-columns: 1fr; padding: 24px; }
+  }
+
+  .abramoff-box {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 36px;
+    margin-bottom: 28px;
+  }
+
+  .lobby-terms {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 36px;
+  }
+  .term-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .term-card {
+    padding: 18px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 14px;
+    border: 1px solid var(--card-br);
+  }
+  .term-card strong {
+    display: block;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+    margin-bottom: 2px;
+  }
+  .term-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .term-card p { color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+  /* LIVE BILLS */
+  .bill-feed {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+  .live-bill {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 20px;
+    padding: 26px;
+    transition: transform 0.3s, border-color 0.3s;
+    position: relative;
+  }
+  .live-bill:hover {
+    transform: translateY(-4px);
+    border-color: var(--mint);
+  }
+  .bill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .bill-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--yellow);
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+  .bill-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .status-pending { background: rgba(255,224,61,0.15); color: var(--yellow); border: 1px solid rgba(255,224,61,0.3); }
+  .status-passed { background: rgba(94,234,212,0.15); color: var(--mint); border: 1px solid rgba(94,234,212,0.3); }
+  .status-floor { background: rgba(185,133,255,0.15); color: var(--purple); border: 1px solid rgba(185,133,255,0.3); }
+  .live-bill h3 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+  .live-bill p { color: var(--muted); font-size: 14px; margin-bottom: 16px; line-height: 1.55; }
+  .bill-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--mint);
+    text-decoration: none;
+    padding: 6px 12px;
+    background: rgba(94,234,212,0.08);
+    border: 1px solid rgba(94,234,212,0.3);
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+  .bill-link:hover { background: rgba(94,234,212,0.2); }
+
+  .live-cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 36px;
+    background: linear-gradient(135deg, rgba(94,234,212,0.1), rgba(61,165,255,0.08));
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .live-cta h3 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 24px;
+    letter-spacing: -0.5px;
+  }
+
+  /* PRINT STYLES */
+  @media print {
+    * {
+      background: #fff !important;
+      color: #000 !important;
+      -webkit-text-fill-color: #000 !important;
+      text-shadow: none !important;
+      box-shadow: none !important;
+    }
+    body {
+      background: #fff !important;
+      background-image: none !important;
+      color: #000 !important;
+      font-size: 11pt;
+    }
+    nav, .marquee, .grain, video, .hero-cta, .btn,
+    #billgame .game-status, #billgame .game-grid, #billgame .game-win,
+    #quiz, .print-link, .live-cta, #debt-counter, .live-dot,
+    .salamander, .win-burst {
+      display: none !important;
+    }
+    .hero {
+      padding: 20px 0 !important;
+      min-height: auto !important;
+      page-break-after: avoid;
+    }
+    h1.mega {
+      font-size: 30pt !important;
+      letter-spacing: 0 !important;
+      color: #000 !important;
+    }
+    h1.mega .red, h1.mega .shift, h1.mega .outline {
+      color: #000 !important;
+      -webkit-text-fill-color: #000 !important;
+      -webkit-text-stroke: 0 !important;
+    }
+    section {
+      padding: 12pt 0 !important;
+      max-width: 100% !important;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .section-title {
+      font-size: 20pt !important;
+      letter-spacing: 0 !important;
+      margin-bottom: 10pt !important;
+    }
+    .section-intro {
+      font-size: 11pt !important;
+      margin-bottom: 12pt !important;
+    }
+    .section-label { color: #666 !important; }
+    .card, .dirty-card, .flow-step, .pork-card, .ctx-card,
+    .senator-card, .rep-lookup, .action-box, .lobby-spenders,
+    .revolve, .abramoff-box, .lobby-terms, .live-bill, .logroll,
+    .takeaway, .map-frame, .origin, .pc-card, .video-wrap,
+    .quiz, .debt-hero, .counter-card, .budget-box, .context-row > div,
+    .vocab {
+      border: 1pt solid #999 !important;
+      border-radius: 4pt !important;
+      padding: 8pt !important;
+      margin-bottom: 6pt !important;
+      page-break-inside: avoid;
+    }
+    .vocab .def { display: block !important; }
+    .vocab .hint { color: #666 !important; }
+    .bento, .dirty-grid, .pc-grid, .pork-grid, .term-grid,
+    .bill-feed, .take-grid, .action-grid, .senators-row,
+    .counter-grid, .context-row, .lobby-bars, .vocab-grid {
+      display: block !important;
+      gap: 0 !important;
+    }
+    .card.wide, .card.half, .card.third, .card.full, .card.tall,
+    .pork-card.pork-hof, .pork-card.pork-total {
+      grid-column: auto !important;
+      grid-row: auto !important;
+    }
+    .hot-take, .pc-result, .pork-card p, .sen-link,
+    .bill-link, .sal-art { color: #000 !important; }
+    a { color: #000 !important; text-decoration: underline; }
+    a::after { content: " (" attr(href) ")"; font-size: 8pt; color: #666; }
+    /* Hide long-URL append for internal anchor links */
+    a[href^="#"]::after { content: ""; }
+    .pork-amount, .counter-val, .bar-val, .debt-counter,
+    .ctx-num, .stat { font-size: 18pt !important; }
+    img { max-width: 100% !important; page-break-inside: avoid; }
+    footer { border-top: 1pt solid #999 !important; margin-top: 12pt; padding-top: 8pt !important; }
+  }
+
+  /* GRAIN TEXTURE */
+  .grain {
+    position: fixed; inset: 0; pointer-events: none;
+    opacity: 0.04; z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* REVEAL ON SCROLL */
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* MARQUEE */
+  .marquee {
+    overflow: hidden;
+    padding: 20px 0;
+    border-top: 1px solid var(--card-br);
+    border-bottom: 1px solid var(--card-br);
+    background: rgba(255,255,255,0.02);
+    margin: 60px 0;
+  }
+  .marquee-track {
+    display: flex; gap: 60px;
+    animation: scroll 40s linear infinite;
+    white-space: nowrap;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 40px;
+    letter-spacing: -1px;
+  }
+  .marquee-track span { color: var(--ink); }
+  .marquee-track span:nth-child(2n) { color: transparent; -webkit-text-stroke: 1px var(--ink); }
+  .marquee-track span:nth-child(3n) { color: var(--yellow); }
+  .marquee-track span:nth-child(5n) { color: var(--red); }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+</style>
+</head>
+<body>
+<div class="grain"></div>
+
+<nav>
+  <div class="logo">CONGRESS<span>.</span>101</div>
+  <ul>
+    <li><a href="#basics">Basics</a></li>
+    <li><a href="#reps">Your Reps</a></li>
+    <li><a href="#bill">Bill Flow</a></li>
+    <li><a href="#billgame">Play</a></li>
+    <li><a href="#powers">Powers</a></li>
+    <li><a href="#gerrymander">Gerry</a></li>
+    <li><a href="#pork">Pork</a></li>
+    <li><a href="#lobby">Lobbying</a></li>
+    <li><a href="#money">Money</a></li>
+    <li><a href="#live">Live</a></li>
+    <li><a href="#vocab">Vocab</a></li>
+    <li><a href="#quiz">Quiz</a></li>
+    <li><a href="#" onclick="window.print(); return false;" class="print-link">⎙ Print</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="eyebrow"><span class="dot"></span>Live from Capitol Hill · 119th Congress in session</div>
+  <h1 class="mega">
+    <span class="outline">CONGRESS</span><br>
+    <span class="red">isn't</span> <span>boring.</span><br>
+    <span class="shift">you just</span><br>
+    <span>never looked close.</span>
+  </h1>
+  <p class="hero-sub">
+    535 people. $6.8 trillion budget. The power to <strong>declare war</strong>, tax your paycheck, and decide if your group chat memes are illegal. Let's decode the weirdest, messiest, most powerful club in America.
+  </p>
+  <div class="hero-cta">
+    <a href="#basics" class="btn btn-primary">let's go →</a>
+    <a href="#quiz" class="btn btn-ghost">skip to quiz</a>
+  </div>
+</section>
+
+<!-- BASICS -->
+<section id="basics">
+  <div class="section-label">// Chapter 01 — The Setup</div>
+  <h2 class="section-title">Two rooms,<br>one vibe shift.</h2>
+  <p class="section-intro">Congress is a bicameral legislature — fancy word for "two chambers." Together they make federal law. Apart, they feel like two entirely different schools.</p>
+
+  <div class="bento">
+    <div class="card card-house half">
+      <span class="tag">The House</span>
+      <div class="stat">435</div>
+      <h3>More members. More chaos.</h3>
+      <p>Reps serve 2-year terms. Every single one is up for re-election every other year, so they're in <em>constant</em> campaign mode. House = loud, fast, populist.</p>
+    </div>
+    <div class="card card-senate half">
+      <span class="tag">The Senate</span>
+      <div class="stat">100</div>
+      <h3>Fewer members. More swag.</h3>
+      <p>Two per state, no matter if it's Wyoming or California. 6-year terms mean senators can play the long game. Senate = slower, older, filibuster-heavy.</p>
+    </div>
+
+    <div class="card card-yellow third">
+      <div class="stat">25</div>
+      <h3>House minimum age</h3>
+      <p>Citizen for 7 years, live in the state.</p>
+    </div>
+    <div class="card card-yellow third">
+      <div class="stat">30</div>
+      <h3>Senate minimum age</h3>
+      <p>Citizen for 9 years. Older club, longer dues.</p>
+    </div>
+    <div class="card card-mint third">
+      <div class="stat">6.8T</div>
+      <h3>Budget they handle</h3>
+      <p>That's "trillion." With a T. Your tax dollars.</p>
+    </div>
+
+    <div class="card card-purple full">
+      <span class="tag">Who's in charge?</span>
+      <h3 style="font-size: 28px; margin-bottom: 18px;">Leadership cheat sheet</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px;">
+        <div>
+          <div style="color: var(--blue); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; margin-bottom: 4px;">HOUSE BOSS</div>
+          <strong style="font-size: 18px;">Speaker of the House</strong>
+          <p style="margin-top: 6px;">Runs the House floor. 2nd in line for presidency. Picked by the majority party.</p>
+        </div>
+        <div>
+          <div style="color: var(--red); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; margin-bottom: 4px;">SENATE BOSS (on paper)</div>
+          <strong style="font-size: 18px;">President of the Senate</strong>
+          <p style="margin-top: 6px;">Literally the VP. Only votes to break ties. Mostly ceremonial.</p>
+        </div>
+        <div>
+          <div style="color: var(--yellow); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; margin-bottom: 4px;">SENATE BOSS (actually)</div>
+          <strong style="font-size: 18px;">Majority Leader</strong>
+          <p style="margin-top: 6px;">Controls what bills get voted on. The real shot-caller.</p>
+        </div>
+        <div>
+          <div style="color: var(--mint); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; margin-bottom: 4px;">WHIPS</div>
+          <strong style="font-size: 18px;">Majority / Minority Whip</strong>
+          <p style="margin-top: 6px;">Counts votes. Pressures their party to vote the line. Basically peer pressure, but legal.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- YOUR REPS -->
+<section id="reps">
+  <div class="section-label">// Homeroom — Your Reps</div>
+  <h2 class="section-title">Meet YOUR<br>members of Congress.</h2>
+  <p class="section-intro">Every American has <strong style="color:var(--ink);">3 members of Congress</strong>: 1 Representative (based on your ZIP) + 2 Senators (based on your state). These are the people who vote on everything from student loans to TikTok. They work for <em>you</em>.</p>
+
+  <!-- CA SENATORS -->
+  <div class="senators-row">
+    <div class="senator-card">
+      <div class="sen-badge">🐻 CA SENATOR</div>
+      <div class="sen-name">Alex Padilla</div>
+      <div class="sen-party party-D">Democrat · Term ends 2029</div>
+      <p>Padilla was appointed in 2021 to fill Kamala Harris's seat when she became VP — the first Latino senator from California. Won a full term in 2022. Focus areas: immigration, election security, climate.</p>
+      <a href="https://www.padilla.senate.gov/" target="_blank" rel="noopener" class="sen-link">padilla.senate.gov ↗</a>
+    </div>
+    <div class="senator-card">
+      <div class="sen-badge">🐻 CA SENATOR</div>
+      <div class="sen-name">Adam Schiff</div>
+      <div class="sen-party party-D">Democrat · Term ends 2031</div>
+      <p>Former House rep from Burbank. Won Feinstein's seat in Nov 2024. Known nationally for leading Trump's first impeachment. Focus areas: national security, voting rights, entertainment industry policy.</p>
+      <a href="https://www.schiff.senate.gov/" target="_blank" rel="noopener" class="sen-link">schiff.senate.gov ↗</a>
+    </div>
+  </div>
+
+  <!-- HOUSE REP LOOKUP -->
+  <div class="rep-lookup">
+    <div class="rep-lookup-left">
+      <div class="tag" style="margin-bottom:14px;">🏠 House Rep Lookup</div>
+      <h3 style="font-family:'Archivo Black', sans-serif; font-size:30px; letter-spacing:-1px; margin-bottom:12px;">Find YOUR House Rep.</h3>
+      <p style="color:var(--muted); font-size:16px; margin-bottom:14px;">Unlike Senators, your House Rep depends on your exact ZIP code. Type yours in and we'll send you straight to house.gov's official lookup.</p>
+      <p style="color:var(--muted); font-size:14px;">Heads up — if you live in East County San Diego (Granite Hills area, El Cajon, Santee), you're probably in <strong style="color:var(--yellow);">CA-48 (Darrell Issa)</strong> or <strong style="color:var(--yellow);">CA-50 (Scott Peters)</strong>.</p>
+    </div>
+    <div class="rep-lookup-right">
+      <form class="zip-form" onsubmit="return findRep(event)">
+        <label>Your ZIP code</label>
+        <input type="text" id="zip-input" placeholder="92019" maxlength="5" pattern="[0-9]{5}" required />
+        <button type="submit" class="btn btn-primary" style="width:100%; justify-content:center;">Find My Rep →</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- TAKE ACTION -->
+  <div class="action-box">
+    <div class="tag" style="background:rgba(94,234,212,0.15); color:var(--mint); border:1px solid rgba(94,234,212,0.3); margin-bottom:14px;">// your voice actually matters</div>
+    <h3 style="font-family:'Archivo Black', sans-serif; font-size:28px; letter-spacing:-0.5px; margin-bottom:20px;">How to actually contact them.</h3>
+    <div class="action-grid">
+      <div>
+        <strong style="color:var(--blue);">📞 CALL</strong>
+        <p>Phone calls > emails. Staffers tally every call. 30 seconds: "I'm a constituent. I want [senator] to vote [yes/no] on [bill]."</p>
+      </div>
+      <div>
+        <strong style="color:var(--yellow);">✉️ WRITE</strong>
+        <p>Every office has a contact form. Mention your town. Mention you vote. Be brief and specific.</p>
+      </div>
+      <div>
+        <strong style="color:var(--mint);">🏛️ VISIT</strong>
+        <p>Every senator + rep has a local district office. Free to walk in. Meet a staffer. Ask a question. They're literally paid to listen.</p>
+      </div>
+      <div>
+        <strong style="color:var(--red);">🗳️ VOTE</strong>
+        <p>In California, you can pre-register at <strong>16</strong> and it auto-activates at 18. Turnout for voters 18-24 is always lowest. Be the exception.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>filibuster</span><span>★</span><span>gerrymander</span><span>★</span><span>pork barrel</span><span>★</span><span>veto override</span><span>★</span><span>cloture</span><span>★</span>
+    <span>filibuster</span><span>★</span><span>gerrymander</span><span>★</span><span>pork barrel</span><span>★</span><span>veto override</span><span>★</span><span>cloture</span><span>★</span>
+  </div>
+</div>
+
+<!-- HOW A BILL -->
+<section id="bill">
+  <div class="section-label">// Chapter 02 — The Bill Pipeline</div>
+  <h2 class="section-title">How a Bill <br>actually becomes law.</h2>
+  <p class="section-intro">Schoolhouse Rock lied to you. It's not a cute 3-minute cartoon. It's an obstacle course where 90% of bills die. Here's the real route.</p>
+
+  <div class="bill-flow">
+    <div class="flow-step">
+      <div class="num">// STEP 01</div>
+      <h4>Somebody has an idea</h4>
+      <p>A citizen, a lobbyist, the president, a member — anyone can suggest a bill. Only a member of Congress can <em>introduce</em> it.</p>
+      <div class="hot-take">vibe check: most bills start as lobbyist drafts, not civics-class dreams.</div>
+    </div>
+    <div class="flow-step">
+      <div class="num">// STEP 02</div>
+      <h4>Committee graveyard</h4>
+      <p>Bill goes to a committee that matches the topic. Most bills die here — never get a hearing, never see the light of day.</p>
+      <div class="hot-take">~90% of bills never escape committee. it's where ideas go to ghost.</div>
+    </div>
+    <div class="flow-step">
+      <div class="num">// STEP 03</div>
+      <h4>Floor debate + vote</h4>
+      <p>If it survives committee, the whole chamber debates and votes. House keeps debates tight. Senate lets you talk forever (filibuster).</p>
+      <div class="hot-take">filibuster = "I can talk this bill to death unless 60 senators shut me up."</div>
+    </div>
+    <div class="flow-step">
+      <div class="num">// STEP 04</div>
+      <h4>Other chamber, same circus</h4>
+      <p>Pass one chamber? Cool, now do it all again in the other one. They usually change it, so the two versions don't match.</p>
+      <div class="hot-take">two chambers, two egos. rarely on the same page.</div>
+    </div>
+    <div class="flow-step">
+      <div class="num">// STEP 05</div>
+      <h4>Conference committee</h4>
+      <p>A mixed group from House + Senate merges the two versions into one. Then both chambers re-vote on the combined bill.</p>
+      <div class="hot-take">this is where pork barrel spending gets sneakily added in.</div>
+    </div>
+    <div class="flow-step">
+      <div class="num">// STEP 06</div>
+      <h4>President's desk</h4>
+      <p>Sign → it's law. Veto → back to Congress. Do nothing for 10 days → law (if Congress is in session) or dead (if they left).</p>
+      <div class="hot-take">"pocket veto" = the silent treatment, but constitutional.</div>
+    </div>
+    <div class="flow-step">
+      <div class="num">// STEP 07</div>
+      <h4>Override?</h4>
+      <p>Congress can override a veto with a 2/3 supermajority in both chambers. That's rare. Like, really rare.</p>
+      <div class="hot-take">less than 4% of vetoes get overridden in history. rare W for Congress.</div>
+    </div>
+    <div class="flow-step" style="background: linear-gradient(135deg, rgba(255,224,61,0.12), rgba(255,61,110,0.08)); border-color: rgba(255,224,61,0.4);">
+      <div class="num" style="color: var(--mint);">// FINAL</div>
+      <h4>It's a law</h4>
+      <p>The surviving few percent. Congrats, you now affect 330 million people.</p>
+      <div class="hot-take" style="background: rgba(94,234,212,0.1); border-left-color: var(--mint); color: var(--mint);">avg: ~4% of introduced bills actually become law.</div>
+    </div>
+  </div>
+</section>
+
+<!-- BILL GAME -->
+<section id="billgame">
+  <div class="section-label">// Mini-Game — Order the Bill</div>
+  <h2 class="section-title">Think you got it?<br><span style="color:var(--yellow);">Put the steps in order.</span></h2>
+  <p class="section-intro">Click the steps in the correct order a bill travels through Congress. Wrong click = red flash. Get all 7 in order to win. No pressure — try as many times as you want.</p>
+
+  <div class="game-status" id="game-status">
+    <span class="game-progress">Step <strong id="game-step">1</strong> of 7</span>
+    <span class="game-timer">Attempts: <strong id="game-attempts">0</strong></span>
+    <button class="btn btn-ghost" onclick="resetGame()" style="padding:8px 16px; font-size:13px;">↺ Reset</button>
+  </div>
+
+  <div class="game-grid" id="game-grid">
+    <!-- populated by JS -->
+  </div>
+
+  <div class="game-win" id="game-win" style="display:none;">
+    <div class="win-burst">🏆</div>
+    <h3>You got it!</h3>
+    <p>Nailed all 7 steps in order. You now understand the bill process better than 80% of American adults. Real talk.</p>
+    <button class="btn btn-primary" onclick="resetGame()">play again</button>
+  </div>
+</section>
+
+<!-- POWERS -->
+<section id="powers">
+  <div class="section-label">// Chapter 03 — The Arsenal</div>
+  <h2 class="section-title">What Congress<br>can <span style="color: var(--yellow);">actually</span> do.</h2>
+  <p class="section-intro">The Constitution hands Congress a huge toolbox. Some of these are obvious. Some will surprise you. All of them are why lobbyists throw money at these 535 people.</p>
+
+  <div class="bento">
+    <div class="card card-yellow wide">
+      <span class="tag">Expressed Powers · Article I, Sec 8</span>
+      <h3>The money power</h3>
+      <p style="margin-bottom: 14px;">Congress controls taxes, tariffs, the budget, and federal spending. If you get a paycheck, a refund, or pay sales tax — Congress wrote the rules.</p>
+      <p style="color: var(--yellow); font-family: 'JetBrains Mono', monospace; font-size: 13px;">&gt; "the power of the purse"</p>
+    </div>
+    <div class="card card-senate third">
+      <span class="tag">War Power</span>
+      <h3>Declare war</h3>
+      <p>Only Congress can. The president commands the military, but can't officially declare war alone.</p>
+    </div>
+
+    <div class="card card-house third">
+      <span class="tag">Commerce Clause</span>
+      <h3>Regulate trade</h3>
+      <p>Between states + with foreign countries. This clause has been stretched to cover almost everything.</p>
+    </div>
+    <div class="card card-mint third">
+      <span class="tag">Immigration</span>
+      <h3>Naturalization</h3>
+      <p>Rules for becoming a US citizen. Entirely Congress's call.</p>
+    </div>
+    <div class="card card-purple third">
+      <span class="tag">Infrastructure</span>
+      <h3>Post office + roads</h3>
+      <p>Yes, stamps. But also basically all federal infrastructure spending.</p>
+    </div>
+
+    <div class="card wide" style="background: linear-gradient(135deg, rgba(185,133,255,0.15), rgba(61,165,255,0.08)); border-color: rgba(185,133,255,0.3);">
+      <span class="tag">Non-Legislative Powers</span>
+      <h3>They don't just make laws</h3>
+      <p style="margin-bottom: 16px;">Congress also runs the show on things that aren't bills:</p>
+      <ul style="list-style: none; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px;">
+        <li style="padding: 10px 14px; background: rgba(255,255,255,0.04); border-radius: 10px;"><strong style="color: var(--purple);">Impeach</strong><br><span style="color: var(--muted); font-size: 14px;">House charges, Senate tries</span></li>
+        <li style="padding: 10px 14px; background: rgba(255,255,255,0.04); border-radius: 10px;"><strong style="color: var(--blue);">Confirm</strong><br><span style="color: var(--muted); font-size: 14px;">Senate approves judges + cabinet</span></li>
+        <li style="padding: 10px 14px; background: rgba(255,255,255,0.04); border-radius: 10px;"><strong style="color: var(--mint);">Ratify treaties</strong><br><span style="color: var(--muted); font-size: 14px;">Senate, 2/3 majority</span></li>
+        <li style="padding: 10px 14px; background: rgba(255,255,255,0.04); border-radius: 10px;"><strong style="color: var(--yellow);">Investigate</strong><br><span style="color: var(--muted); font-size: 14px;">Subpoena powers, hearings</span></li>
+        <li style="padding: 10px 14px; background: rgba(255,255,255,0.04); border-radius: 10px;"><strong style="color: var(--red);">Amend Constitution</strong><br><span style="color: var(--muted); font-size: 14px;">Propose with 2/3 vote</span></li>
+        <li style="padding: 10px 14px; background: rgba(255,255,255,0.04); border-radius: 10px;"><strong style="color: var(--purple);">Elect president</strong><br><span style="color: var(--muted); font-size: 14px;">If electoral college ties</span></li>
+      </ul>
+    </div>
+    <div class="card card-yellow third">
+      <span class="tag">The Elastic Clause</span>
+      <h3>"Necessary & Proper"</h3>
+      <p>The cheat code. Lets Congress do stuff not explicitly listed, as long as it's connected to an expressed power.</p>
+    </div>
+  </div>
+</section>
+
+<!-- DIRTY SIDE -->
+<section id="dirty">
+  <div class="section-label">// Chapter 04 — The Sus Side</div>
+  <h2 class="section-title">Where it gets<br><span style="color: var(--red);">shady</span>.</h2>
+  <p class="section-intro">Congress has some... questionable hobbies. Here are three you'll see on every exam — and every news cycle.</p>
+
+  <div class="dirty-grid">
+    <div class="dirty-card">
+      <span class="big-emoji">🗺️</span>
+      <span class="pill pill-sus">tier 1 sus</span>
+      <h3 style="margin-top: 12px;">Gerrymandering</h3>
+      <p>Drawing district lines in weird zigzags so your party always wins — even if fewer people voted for you.</p>
+      <p style="color: var(--ink); font-size: 14px;"><strong>Two flavors:</strong></p>
+      <p style="font-size: 14px;"><strong style="color: var(--yellow);">Packing</strong> — cramming opponents into one district so they only win one seat.</p>
+      <p style="font-size: 14px;"><strong style="color: var(--yellow);">Cracking</strong> — splitting opponents across many districts so they never get a majority anywhere.</p>
+    </div>
+
+    <div class="dirty-card">
+      <span class="big-emoji">🐷</span>
+      <span class="pill pill-sus">tier 2 sus</span>
+      <h3 style="margin-top: 12px;">Pork Barrel Spending</h3>
+      <p>A member slides a pet project for their hometown into a big unrelated bill. Bridge to nowhere? Pork. New stadium funding? Pork.</p>
+      <p style="color: var(--ink); font-size: 14px;"><strong>Why it works:</strong></p>
+      <p style="font-size: 14px;">Other members let it slide because <em>they</em> want their own pork. It's the original "you scratch my back" — also called <strong style="color: var(--yellow);">logrolling</strong>.</p>
+    </div>
+
+    <div class="dirty-card">
+      <span class="big-emoji">💼</span>
+      <span class="pill pill-sus">tier 3 sus</span>
+      <h3 style="margin-top: 12px;">Lobbying</h3>
+      <p>Corporations, unions, and activist groups pay pros to influence members. Legal, regulated, and everywhere.</p>
+      <p style="color: var(--ink); font-size: 14px;"><strong>The Abramoff lesson:</strong></p>
+      <p style="font-size: 14px;">Super-lobbyist Jack Abramoff went to federal prison in 2006 for bribery, fraud, and tax evasion. Proved how blurry the "gift vs bribe" line really is.</p>
+    </div>
+  </div>
+</section>
+
+<!-- GERRYMANDER DEEP DIVE -->
+<section id="gerrymander">
+  <div class="section-label">// Deep Dive — Gerrymandering</div>
+  <h2 class="section-title">Meet the<br><span style="color: var(--red);">weirdest</span> map in America.</h2>
+  <p class="section-intro">California has <strong style="color: var(--ink);">52 congressional districts</strong> — more than any other state. Some are compact squares. Others look like Rorschach tests. Scroll the map. Spot the squiggles. Ask: <em>who drew this, and why?</em></p>
+
+  <div class="map-wrap">
+    <div class="map-frame">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/00/California_Congressional_Districts%2C_118th_Congress.svg/960px-California_Congressional_Districts%2C_118th_Congress.svg.png"
+           alt="California's 52 congressional districts for the 118th Congress"
+           loading="lazy" />
+      <div class="map-caption">
+        <div class="tag" style="margin-bottom:8px;">CA · 52 districts · 2023–2033</div>
+        <p>California uses an <strong style="color: var(--mint);">independent citizens commission</strong> to draw these — not the legislature. That's rare. Most states let politicians draw their own districts. Guess how that usually turns out.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ORIGIN STORY -->
+  <div class="origin">
+    <div class="origin-left">
+      <div class="tag" style="background:rgba(255,61,110,0.15); color:var(--red); border:1px solid rgba(255,61,110,0.3); margin-bottom:16px;">Origin Story · 1812</div>
+      <h3 style="font-family:'Archivo Black', sans-serif; font-size:32px; letter-spacing:-1px; margin-bottom:16px;">The word is a pun.<br>An insult, actually.</h3>
+      <p style="color: var(--muted); margin-bottom: 14px;">In 1812, Massachusetts Governor <strong style="color: var(--ink);">Elbridge Gerry</strong> signed a law redrawing state senate districts to favor his party. One district was so twisted it looked like a <strong style="color: var(--ink);">salamander</strong>.</p>
+      <p style="color: var(--muted); margin-bottom: 14px;">A Boston newspaper roasted him by mashing his name with "salamander" → <strong style="color: var(--yellow);">Gerry-mander</strong>. The word has stuck for <strong>213 years</strong>.</p>
+      <p style="color: var(--muted);">Today "gerrymandering" means any redrawing of political lines to rig the outcome. Fun fact: Gerry's name was actually pronounced with a hard G (like "Gary"), but the word is now always pronounced "Jerry-mander." Sorry, Elbridge.</p>
+    </div>
+    <div class="origin-right">
+      <div class="salamander">
+        <div class="sal-label">est. 1812 · still undefeated</div>
+        <div class="sal-art">🦎</div>
+        <div class="sal-sub">the original Gerry-Mander</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PACKING VS CRACKING -->
+  <h3 style="font-family:'Archivo Black', sans-serif; font-size:36px; letter-spacing:-1px; margin: 80px 0 12px;">Packing vs. Cracking.</h3>
+  <p style="color: var(--muted); max-width: 680px; margin-bottom: 40px; font-size: 17px;">50 voters. <strong style="color:var(--blue);">20 blue (40%)</strong>, <strong style="color:var(--red);">30 red (60%)</strong>. Divided into 5 districts of 10. Same voters every time — only the lines change.</p>
+
+  <div class="pc-grid">
+    <div class="pc-card pc-fair">
+      <div class="pc-label">// FAIR MAP</div>
+      <h4>Proportional</h4>
+      <div class="pc-viz" id="viz-fair"></div>
+      <div class="pc-result">Blue is <strong>40%</strong> of voters → wins <strong>2 of 5</strong> districts. Roughly proportional. This is the fair version.</div>
+    </div>
+    <div class="pc-card pc-pack">
+      <div class="pc-label" style="color:var(--red)">// PACKING</div>
+      <h4>Cram them all in one</h4>
+      <div class="pc-viz" id="viz-pack"></div>
+      <div class="pc-result">Blue still 40% → only wins <strong>1 district</strong>. Their voters got packed into one super-blue district and wasted.</div>
+    </div>
+    <div class="pc-card pc-crack">
+      <div class="pc-label" style="color:var(--yellow)">// CRACKING</div>
+      <h4>Split them everywhere</h4>
+      <div class="pc-viz" id="viz-crack"></div>
+      <div class="pc-result">Blue still 40% → wins <strong>0 districts</strong>. Spread so thin they're the minority in every single one.</div>
+    </div>
+  </div>
+
+  <!-- VIDEO -->
+  <div class="video-wrap">
+    <div class="tag" style="margin-bottom:12px;">Watch · Mr. James's Class Video</div>
+    <h3 style="font-family:'Archivo Black', sans-serif; font-size:28px; letter-spacing:-0.5px; margin-bottom:20px;">Gerrymandering, Explained.</h3>
+    <video controls preload="metadata" poster="">
+      <source src="../Gerrymandering%20Explained.mp4" type="video/mp4">
+      Your browser doesn't support video. Ask Mr. James to play it in class.
+    </video>
+    <p style="color: var(--muted); font-size: 14px; margin-top: 12px;">If this doesn't load, the file is <code style="background:rgba(255,255,255,0.08); padding:2px 6px; border-radius:4px;">Gerrymandering Explained.mp4</code> in the parent folder.</p>
+  </div>
+
+  <!-- TAKEAWAY -->
+  <div class="takeaway">
+    <div class="tag" style="background:rgba(94,234,212,0.15); color:var(--mint); border:1px solid rgba(94,234,212,0.3); margin-bottom:14px;">// the real question</div>
+    <h3 style="font-family:'Archivo Black', sans-serif; font-size:32px; letter-spacing:-1px; margin-bottom:14px; line-height:1.1;">Who should draw the lines?</h3>
+    <div class="take-grid">
+      <div>
+        <strong style="color:var(--red);">State legislatures</strong>
+        <p>Cheap, fast — and massively prone to the majority party rigging maps for themselves.</p>
+      </div>
+      <div>
+        <strong style="color:var(--blue);">Independent commissions</strong>
+        <p>California's method. Citizens, not politicians, draw the map. Fairer, but slower and still imperfect.</p>
+      </div>
+      <div>
+        <strong style="color:var(--yellow);">Courts</strong>
+        <p>Sometimes step in when maps get too wild. 2019 SCOTUS said federal courts can't rule on partisan gerrymandering — so it's up to states.</p>
+      </div>
+      <div>
+        <strong style="color:var(--purple);">Algorithms</strong>
+        <p>New idea: let a computer draw the most compact, balanced districts. Pros: no human bias. Cons: no accountability.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORK HALL OF SHAME -->
+<section id="pork">
+  <div class="section-label">// Deep Dive — Pork Barrel</div>
+  <h2 class="section-title">The Pork Hall<br>of <span style="color: var(--red);">Shame</span>. 🐷</h2>
+  <p class="section-intro">Real earmarks. Real tax dollars. Every single one actually got proposed or funded by Congress. The receipts:</p>
+
+  <div class="pork-grid">
+
+    <div class="pork-card pork-hof">
+      <div class="pork-tag">🏆 hall of famer</div>
+      <div class="pork-amount">$398<span>M</span></div>
+      <h3>The Bridge to Nowhere</h3>
+      <div class="pork-meta">Ketchikan, Alaska · 2005</div>
+      <p>A bridge from a town of ~8,000 people to an island with <strong style="color:var(--yellow);">50 residents</strong> and one airport. That's <strong style="color:var(--yellow);">~$7.9 million per islander</strong>. After years of national roasting, the earmark got pulled. The name stuck forever as shorthand for pointless spending.</p>
+    </div>
+
+    <div class="pork-card">
+      <div class="pork-tag">🫖 certified odd</div>
+      <div class="pork-amount">$500<span>K</span></div>
+      <h3>Sparta Teapot Museum</h3>
+      <div class="pork-meta">Sparta, North Carolina · 2005</div>
+      <p>Half a million of federal money to help build a museum for an <strong>8,000-piece teapot collection</strong> owned by a couple in California. Tourists never materialized. The museum was scrapped in 2009 before it ever opened.</p>
+    </div>
+
+    <div class="pork-card">
+      <div class="pork-tag">🌴 inside a building</div>
+      <div class="pork-amount">$50<span>M</span></div>
+      <h3>Indoor Rainforest</h3>
+      <div class="pork-meta">Coralville, Iowa · 2004</div>
+      <p>Fifty million federal dollars for a giant glass-domed rainforest... in Iowa. Senator McCain flagged it as his personal pork poster-child. The project quietly died when private funding fell through.</p>
+    </div>
+
+    <div class="pork-card">
+      <div class="pork-tag">📮 98 people</div>
+      <div class="pork-amount">$4<span>M</span></div>
+      <h3>Pelican, Alaska Appropriation</h3>
+      <div class="pork-meta">Alaska · 2024</div>
+      <p>A $4 million earmark for a tiny Alaskan town with a population of <strong style="color:var(--yellow);">98 people</strong>. That's <strong>$40,816 per resident</strong>. You could just write them each a check.</p>
+    </div>
+
+    <div class="pork-card">
+      <div class="pork-tag">🏛️ already rich</div>
+      <div class="pork-amount">$1.75<span>M</span></div>
+      <h3>MET Museum Security Upgrades</h3>
+      <div class="pork-meta">New York City · 2024</div>
+      <p>Plaza security at the Metropolitan Museum of Art — which sat on <strong style="color:var(--yellow);">$5 billion in assets</strong> at the time. Federal taxpayers covering security for one of the richest museums on Earth.</p>
+    </div>
+
+    <div class="pork-card">
+      <div class="pork-tag">🦑 underwater beef</div>
+      <div class="pork-amount">$36<span>M</span></div>
+      <h3>Combating "Underwater Pests"</h3>
+      <div class="pork-meta">Multiple states · 2024</div>
+      <p>Thirty-six million to fight underwater nuisance species like zebra mussels. Real issue — but $36M of <em>earmarked</em> cash? That's a lot of mussel money.</p>
+    </div>
+
+    <div class="pork-card">
+      <div class="pork-tag">🕊️ chill vibes</div>
+      <div class="pork-amount">$350<span>K</span></div>
+      <h3>Inner Harmony Wellness Center</h3>
+      <div class="pork-meta">Nevada · early 2000s</div>
+      <p>Your tax dollars funding a "wellness center." Another McCain hit-list favorite. Legal under the earmark rules, but... inner harmony, federally subsidized.</p>
+    </div>
+
+    <div class="pork-card">
+      <div class="pork-tag">📚 not underfunded</div>
+      <div class="pork-amount">$17.5<span>M</span></div>
+      <h3>Eisenhower Library Earmark</h3>
+      <div class="pork-meta">Abilene, Kansas · 2024</div>
+      <p>Presidential libraries already have federal funding via the National Archives. This was an extra $17.5M on top — for a library about a president who left office in 1961.</p>
+    </div>
+
+    <div class="pork-card pork-total">
+      <div class="pork-tag" style="background:rgba(255,61,110,0.15); color:var(--red);">💸 2024 grand total</div>
+      <div class="pork-amount" style="color: var(--red);">$22<span>B</span></div>
+      <h3>Total pork, one year</h3>
+      <div class="pork-meta">Congressional earmarks · FY2024</div>
+      <p>Fiscal watchdog groups identified around <strong style="color:var(--ink);">$22 billion</strong> in earmark spending in fiscal year 2024 alone — after Congress brought earmarks <em>back</em> in 2022 under new transparency rules.</p>
+    </div>
+  </div>
+
+  <!-- LOGROLLING CALLOUT -->
+  <div class="logroll">
+    <div class="logroll-left">
+      <div class="tag" style="background:rgba(255,224,61,0.15); color:var(--yellow); border:1px solid rgba(255,224,61,0.3); margin-bottom:14px;">// the real reason it happens</div>
+      <h3 style="font-family:'Archivo Black', sans-serif; font-size:32px; letter-spacing:-1px; margin-bottom:14px; line-height:1.1;">Why doesn't anyone stop this?</h3>
+      <p style="color: var(--muted); font-size:16px; margin-bottom: 14px;">Two words: <strong style="color:var(--yellow);">logrolling</strong>.</p>
+      <p style="color: var(--muted); font-size:16px; margin-bottom: 14px;">"You vote for my teapot museum, I'll vote for your indoor rainforest." Members trade support for each other's pet projects. Nobody wants to kill pork in general, because everyone has their own pork to protect.</p>
+      <p style="color: var(--muted); font-size:16px;">Add in that pork makes a member look like a hero back home ("I brought jobs to our district!") — and you get a system where <strong style="color:var(--ink);">the incentives all point toward more pork</strong>, not less.</p>
+    </div>
+    <div class="logroll-right">
+      <div class="quote-box">
+        <div class="quote-mark">"</div>
+        <p>The nine most terrifying words in the English language are: <em>I'm from the government and I'm here to help.</em></p>
+        <div class="quote-cite">— Ronald Reagan, 1986</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOBBYING DEEP DIVE -->
+<section id="lobby">
+  <div class="section-label">// Deep Dive — Lobbying</div>
+  <h2 class="section-title">Who really<br>writes the laws?<br><span style="color:var(--purple);">It's not just Congress.</span></h2>
+  <p class="section-intro">Lobbying is legal. Regulated. Everywhere. There are <strong style="color:var(--ink);">~12,000 registered lobbyists</strong> in DC — <strong>22 for every member of Congress</strong>. They spend <strong style="color:var(--yellow);">$4+ billion per year</strong> trying to influence what becomes law.</p>
+
+  <!-- TOP SPENDERS -->
+  <div class="lobby-spenders">
+    <div class="tag" style="margin-bottom:14px;">💰 top-spending industries · 2024</div>
+    <h3 style="font-family:'Archivo Black', sans-serif; font-size:28px; letter-spacing:-0.5px; margin-bottom:24px;">Follow the money.</h3>
+    <div class="lobby-bars">
+      <div class="lobby-row"><div class="lobby-name">Pharmaceuticals / Health</div><div class="lobby-bar" style="--w:100%"><span>$383M</span></div></div>
+      <div class="lobby-row"><div class="lobby-name">Electronics / Tech</div><div class="lobby-bar" style="--w:67%;background:linear-gradient(90deg, var(--blue), var(--purple));"><span>$256M</span></div></div>
+      <div class="lobby-row"><div class="lobby-name">Insurance</div><div class="lobby-bar" style="--w:48%;background:linear-gradient(90deg, var(--mint), var(--blue));"><span>$184M</span></div></div>
+      <div class="lobby-row"><div class="lobby-name">Oil / Gas</div><div class="lobby-bar" style="--w:37%;background:linear-gradient(90deg, var(--red), var(--yellow));"><span>$140M</span></div></div>
+      <div class="lobby-row"><div class="lobby-name">Real Estate</div><div class="lobby-bar" style="--w:34%;background:linear-gradient(90deg, var(--purple), var(--red));"><span>$130M</span></div></div>
+      <div class="lobby-row"><div class="lobby-name">Securities / Banking</div><div class="lobby-bar" style="--w:32%;background:linear-gradient(90deg, var(--yellow), var(--mint));"><span>$122M</span></div></div>
+      <div class="lobby-row"><div class="lobby-name">Defense / Aerospace</div><div class="lobby-bar" style="--w:24%;background:linear-gradient(90deg, var(--blue), var(--red));"><span>$92M</span></div></div>
+    </div>
+    <p style="color:var(--muted); font-size:13px; margin-top:18px;">Source: OpenSecrets.org · amounts are reported lobbying spend, 2024</p>
+  </div>
+
+  <!-- REVOLVING DOOR -->
+  <div class="revolve">
+    <div class="revolve-visual">
+      <div class="revolve-ring">
+        <div class="ring-item ring-gov">🏛️<br><span>Congress</span></div>
+        <div class="ring-arrow ring-arrow-1">→</div>
+        <div class="ring-item ring-lobby">💼<br><span>K Street</span></div>
+        <div class="ring-arrow ring-arrow-2">↓</div>
+        <div class="ring-item ring-back">📋<br><span>Agency</span></div>
+        <div class="ring-arrow ring-arrow-3">←</div>
+        <div class="ring-item ring-congress">🏢<br><span>Company</span></div>
+      </div>
+    </div>
+    <div class="revolve-text">
+      <div class="tag" style="background:rgba(185,133,255,0.15); color:var(--purple); border:1px solid rgba(185,133,255,0.3); margin-bottom:14px;">// the revolving door</div>
+      <h3 style="font-family:'Archivo Black', sans-serif; font-size:32px; letter-spacing:-1px; margin-bottom:14px; line-height:1.1;">Today's senator,<br>tomorrow's lobbyist.</h3>
+      <p style="color:var(--muted); font-size:16px; margin-bottom:14px;">Retire from Congress → get hired by a lobbying firm for <strong style="color:var(--yellow);">5-10x your Senate salary</strong>. You know everyone. You know the rules. You know which aides to call.</p>
+      <p style="color:var(--muted); font-size:16px; margin-bottom:14px;">It's called the <strong style="color:var(--purple);">revolving door</strong> and it goes both ways — lobbyists become staffers and vice versa.</p>
+      <p style="color:var(--muted); font-size:16px;">Legal? Yes. Ethically sus? Absolutely. About <strong style="color:var(--ink);">60% of members</strong> who leave Congress end up working in lobbying or advocacy.</p>
+    </div>
+  </div>
+
+  <!-- ABRAMOFF CASE STUDY -->
+  <div class="abramoff-box">
+    <div class="tag" style="background:rgba(255,61,110,0.15); color:var(--red); border:1px solid rgba(255,61,110,0.3); margin-bottom:14px;">📁 case study · the Abramoff scandal</div>
+    <h3 style="font-family:'Archivo Black', sans-serif; font-size:32px; letter-spacing:-1px; margin-bottom:14px;">Jack Abramoff · the super-lobbyist who broke the rules.</h3>
+    <p style="color:var(--muted); font-size:16px; margin-bottom:14px;">In the early 2000s, Abramoff was the most connected lobbyist in Washington. Steakhouse dinners, private jet trips, skybox seats at games — all legal "gifts" to lawmakers.</p>
+    <p style="color:var(--muted); font-size:16px; margin-bottom:14px;">Then investigators found he was also <strong style="color:var(--red);">defrauding his own Native American tribal clients of tens of millions</strong>, bribing officials, and evading taxes. In 2006 he pled guilty to <strong>fraud, conspiracy, and tax evasion</strong>. Served ~4 years in federal prison.</p>
+    <p style="color:var(--muted); font-size:16px; margin-bottom:26px;">21 other people got convicted in the fallout — including a US Representative and White House officials. His case led to the <strong style="color:var(--yellow);">Honest Leadership and Open Government Act of 2007</strong>, the biggest lobbying-reform law in 20 years.</p>
+
+    <video controls preload="metadata" style="width:100%; border-radius:14px; background:#000;">
+      <source src="../Jack%20Abramoff-%20The%20lobbyist's%20playbook.mp4" type="video/mp4">
+      Your browser doesn't support video. Ask Mr. James to play it in class.
+    </video>
+    <p style="color:var(--muted); font-size:13px; margin-top:10px;">60 Minutes interview: Abramoff explains the tricks he used (file: <code style="background:rgba(255,255,255,0.08); padding:2px 6px; border-radius:4px;">Jack Abramoff- The lobbyist's playbook.mp4</code>)</p>
+  </div>
+
+  <!-- KEY TERMS -->
+  <div class="lobby-terms">
+    <h3 style="font-family:'Archivo Black', sans-serif; font-size:28px; letter-spacing:-0.5px; margin-bottom:20px;">Words you'll hear on the news.</h3>
+    <div class="term-grid">
+      <div class="term-card">
+        <strong style="color:var(--blue);">PAC</strong>
+        <div class="term-meta">Political Action Committee</div>
+        <p>A group that pools donations (max $5,000/donor) and gives to candidates. Limited. Regulated.</p>
+      </div>
+      <div class="term-card">
+        <strong style="color:var(--red);">Super PAC</strong>
+        <div class="term-meta">Unlimited independent spending</div>
+        <p>Can raise + spend UNLIMITED money on ads — as long as they don't coordinate with a candidate. Created by <em>Citizens United</em> (2010).</p>
+      </div>
+      <div class="term-card">
+        <strong style="color:var(--yellow);">Dark Money</strong>
+        <div class="term-meta">Donors kept secret</div>
+        <p>Money funneled through nonprofits that don't have to disclose donors. Billions spent each cycle — no one knows by whom.</p>
+      </div>
+      <div class="term-card">
+        <strong style="color:var(--mint);">Soft Money</strong>
+        <div class="term-meta">Party-level donations</div>
+        <p>Unlimited donations to political parties (not candidates directly). Used to fund "party-building" activities + issue ads.</p>
+      </div>
+      <div class="term-card">
+        <strong style="color:var(--purple);">K Street</strong>
+        <div class="term-meta">DC's lobbyist row</div>
+        <p>A street in DC where many major lobbying firms have offices. Now slang for "the lobbying industry" in general.</p>
+      </div>
+      <div class="term-card">
+        <strong style="color:var(--blue);">Citizens United</strong>
+        <div class="term-meta">2010 Supreme Court case</div>
+        <p>Said corporations + unions can spend unlimited money on political speech. Unleashed Super PACs. One of the most controversial SCOTUS rulings of the century.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE MONEY - LIVE DEBT -->
+<section id="money">
+  <div class="section-label">// Zoom Out — The Money</div>
+  <h2 class="section-title">Congress controls<br>this number.<br><span style="color: var(--red);">Live. Right now.</span></h2>
+  <p class="section-intro">Pork is the appetizer. This is the entrée. The Constitution gives Congress "the power of the purse" — and this is what that purse looks like in 2026. Watch the counter. It doesn't stop.</p>
+
+  <!-- MAIN DEBT COUNTER -->
+  <div class="debt-hero">
+    <div class="debt-label">
+      <span class="live-dot"></span>
+      US NATIONAL DEBT · REAL-TIME ESTIMATE
+    </div>
+    <div class="debt-counter" id="debt-counter">$39,000,000,000,000</div>
+    <div class="debt-sub">
+      growing by <strong style="color:var(--red);">~$60,000 every second</strong> · that's <strong>$1.9 trillion deficit</strong> projected for FY 2026
+    </div>
+    <div class="debt-bars">
+      <div class="bar-item">
+        <div class="bar-label">federal spending (FY26)</div>
+        <div class="bar-val">$7.4T</div>
+        <div class="bar-fill"><div style="width:100%; background:var(--red);"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label">federal tax revenue (FY26)</div>
+        <div class="bar-val">$5.6T</div>
+        <div class="bar-fill"><div style="width:75.6%; background:var(--mint);"></div></div>
+      </div>
+      <div class="bar-item">
+        <div class="bar-label">the gap = deficit</div>
+        <div class="bar-val" style="color:var(--red);">$1.9T</div>
+        <div class="bar-fill"><div style="width:25.6%; background:var(--yellow);"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COUNTERS GRID -->
+  <div class="counter-grid">
+    <div class="counter-card">
+      <div class="counter-tag">💳 your share</div>
+      <div class="counter-val" id="c-percitizen">$116,418</div>
+      <div class="counter-sub">Debt per US citizen<br><span style="color:var(--muted); font-size:12px;">~$39T ÷ ~335M people</span></div>
+    </div>
+    <div class="counter-card">
+      <div class="counter-tag">🧾 taxpayer share</div>
+      <div class="counter-val" id="c-pertaxpayer">$316,215</div>
+      <div class="counter-sub">Debt per US taxpayer<br><span style="color:var(--muted); font-size:12px;">only ~40% of adults owe income tax</span></div>
+    </div>
+    <div class="counter-card">
+      <div class="counter-tag">⏱ this session</div>
+      <div class="counter-val" id="c-session">$0</div>
+      <div class="counter-sub">Debt added since you opened this page<br><span style="color:var(--muted); font-size:12px;">scroll away and it still keeps climbing</span></div>
+    </div>
+    <div class="counter-card">
+      <div class="counter-tag">🔥 interest alone</div>
+      <div class="counter-val" id="c-interest">$88B</div>
+      <div class="counter-sub">Paid <strong>per month</strong> just on interest<br><span style="color:var(--muted); font-size:12px;">more than defense + education combined</span></div>
+    </div>
+  </div>
+
+  <!-- BUDGET BREAKDOWN -->
+  <div class="budget-box">
+    <div class="tag" style="margin-bottom:14px;">// where the $7.4T actually goes</div>
+    <h3 style="font-family:'Archivo Black', sans-serif; font-size:32px; letter-spacing:-1px; margin-bottom:8px;">The federal pie.</h3>
+    <p style="color:var(--muted); font-size:16px; margin-bottom:28px;">Social Security + Medicare + interest on the debt now eat up more than half the budget. Congress can technically change any of this — but politically? Touching Social Security = career suicide.</p>
+
+    <div class="pie-rows">
+      <div class="pie-row">
+        <div class="pie-label"><strong>Social Security</strong><span>retirement checks for 70M+ Americans</span></div>
+        <div class="pie-bar"><div class="pie-fill" style="width:22%; background:var(--blue);"></div></div>
+        <div class="pie-pct">~22%</div>
+      </div>
+      <div class="pie-row">
+        <div class="pie-label"><strong>Medicare + Medicaid</strong><span>healthcare for seniors, poor, disabled</span></div>
+        <div class="pie-bar"><div class="pie-fill" style="width:24%; background:var(--mint);"></div></div>
+        <div class="pie-pct">~24%</div>
+      </div>
+      <div class="pie-row">
+        <div class="pie-label"><strong>Interest on the debt</strong><span>🔥 now bigger than defense</span></div>
+        <div class="pie-bar"><div class="pie-fill" style="width:14%; background:var(--red);"></div></div>
+        <div class="pie-pct">~14%</div>
+      </div>
+      <div class="pie-row">
+        <div class="pie-label"><strong>Defense / military</strong><span>Pentagon, wars, veterans, bases</span></div>
+        <div class="pie-bar"><div class="pie-fill" style="width:13%; background:var(--yellow);"></div></div>
+        <div class="pie-pct">~13%</div>
+      </div>
+      <div class="pie-row">
+        <div class="pie-label"><strong>Everything else</strong><span>roads, schools, science, NASA, parks, the IRS...</span></div>
+        <div class="pie-bar"><div class="pie-fill" style="width:27%; background:var(--purple);"></div></div>
+        <div class="pie-pct">~27%</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONGRESS SALARY CONTEXT -->
+  <div class="context-row">
+    <div class="ctx-card">
+      <div class="ctx-num">$174K</div>
+      <div class="ctx-desc"><strong>Salary of a regular member of Congress.</strong> Speaker gets $223,500. Majority/Minority leaders: $193,400. Unchanged since 2009.</div>
+    </div>
+    <div class="ctx-card">
+      <div class="ctx-num">$1T</div>
+      <div class="ctx-desc"><strong>What a trillion looks like:</strong> stack 1 trillion $1 bills and the pile reaches <strong style="color:var(--yellow);">67,866 miles high</strong> — more than a quarter of the way to the moon. We have 39 of those piles.</div>
+    </div>
+    <div class="ctx-card">
+      <div class="ctx-num">101%</div>
+      <div class="ctx-desc"><strong>US debt as % of GDP.</strong> Projected to hit 120% by 2036 — higher than the WWII-era peak of 106%.</div>
+    </div>
+  </div>
+
+  <p style="text-align:center; font-family:'JetBrains Mono', monospace; font-size:13px; color:var(--muted); margin-top:40px;">
+    counter seeded from public Treasury + CBO data · for a real-time version, visit <a href="https://www.usdebtclock.org/" target="_blank" rel="noopener" style="color:var(--yellow);">usdebtclock.org</a> ↗
+  </p>
+</section>
+
+<!-- LIVE NOW -->
+<section id="live">
+  <div class="section-label">// Happening Now — 119th Congress</div>
+  <h2 class="section-title">What's Congress<br>debating <span style="color:var(--mint);">right now</span>?</h2>
+  <p class="section-intro">Real bills. Pending in the current session. These aren't hypothetical — they could become law this year and directly affect you, your phone, your school, and your wallet.</p>
+
+  <div class="bill-feed">
+
+    <div class="live-bill">
+      <div class="bill-header">
+        <span class="bill-id">S.103</span>
+        <span class="bill-status status-pending">⏳ Pending</span>
+      </div>
+      <h3>Extend the TikTok Deadline Act</h3>
+      <p>Would push back the deadline for ByteDance to divest from TikTok. Direct impact on the app ~170M Americans use. Senate-introduced; under committee review.</p>
+      <a href="https://www.congress.gov/bill/119th-congress/senate-bill/103" target="_blank" rel="noopener" class="bill-link">track on congress.gov ↗</a>
+    </div>
+
+    <div class="live-bill">
+      <div class="bill-header">
+        <span class="bill-id">H.R.2003</span>
+        <span class="bill-status status-floor">🏛️ Floor Action</span>
+      </div>
+      <h3>2% Student Loan Interest Rate Act</h3>
+      <p>Would slash federal student loan interest rates down to 2% — a massive reduction from current rates (6-9%). If you're going to college soon, this one's worth watching.</p>
+      <a href="https://www.congress.gov/bill/119th-congress/house-resolution/883" target="_blank" rel="noopener" class="bill-link">track on congress.gov ↗</a>
+    </div>
+
+    <div class="live-bill">
+      <div class="bill-header">
+        <span class="bill-id">S.3957</span>
+        <span class="bill-status status-pending">⏳ Pending</span>
+      </div>
+      <h3>NSF AI Education Act of 2026</h3>
+      <p>Funds K-12 and university AI literacy programs through the National Science Foundation. This is the government deciding how YOU learn about AI.</p>
+      <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3957" target="_blank" rel="noopener" class="bill-link">track on congress.gov ↗</a>
+    </div>
+
+    <div class="live-bill">
+      <div class="bill-header">
+        <span class="bill-id">S.3063</span>
+        <span class="bill-status status-pending">⏳ Pending</span>
+      </div>
+      <h3>LIFE with AI Act</h3>
+      <p>"Learning Innovation and Family Empowerment with AI." Targets student privacy, parental choice, and personalized AI-driven learning tools. Expect this to affect Chromebook-era classrooms.</p>
+      <a href="https://www.congress.gov/bill/119th-congress/senate-bill/3063/text" target="_blank" rel="noopener" class="bill-link">track on congress.gov ↗</a>
+    </div>
+
+    <div class="live-bill">
+      <div class="bill-header">
+        <span class="bill-id">H.R.7148</span>
+        <span class="bill-status status-passed">✅ Passed</span>
+      </div>
+      <h3>Consolidated Appropriations Act, 2026</h3>
+      <p>The big annual federal funding bill. Passed the House 217-214 — trillions in spending allocated across every federal department for the fiscal year.</p>
+      <a href="https://www.congress.gov/bill/119th-congress/house-bill/7148" target="_blank" rel="noopener" class="bill-link">track on congress.gov ↗</a>
+    </div>
+
+    <div class="live-bill">
+      <div class="bill-header">
+        <span class="bill-id">S.801 / H.R.1739</span>
+        <span class="bill-status status-pending">⏳ Pending</span>
+      </div>
+      <h3>Higher Education Reform and Opportunity Act</h3>
+      <p>Consolidates all federal student loans into one program and phases out loan forgiveness. Huge implications if you plan to borrow for college.</p>
+      <a href="https://www.congress.gov/bill/119th-congress/senate-bill/801" target="_blank" rel="noopener" class="bill-link">track on congress.gov ↗</a>
+    </div>
+
+  </div>
+
+  <div class="live-cta">
+    <div>
+      <h3>Want the live feed?</h3>
+      <p style="color:var(--muted); margin-top:6px;">Congress.gov has every bill, vote, and committee action — as it happens.</p>
+    </div>
+    <a href="https://www.congress.gov/browse" target="_blank" rel="noopener" class="btn btn-primary">go live →</a>
+  </div>
+</section>
+
+<!-- VOCAB -->
+<section id="vocab">
+  <div class="section-label">// Chapter 05 — Terms to Know</div>
+  <h2 class="section-title">Vocab drop.<br><span style="color: var(--mint);">Tap to flip.</span></h2>
+  <p class="section-intro">These show up on every quiz. Click a card to reveal the definition. Make them make sense before test day.</p>
+
+  <div class="vocab-grid" id="vocab-grid">
+    <!-- populated by JS -->
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="section-label">// Chapter 06 — Prove It</div>
+  <h2 class="section-title">The <span style="color: var(--yellow);">10-question</span> gauntlet.</h2>
+  <p class="section-intro">No pressure, no grade. Just you vs. Congress. See if you were actually paying attention.</p>
+
+  <div class="quiz" id="quiz-box">
+    <!-- rendered by JS -->
+  </div>
+</section>
+
+<footer>
+  <div class="foot-logo">CONGRESS<span>.</span>101</div>
+  <p>Built with care for the homies in government class.</p>
+  <p style="margin-top: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px;">// Mr. James · Granite Hills HS · <span id="year"></span></p>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // VOCAB DATA
+  const vocab = [
+    { term: "Bicameral", hint: "structure", def: "A legislature with two chambers. Congress has the House and Senate." },
+    { term: "Filibuster", hint: "senate trick", def: "A senator talks (or threatens to talk) endlessly to stall a bill. Only the Senate allows it." },
+    { term: "Cloture", hint: "the shutdown", def: "The only way to end a filibuster. Needs 60 senators to agree." },
+    { term: "Quorum", hint: "minimum crowd", def: "The minimum number of members needed to officially do business." },
+    { term: "Veto", hint: "presidential no", def: "The president's power to reject a bill passed by Congress." },
+    { term: "Override", hint: "the clapback", def: "Congress overruling a veto with a 2/3 vote in both chambers." },
+    { term: "Pocket Veto", hint: "ghosting", def: "President ignores a bill for 10 days while Congress is adjourned — bill dies silently." },
+    { term: "Impeachment", hint: "the charge", def: "Formal accusation by the House that an official committed a crime. Senate holds the trial." },
+    { term: "Cloakroom", hint: "the hallway", def: "Private lounges off the House/Senate floor where deals and trades get made." },
+    { term: "Incumbent", hint: "already in", def: "A current officeholder running for reelection. They almost always win." },
+    { term: "Gerrymander", hint: "map magic", def: "Drawing districts to give one party an unfair electoral advantage." },
+    { term: "Pork Barrel", hint: "hometown goodies", def: "Spending targeted to a member's district — often tacked onto unrelated bills." },
+    { term: "Logrolling", hint: "trade", def: "'Vote for my bill, I'll vote for yours.' Mutual backscratching in action." },
+    { term: "Lobbyist", hint: "the influencer", def: "Paid pro who tries to sway lawmakers toward a client's interests." },
+    { term: "Caucus", hint: "the group chat", def: "A group of members with shared interests meeting to plan strategy." },
+    { term: "Rider", hint: "sneaky add-on", def: "An unrelated provision attached to a bill likely to pass — like a Trojan horse." },
+    { term: "Franking", hint: "free mail", def: "Members of Congress can mail stuff to constituents for free. Huge re-election perk." },
+    { term: "Gridlock", hint: "nothing moves", def: "When political disagreement stalls government — no bills pass, no progress." },
+    { term: "Expressed Powers", hint: "the list", def: "Powers literally written out for Congress in Article I, Section 8." },
+    { term: "Elastic Clause", hint: "the stretch", def: "'Necessary and proper' clause — lets Congress make laws that stretch beyond the expressed list." },
+  ];
+
+  const grid = document.getElementById('vocab-grid');
+  vocab.forEach(v => {
+    const el = document.createElement('div');
+    el.className = 'vocab';
+    el.innerHTML = `
+      <div class="hint">${v.hint}</div>
+      <div class="term">${v.term}</div>
+      <div class="def">${v.def}</div>
+    `;
+    el.addEventListener('click', () => el.classList.toggle('flipped'));
+    grid.appendChild(el);
+  });
+
+  // QUIZ DATA
+  const questions = [
+    {
+      q: "How many total members serve in the US Congress?",
+      options: ["100", "435", "535", "538"],
+      correct: 2,
+      why: "435 in the House + 100 in the Senate = 535."
+    },
+    {
+      q: "How long is a term in the House of Representatives?",
+      options: ["2 years", "4 years", "6 years", "Lifetime"],
+      correct: 0,
+      why: "Reps run every 2 years — that's why they're always campaigning."
+    },
+    {
+      q: "Who is second in line to the presidency?",
+      options: ["Vice President", "Speaker of the House", "Secretary of State", "Senate Majority Leader"],
+      correct: 1,
+      why: "VP is first, Speaker of the House is second."
+    },
+    {
+      q: "What's the ONLY way to end a filibuster?",
+      options: ["The president vetoes", "A majority (51) votes", "Cloture (60 votes)", "A 2/3 override"],
+      correct: 2,
+      why: "Cloture takes 60 senators. That's why the filibuster is so powerful."
+    },
+    {
+      q: "Drawing district lines to favor one party is called...",
+      options: ["Packing", "Logrolling", "Gerrymandering", "Franking"],
+      correct: 2,
+      why: "Gerrymandering. Packing + cracking are two methods of doing it."
+    },
+    {
+      q: "Which chamber holds impeachment trials?",
+      options: ["The House", "The Senate", "The Supreme Court", "Both chambers"],
+      correct: 1,
+      why: "House charges (impeaches), Senate tries. Needs 2/3 to convict."
+    },
+    {
+      q: "To override a presidential veto, Congress needs...",
+      options: ["Simple majority", "60 votes in Senate", "2/3 of both chambers", "Unanimous vote"],
+      correct: 2,
+      why: "2/3 in BOTH chambers. Super rare — less than 4% of vetoes get overridden."
+    },
+    {
+      q: "What's the minimum age to serve as a US Senator?",
+      options: ["25", "30", "35", "40"],
+      correct: 1,
+      why: "30 for Senate, 25 for House, 35 for President. Stair steps."
+    },
+    {
+      q: "A 'rider' is...",
+      options: ["A new member of Congress", "An unrelated add-on to a bill", "A type of lobbyist", "A campaign staffer"],
+      correct: 1,
+      why: "Riders are unrelated provisions sneaked onto bills likely to pass."
+    },
+    {
+      q: "The 'elastic clause' lets Congress...",
+      options: ["Raise its own pay", "Override the president easily", "Make laws that are 'necessary and proper'", "Declare war without voting"],
+      correct: 2,
+      why: "Article I, Section 8 — Congress can do what's 'necessary and proper' beyond the expressed list."
+    },
+  ];
+
+  let current = 0, score = 0, answered = false;
+  const quizBox = document.getElementById('quiz-box');
+
+  function renderQ() {
+    if (current >= questions.length) return renderDone();
+    answered = false;
+    const q = questions[current];
+    quizBox.innerHTML = `
+      <div class="q-num">// question ${current + 1} / ${questions.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options" id="opts">
+        ${q.options.map((o, i) => `<button class="opt" data-i="${i}">${o}</button>`).join('')}
+      </div>
+      <div id="why" style="display:none; margin-top:20px; padding:14px 16px; background:rgba(94,234,212,0.08); border-left:3px solid var(--mint); border-radius:6px; color:var(--mint); font-family:'JetBrains Mono', monospace; font-size:13px;"></div>
+      <div class="quiz-footer">
+        <div class="score-display">score: <strong style="color:var(--yellow)">${score}</strong> / ${questions.length}</div>
+        <button class="btn btn-primary" id="next-btn" style="display:none;">next →</button>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${(current / questions.length) * 100}%"></div></div>
+    `;
+    document.querySelectorAll('.opt').forEach(btn => btn.addEventListener('click', handle));
+    document.getElementById('next-btn').addEventListener('click', () => { current++; renderQ(); });
+  }
+
+  function handle(e) {
+    if (answered) return;
+    answered = true;
+    const q = questions[current];
+    const picked = parseInt(e.target.dataset.i);
+    document.querySelectorAll('.opt').forEach((b, i) => {
+      b.disabled = true;
+      if (i === q.correct) b.classList.add('correct');
+      else if (i === picked) b.classList.add('wrong');
+    });
+    if (picked === q.correct) score++;
+    const why = document.getElementById('why');
+    why.textContent = '> ' + q.why;
+    why.style.display = 'block';
+    document.getElementById('next-btn').style.display = 'inline-flex';
+  }
+
+  function renderDone() {
+    const pct = Math.round((score / questions.length) * 100);
+    let msg = '';
+    if (pct === 100) msg = "flawless. you're running for Congress next.";
+    else if (pct >= 80) msg = "low-key a pro. test is gonna be easy.";
+    else if (pct >= 60) msg = "decent. scroll back, hit the vocab, try again.";
+    else if (pct >= 40) msg = "room to grow. flip some vocab cards, come back.";
+    else msg = "bestie. read the whole page and retake. you got this.";
+
+    quizBox.innerHTML = `
+      <div class="quiz-done">
+        <div class="q-num">// results</div>
+        <div class="big-score">${score} / ${questions.length}</div>
+        <p style="font-size:18px; color:var(--ink); margin: 20px 0 30px;">${msg}</p>
+        <button class="btn btn-primary" onclick="current=0;score=0;renderQ();">run it back</button>
+      </div>
+    `;
+  }
+
+  renderQ();
+
+  // PACKING VS CRACKING VIZ
+  // Each district = 10 voters. 5 districts. 50 voters total.
+  // Blue = 20 voters (40%), Red = 30 voters (60%)
+  // FAIR proportional: blue wins 2 of 5 districts
+  // PACK: blue crammed into 1 super-blue district -> blue wins 1 of 5
+  // CRACK: blue spread 4 per district -> blue wins 0 of 5
+  function makeRow(cells, winner) {
+    const row = document.createElement('div');
+    row.className = 'pc-district-row ' + (winner === 'B' ? 'win-blue' : 'win-red');
+    row.dataset.result = winner === 'B' ? 'BLUE wins' : 'RED wins';
+    cells.forEach(c => {
+      const cell = document.createElement('div');
+      cell.className = 'pc-cell ' + (c === 'B' ? 'blue' : 'red');
+      row.appendChild(cell);
+    });
+    return row;
+  }
+  function buildViz(id, districts) {
+    const container = document.getElementById(id);
+    container.style.display = 'flex';
+    container.style.flexDirection = 'column';
+    container.style.gap = '6px';
+    container.style.gridTemplateColumns = 'none';
+    districts.forEach(d => {
+      const blues = d.filter(c => c === 'B').length;
+      const winner = blues > 5 ? 'B' : 'R';
+      container.appendChild(makeRow(d, winner));
+    });
+  }
+  // FAIR — roughly proportional: 2 blue-majority, 3 red-majority. Totals: 20B/30R.
+  buildViz('viz-fair', [
+    ['B','B','B','B','B','B','R','R','R','R'], // 6-4 blue
+    ['B','B','B','B','B','B','R','R','R','R'], // 6-4 blue
+    ['B','B','B','R','R','R','R','R','R','R'], // 3-7 red
+    ['B','B','B','R','R','R','R','R','R','R'], // 3-7 red
+    ['B','B','R','R','R','R','R','R','R','R'], // 2-8 red
+  ]); // total: 6+6+3+3+2 = 20B, 4+4+7+7+8 = 30R ✓
+  // PACKING — 10 blues crammed in one district, rest red-majority. Totals: 20B/30R.
+  buildViz('viz-pack', [
+    ['B','B','B','B','B','B','B','B','B','B'], // 10-0 blue (packed)
+    ['B','B','B','R','R','R','R','R','R','R'], // 3-7 red
+    ['B','B','B','R','R','R','R','R','R','R'], // 3-7 red
+    ['B','B','R','R','R','R','R','R','R','R'], // 2-8 red
+    ['B','B','R','R','R','R','R','R','R','R'], // 2-8 red
+  ]); // total: 10+3+3+2+2 = 20B, 0+7+7+8+8 = 30R ✓
+  // CRACKING — blues spread exactly 4 per district, lose everywhere. Totals: 20B/30R.
+  buildViz('viz-crack', [
+    ['B','B','B','B','R','R','R','R','R','R'], // 4-6 red
+    ['B','B','B','B','R','R','R','R','R','R'], // 4-6 red
+    ['B','B','B','B','R','R','R','R','R','R'], // 4-6 red
+    ['B','B','B','B','R','R','R','R','R','R'], // 4-6 red
+    ['B','B','B','B','R','R','R','R','R','R'], // 4-6 red
+  ]); // total: 4×5 = 20B, 6×5 = 30R ✓
+
+  // LIVE DEBT COUNTER
+  // Seed: US national debt ~$39T as of early 2026 (per Treasury + CBO).
+  // FY26 deficit projected at $1.9T/yr → $60,235 per second.
+  // Anchor to Jan 1 2026 so counter is consistent on every page load.
+  const ANCHOR_DEBT = 39_000_000_000_000; // $39T
+  const ANCHOR_DATE = new Date('2026-01-01T00:00:00Z').getTime();
+  const DEBT_PER_SEC = 1_900_000_000_000 / (365 * 24 * 60 * 60); // ~60,235 $/sec
+
+  const US_POPULATION = 335_000_000;
+  const US_TAXPAYERS = 123_300_000; // ~40% of adults pay federal income tax
+
+  const debtEl = document.getElementById('debt-counter');
+  const perCitizenEl = document.getElementById('c-percitizen');
+  const perTaxpayerEl = document.getElementById('c-pertaxpayer');
+  const sessionEl = document.getElementById('c-session');
+
+  const pageOpened = Date.now();
+
+  function fmt(n) {
+    return '$' + Math.round(n).toLocaleString('en-US');
+  }
+
+  function tick() {
+    const now = Date.now();
+    const secondsSinceAnchor = (now - ANCHOR_DATE) / 1000;
+    const currentDebt = ANCHOR_DEBT + (secondsSinceAnchor * DEBT_PER_SEC);
+    debtEl.textContent = fmt(currentDebt);
+    perCitizenEl.textContent = fmt(currentDebt / US_POPULATION);
+    perTaxpayerEl.textContent = fmt(currentDebt / US_TAXPAYERS);
+
+    const sessionSeconds = (now - pageOpened) / 1000;
+    sessionEl.textContent = fmt(sessionSeconds * DEBT_PER_SEC);
+  }
+  tick();
+  setInterval(tick, 100); // 10 fps — smooth without cooking the CPU
+
+  // Animate pie bars in when section scrolls into view
+  const moneySection = document.getElementById('money');
+  if (moneySection) {
+    const moneyObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          document.querySelectorAll('.pie-fill').forEach(el => {
+            const target = el.style.width;
+            el.style.width = '0';
+            requestAnimationFrame(() => { el.style.width = target; });
+          });
+          moneyObs.disconnect();
+        }
+      });
+    }, { threshold: 0.2 });
+    moneyObs.observe(moneySection);
+  }
+
+  // ZIP LOOKUP — redirects to house.gov's official tool
+  window.findRep = function(e) {
+    e.preventDefault();
+    const zip = document.getElementById('zip-input').value.trim();
+    if (!/^\d{5}$/.test(zip)) {
+      alert('Enter a valid 5-digit ZIP.');
+      return false;
+    }
+    // house.gov's official find-your-rep form uses ZIP as the lookup.
+    // We open the search page — they'll enter the ZIP there to get their rep.
+    window.open('https://www.house.gov/representatives/find-your-representative?ZIP=' + zip, '_blank', 'noopener');
+    return false;
+  };
+
+  // BILL ORDERING GAME
+  const billSteps = [
+    { order: 1, title: "Idea introduced", desc: "A member of Congress officially introduces the bill." },
+    { order: 2, title: "Committee review", desc: "Assigned to a committee that debates, amends, or kills it." },
+    { order: 3, title: "Floor debate + vote", desc: "The full chamber debates and votes on the bill." },
+    { order: 4, title: "Other chamber", desc: "Whole process repeats in the OTHER chamber (House or Senate)." },
+    { order: 5, title: "Conference committee", desc: "Both chambers' versions get merged into one." },
+    { order: 6, title: "President's desk", desc: "The president signs, vetoes, or lets it sit." },
+    { order: 7, title: "Becomes law", desc: "Signed OR veto overridden OR 10 days of inaction. It's official." },
+  ];
+
+  let gameNext = 1;
+  let gameAttempts = 0;
+  const gameGrid = document.getElementById('game-grid');
+  const gameStep = document.getElementById('game-step');
+  const gameAttemptsEl = document.getElementById('game-attempts');
+  const gameWin = document.getElementById('game-win');
+  const gameStatus = document.getElementById('game-status');
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  window.resetGame = function() {
+    gameNext = 1;
+    gameAttempts = 0;
+    gameStep.textContent = '1';
+    gameAttemptsEl.textContent = '0';
+    gameWin.style.display = 'none';
+    gameGrid.style.display = 'grid';
+    gameStatus.style.display = 'flex';
+    renderGame();
+  };
+
+  function renderGame() {
+    gameGrid.innerHTML = '';
+    shuffle(billSteps).forEach(step => {
+      const card = document.createElement('div');
+      card.className = 'game-card';
+      card.dataset.order = step.order;
+      card.innerHTML = `<h4>${step.title}</h4><p>${step.desc}</p>`;
+      card.addEventListener('click', () => handleGameClick(card, step));
+      gameGrid.appendChild(card);
+    });
+  }
+
+  function handleGameClick(card, step) {
+    if (card.classList.contains('correct')) return;
+    gameAttempts++;
+    gameAttemptsEl.textContent = gameAttempts;
+    if (step.order === gameNext) {
+      card.classList.add('correct');
+      gameNext++;
+      gameStep.textContent = Math.min(gameNext, 7);
+      if (gameNext > 7) {
+        setTimeout(() => {
+          gameGrid.style.display = 'none';
+          gameStatus.style.display = 'none';
+          gameWin.style.display = 'block';
+          gameWin.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 500);
+      }
+    } else {
+      card.classList.add('wrong');
+      setTimeout(() => card.classList.remove('wrong'), 500);
+    }
+  }
+  renderGame();
+
+  // REVEAL ON SCROLL
+  const sections = document.querySelectorAll('section');
+  sections.forEach(s => s.classList.add('reveal'));
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
