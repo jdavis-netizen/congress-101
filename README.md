@@ -33,14 +33,14 @@ open index.html    # Mac
 
 Go to **Settings → Pages → Build from `main` branch, root folder**. That's it.
 
-## A note about videos
+## Videos
 
-The site references two local video files that live in the **parent folder** (not in this repo — they're too big for GitHub):
+Two YouTube videos are embedded directly in the site:
 
-- `Gerrymandering Explained.mp4`
-- `Jack Abramoff- The lobbyist's playbook.mp4`
+- **Gerrymandering: How Your Elections Are Rigged** — in the gerrymandering deep-dive section
+- **Jack Abramoff: The Lobbyist's Playbook** (60 Minutes) — in the lobbying deep-dive section
 
-Videos will play when you open the site locally as long as those files are one folder up from `index.html`. On the hosted GitHub Pages version, the video embeds will fall back to a graceful "watch in class" message.
+They work on both the local and hosted versions.
 
 ## License
 
