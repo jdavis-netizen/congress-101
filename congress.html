@@ -1,0 +1,2223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Congress, Unfiltered — A Hype Guide to the Legislative Branch</title>
+<meta name="description" content="An interactive study guide to the U.S. Congress for government class: how bills become law, gerrymandering, pork barrel spending, lobbying, the national debt, vocab flip cards, and a 10-question quiz." />
+<meta property="og:title" content="Congress, Unfiltered — A Hype Guide to the Legislative Branch" />
+<meta property="og:description" content="Interactive civics: bill flow, gerrymandering, pork, lobbying, a live debt counter, vocab cards, and a quiz. Built for government class at Granite Hills HS." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://jdavis-gov.com" />
+<meta name="theme-color" content="#0a0a14" />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo+Black&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a14;
+    --bg-2: #12122a;
+    --ink: #f4f4f8;
+    --muted: #9a9ab0;
+    --red: #ff3d6e;
+    --blue: #3da5ff;
+    --yellow: #ffe03d;
+    --mint: #5eead4;
+    --purple: #b985ff;
+    --grid: rgba(255,255,255,0.06);
+    --card: rgba(255,255,255,0.04);
+    --card-br: rgba(255,255,255,0.09);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Space Grotesk', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    line-height: 1.55;
+    overflow-x: hidden;
+    background-image:
+      radial-gradient(1200px 600px at 10% -10%, rgba(255,61,110,0.15), transparent 60%),
+      radial-gradient(1000px 700px at 110% 10%, rgba(61,165,255,0.18), transparent 60%),
+      radial-gradient(900px 500px at 50% 120%, rgba(185,133,255,0.15), transparent 60%);
+  }
+
+  ::selection { background: var(--yellow); color: #000; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    padding: 14px 28px;
+    display: flex; justify-content: space-between; align-items: center;
+    backdrop-filter: blur(14px);
+    background: rgba(10,10,20,0.6);
+    border-bottom: 1px solid var(--card-br);
+    z-index: 100;
+  }
+  nav .logo {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 18px; letter-spacing: -0.5px;
+  }
+  nav .logo span { color: var(--red); }
+  nav ul { display: flex; gap: 22px; list-style: none; flex-wrap: wrap; }
+  nav a {
+    color: var(--muted); text-decoration: none; font-size: 14px; font-weight: 500;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--ink); }
+  .nav-toggle {
+    display: none;
+    background: transparent;
+    border: 1px solid var(--card-br);
+    border-radius: 10px;
+    color: var(--ink);
+    font-size: 20px;
+    line-height: 1;
+    padding: 8px 12px;
+    cursor: pointer;
+  }
+  .nav-toggle:hover { border-color: var(--ink); }
+  @media (max-width: 768px) {
+    .nav-toggle { display: block; }
+    nav ul {
+      display: none;
+      position: absolute;
+      top: 100%; left: 0; right: 0;
+      flex-direction: column;
+      gap: 0;
+      background: #0c0c1a;
+      border-bottom: 1px solid var(--card-br);
+      padding: 8px 0 14px;
+      max-height: calc(100vh - 60px);
+      overflow-y: auto;
+    }
+    nav ul.open { display: flex; }
+    nav ul li { width: 100%; }
+    nav a {
+      display: block;
+      padding: 12px 28px;
+      font-size: 16px;
+    }
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    padding: 140px 28px 80px;
+    display: flex; flex-direction: column; justify-content: center;
+    max-width: 1200px; margin: 0 auto;
+    position: relative;
+  }
+  .eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--yellow); margin-bottom: 24px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .eyebrow .dot {
+    width: 10px; height: 10px; background: var(--red); border-radius: 50%;
+    animation: pulse 1.5s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.3); }
+  }
+
+  h1.mega {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(48px, 9vw, 140px);
+    line-height: 0.9;
+    letter-spacing: -3px;
+    margin-bottom: 28px;
+  }
+  h1.mega .red { color: var(--red); }
+  h1.mega .outline {
+    -webkit-text-stroke: 2px var(--ink);
+    color: transparent;
+  }
+  h1.mega .shift {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--blue), var(--purple), var(--red));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .hero-sub {
+    font-size: clamp(16px, 2vw, 22px);
+    color: var(--muted);
+    max-width: 640px;
+    margin-bottom: 40px;
+  }
+  .hero-sub strong { color: var(--ink); }
+
+  .hero-cta {
+    display: flex; gap: 14px; flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    padding: 14px 26px; border-radius: 100px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 600; font-size: 15px;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .btn:hover { transform: translateY(-2px); }
+  .btn-primary {
+    background: var(--yellow); color: #000;
+    box-shadow: 0 10px 40px rgba(255,224,61,0.3);
+  }
+  .btn-primary:hover { box-shadow: 0 14px 48px rgba(255,224,61,0.5); }
+  .btn-ghost {
+    background: transparent; color: var(--ink);
+    border: 1px solid var(--card-br);
+  }
+  .btn-ghost:hover { border-color: var(--ink); }
+
+  /* SECTIONS */
+  section {
+    padding: 100px 28px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+    color: var(--mint); margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(36px, 5.5vw, 72px);
+    line-height: 1; letter-spacing: -2px;
+    margin-bottom: 24px;
+  }
+  .section-intro {
+    font-size: 18px; color: var(--muted);
+    max-width: 680px; margin-bottom: 56px;
+  }
+
+  /* BENTO GRID */
+  .bento {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 18px;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 28px;
+    transition: transform 0.3s, border-color 0.3s, background 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.06);
+  }
+  .card h3 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 22px; letter-spacing: -0.5px;
+    margin-bottom: 10px;
+  }
+  .card p { color: var(--muted); font-size: 15px; }
+  .card .stat {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(44px, 6vw, 88px);
+    line-height: 1; letter-spacing: -2px;
+    margin-bottom: 8px;
+  }
+  .card.wide { grid-column: span 4; }
+  .card.half { grid-column: span 3; }
+  .card.third { grid-column: span 2; }
+  .card.full { grid-column: span 6; }
+  .card.tall { grid-row: span 2; }
+
+  .card-house {
+    background: linear-gradient(135deg, rgba(61,165,255,0.15), rgba(61,165,255,0.02));
+    border-color: rgba(61,165,255,0.3);
+  }
+  .card-senate {
+    background: linear-gradient(135deg, rgba(255,61,110,0.15), rgba(255,61,110,0.02));
+    border-color: rgba(255,61,110,0.3);
+  }
+  .card-yellow {
+    background: linear-gradient(135deg, rgba(255,224,61,0.15), rgba(255,224,61,0.02));
+    border-color: rgba(255,224,61,0.3);
+  }
+  .card-mint {
+    background: linear-gradient(135deg, rgba(94,234,212,0.15), rgba(94,234,212,0.02));
+    border-color: rgba(94,234,212,0.3);
+  }
+  .card-purple {
+    background: linear-gradient(135deg, rgba(185,133,255,0.15), rgba(185,133,255,0.02));
+    border-color: rgba(185,133,255,0.3);
+  }
+
+  .card .tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px;
+    padding: 4px 10px; border-radius: 100px;
+    background: rgba(255,255,255,0.08);
+    margin-bottom: 14px;
+  }
+
+  /* BILL FLOW */
+  .bill-flow {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 16px;
+    margin-top: 40px;
+  }
+  .flow-step {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 20px;
+    padding: 24px;
+    position: relative;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .flow-step:hover {
+    border-color: var(--yellow);
+    transform: translateY(-4px);
+  }
+  .flow-step .num {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 14px;
+    color: var(--yellow);
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+  }
+  .flow-step h4 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 20px;
+    margin-bottom: 10px;
+    letter-spacing: -0.5px;
+  }
+  .flow-step p { color: var(--muted); font-size: 14px; }
+  .flow-step .hot-take {
+    margin-top: 14px;
+    padding: 10px 12px;
+    background: rgba(255,224,61,0.1);
+    border-left: 3px solid var(--yellow);
+    font-size: 13px;
+    border-radius: 4px;
+    color: var(--yellow);
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* VOCAB CARDS */
+  .vocab-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+  }
+  .vocab {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 16px;
+    padding: 20px;
+    cursor: pointer;
+    min-height: 140px;
+    perspective: 1000px;
+    position: relative;
+    transition: transform 0.3s;
+  }
+  .vocab:hover { transform: translateY(-3px); }
+  .vocab .term {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 18px; letter-spacing: -0.5px;
+    margin-bottom: 8px;
+  }
+  .vocab .hint {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  .vocab .def {
+    display: none;
+    font-size: 14px;
+    color: var(--ink);
+    margin-top: 10px;
+  }
+  .vocab.flipped .def { display: block; }
+  .vocab.flipped .hint { color: var(--mint); }
+  .vocab.flipped { border-color: var(--mint); }
+
+  /* QUIZ */
+  .quiz {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 24px;
+    padding: 40px;
+    max-width: 720px;
+    margin: 0 auto;
+  }
+  .quiz .q-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px; letter-spacing: 2px; color: var(--yellow);
+    margin-bottom: 14px;
+  }
+  .quiz .q-text {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 24px;
+    line-height: 1.2;
+    margin-bottom: 28px;
+    letter-spacing: -0.5px;
+  }
+  .quiz .options { display: flex; flex-direction: column; gap: 10px; }
+  .quiz .opt {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--card-br);
+    border-radius: 14px;
+    padding: 16px 20px;
+    text-align: left;
+    color: var(--ink);
+    font-family: inherit;
+    font-size: 15px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .quiz .opt:hover:not(:disabled) {
+    background: rgba(255,255,255,0.07);
+    border-color: var(--ink);
+  }
+  .quiz .opt.correct {
+    background: rgba(94,234,212,0.15);
+    border-color: var(--mint);
+    color: var(--mint);
+  }
+  .quiz .opt.wrong {
+    background: rgba(255,61,110,0.15);
+    border-color: var(--red);
+    color: var(--red);
+  }
+  .quiz .opt:disabled { cursor: default; }
+  .quiz-footer {
+    margin-top: 24px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .progress-bar {
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 100px;
+    overflow: hidden;
+    margin-top: 14px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--yellow), var(--red));
+    transition: width 0.4s;
+  }
+  .score-display {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 14px;
+    color: var(--muted);
+  }
+  .quiz-done {
+    text-align: center;
+    padding: 20px 0;
+  }
+  .quiz-done .big-score {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 80px;
+    line-height: 1;
+    background: linear-gradient(135deg, var(--yellow), var(--red));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* DIRTY SECTION */
+  .dirty-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .dirty-card {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+  }
+  .dirty-card .big-emoji {
+    font-size: 50px;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .dirty-card h3 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 26px;
+    margin-bottom: 12px;
+    letter-spacing: -0.5px;
+  }
+  .dirty-card p { color: var(--muted); font-size: 15px; margin-bottom: 14px; }
+  .dirty-card .pill {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    padding: 5px 12px;
+    border-radius: 100px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+  }
+  .pill-sus { background: rgba(255,61,110,0.15); color: var(--red); border: 1px solid rgba(255,61,110,0.3); }
+
+  /* FOOTER */
+  footer {
+    padding: 80px 28px 60px;
+    max-width: 1200px;
+    margin: 0 auto;
+    border-top: 1px solid var(--card-br);
+    text-align: center;
+  }
+  footer p { color: var(--muted); font-size: 14px; }
+  footer .foot-logo {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 32px;
+    margin-bottom: 12px;
+  }
+  footer .foot-logo span { color: var(--red); }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    .card.wide, .card.half, .card.third, .card.full { grid-column: span 6; }
+    .dirty-grid { grid-template-columns: 1fr; }
+    section { padding: 60px 20px; }
+    .hero { padding: 110px 20px 60px; }
+  }
+
+  /* GERRYMANDER DEEP DIVE */
+  .map-wrap {
+    margin: 0 auto 60px;
+    max-width: 1100px;
+  }
+  .map-frame {
+    background: linear-gradient(135deg, rgba(255,61,110,0.08), rgba(61,165,255,0.06));
+    border: 1px solid var(--card-br);
+    border-radius: 28px;
+    padding: 36px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 36px;
+    align-items: center;
+  }
+  .map-frame img {
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    background: #fff;
+    padding: 18px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .map-caption p {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.6;
+  }
+  @media (max-width: 768px) {
+    .map-frame { grid-template-columns: 1fr; padding: 20px; }
+  }
+
+  /* ORIGIN */
+  .origin {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 40px;
+    align-items: center;
+    margin: 60px 0;
+    padding: 40px;
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 28px;
+  }
+  .salamander {
+    text-align: center;
+    padding: 30px;
+    background: radial-gradient(circle at center, rgba(255,224,61,0.15), transparent 70%);
+    border-radius: 20px;
+  }
+  .sal-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--yellow);
+    text-transform: uppercase;
+    margin-bottom: 14px;
+  }
+  .sal-art {
+    font-size: 140px;
+    line-height: 1;
+    filter: drop-shadow(0 10px 20px rgba(255,224,61,0.3));
+    animation: wobble 3s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes wobble {
+    0%, 100% { transform: rotate(-8deg); }
+    50% { transform: rotate(12deg); }
+  }
+  .sal-sub {
+    margin-top: 14px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+  }
+  @media (max-width: 768px) {
+    .origin { grid-template-columns: 1fr; padding: 24px; }
+  }
+
+  /* PACKING VS CRACKING */
+  .pc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 60px;
+  }
+  .pc-card {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 24px;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .pc-card:hover { transform: translateY(-4px); }
+  .pc-fair { border-color: rgba(94,234,212,0.3); }
+  .pc-pack { border-color: rgba(255,61,110,0.3); }
+  .pc-crack { border-color: rgba(255,224,61,0.3); }
+  .pc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--mint);
+    margin-bottom: 10px;
+  }
+  .pc-card h4 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+    margin-bottom: 18px;
+  }
+  .pc-viz {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 3px;
+    margin-bottom: 18px;
+    padding: 10px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 12px;
+  }
+  .pc-cell {
+    aspect-ratio: 1;
+    border-radius: 3px;
+    transition: transform 0.2s;
+  }
+  .pc-cell.blue { background: var(--blue); }
+  .pc-cell.red { background: var(--red); }
+  .pc-cell:hover { transform: scale(1.3); z-index: 2; }
+  .pc-viz.bordered { position: relative; }
+  .pc-district {
+    border: 2px solid rgba(255,255,255,0.6);
+    border-radius: 6px;
+    padding: 2px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 2px;
+    background: rgba(255,255,255,0.04);
+  }
+  .pc-row {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    margin-bottom: 18px;
+  }
+  .pc-district-row {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 3px;
+    padding: 4px;
+    border-radius: 6px;
+    background: rgba(255,255,255,0.03);
+    border: 1.5px solid rgba(255,255,255,0.15);
+    position: relative;
+  }
+  .pc-district-row.win-blue { border-color: rgba(61,165,255,0.8); }
+  .pc-district-row.win-red { border-color: rgba(255,61,110,0.8); }
+  .pc-district-row::after {
+    content: attr(data-result);
+    position: absolute;
+    right: -4px; top: 50%;
+    transform: translate(100%, -50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    padding-left: 10px;
+    white-space: nowrap;
+  }
+  .pc-result {
+    font-size: 14px;
+    color: var(--muted);
+    padding: 12px 14px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 10px;
+    border-left: 3px solid var(--yellow);
+  }
+  .pc-result strong { color: var(--ink); }
+  @media (max-width: 900px) {
+    .pc-grid { grid-template-columns: 1fr; }
+  }
+
+  /* VIDEO */
+  .video-wrap {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 32px;
+    margin: 40px 0 60px;
+  }
+  .video-wrap video {
+    width: 100%;
+    border-radius: 14px;
+    background: #000;
+  }
+  .yt-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #000;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+  .yt-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+
+  /* TAKEAWAY */
+  .takeaway {
+    background: linear-gradient(135deg, rgba(94,234,212,0.08), rgba(185,133,255,0.06));
+    border: 1px solid var(--card-br);
+    border-radius: 28px;
+    padding: 40px;
+  }
+  .take-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+  }
+  .take-grid > div {
+    padding: 20px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 14px;
+    border: 1px solid var(--card-br);
+  }
+  .take-grid strong {
+    display: block;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+  }
+  .take-grid p { color: var(--muted); font-size: 14px; }
+  @media (max-width: 768px) {
+    .take-grid { grid-template-columns: 1fr; }
+    .takeaway { padding: 24px; }
+  }
+
+  /* PORK HALL OF SHAME */
+  .pork-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 60px;
+  }
+  .pork-card {
+    background: linear-gradient(180deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .pork-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--red), var(--yellow));
+    opacity: 0.6;
+  }
+  .pork-card:hover {
+    transform: translateY(-5px) rotate(-0.5deg);
+    border-color: rgba(255,255,255,0.2);
+  }
+  .pork-card.pork-hof {
+    background: linear-gradient(180deg, rgba(255,224,61,0.12), rgba(255,61,110,0.05));
+    border-color: rgba(255,224,61,0.35);
+    grid-column: span 2;
+    grid-row: span 2;
+  }
+  .pork-card.pork-hof::before {
+    height: 6px;
+    background: linear-gradient(90deg, var(--yellow), var(--red), var(--purple));
+  }
+  .pork-card.pork-hof .pork-amount {
+    font-size: clamp(80px, 10vw, 140px);
+  }
+  .pork-card.pork-total {
+    background: linear-gradient(180deg, rgba(255,61,110,0.15), rgba(255,61,110,0.02));
+    border-color: rgba(255,61,110,0.4);
+    grid-column: span 2;
+  }
+  .pork-card.pork-total .pork-amount { font-size: clamp(70px, 9vw, 110px); }
+  .pork-tag {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    background: rgba(255,255,255,0.08);
+    color: var(--ink);
+    margin-bottom: 14px;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .pork-amount {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(56px, 7vw, 80px);
+    line-height: 1;
+    letter-spacing: -3px;
+    margin-bottom: 12px;
+    background: linear-gradient(135deg, var(--yellow), var(--red));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .pork-amount span {
+    font-size: 0.5em;
+    vertical-align: super;
+    margin-left: 2px;
+    letter-spacing: -1px;
+  }
+  .pork-card h3 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 22px;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    margin-bottom: 6px;
+  }
+  .pork-card.pork-hof h3 { font-size: 32px; }
+  .pork-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    letter-spacing: 0.5px;
+  }
+  .pork-card p {
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .pork-card.pork-hof p, .pork-card.pork-total p { font-size: 16px; }
+
+  @media (max-width: 900px) {
+    .pork-grid { grid-template-columns: repeat(2, 1fr); }
+    .pork-card.pork-hof, .pork-card.pork-total { grid-column: span 2; grid-row: auto; }
+  }
+  @media (max-width: 600px) {
+    .pork-grid { grid-template-columns: 1fr; }
+    .pork-card.pork-hof, .pork-card.pork-total { grid-column: span 1; }
+  }
+
+  /* LOGROLLING QUOTE */
+  .logroll {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 36px;
+    align-items: center;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(255,224,61,0.08), rgba(185,133,255,0.05));
+    border: 1px solid var(--card-br);
+    border-radius: 28px;
+  }
+  .quote-box {
+    position: relative;
+    padding: 36px 28px 28px;
+    background: rgba(0,0,0,0.3);
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .quote-mark {
+    position: absolute;
+    top: -20px; left: 20px;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 100px;
+    line-height: 1;
+    color: var(--yellow);
+    opacity: 0.7;
+  }
+  .quote-box p {
+    font-size: 18px;
+    line-height: 1.4;
+    color: var(--ink);
+    margin-bottom: 16px;
+  }
+  .quote-box em { color: var(--yellow); font-style: italic; }
+  .quote-cite {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  @media (max-width: 768px) {
+    .logroll { grid-template-columns: 1fr; padding: 24px; }
+  }
+
+  /* LIVE DEBT */
+  .debt-hero {
+    background: linear-gradient(135deg, rgba(255,61,110,0.18), rgba(0,0,0,0.4));
+    border: 2px solid rgba(255,61,110,0.3);
+    border-radius: 28px;
+    padding: 44px 36px;
+    margin-bottom: 32px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .debt-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 0%, rgba(255,61,110,0.2), transparent 60%);
+    pointer-events: none;
+  }
+  .debt-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2.5px;
+    color: var(--red);
+    margin-bottom: 20px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .live-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--red);
+    box-shadow: 0 0 0 0 rgba(255,61,110,0.6);
+    animation: live 1.5s infinite;
+  }
+  @keyframes live {
+    0% { box-shadow: 0 0 0 0 rgba(255,61,110,0.7); }
+    70% { box-shadow: 0 0 0 14px rgba(255,61,110,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,61,110,0); }
+  }
+  .debt-counter {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(36px, 7.5vw, 96px);
+    letter-spacing: -3px;
+    line-height: 1;
+    margin-bottom: 14px;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(135deg, #fff, var(--red));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 60px rgba(255,61,110,0.2);
+  }
+  .debt-sub {
+    color: var(--muted);
+    font-size: 16px;
+    margin-bottom: 30px;
+  }
+  .debt-bars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: left;
+  }
+  .bar-item {
+    background: rgba(0,0,0,0.3);
+    padding: 14px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--card-br);
+  }
+  .bar-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .bar-val {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 28px;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+  }
+  .bar-fill {
+    height: 6px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .bar-fill div { height: 100%; border-radius: 100px; transition: width 1s; }
+  @media (max-width: 700px) {
+    .debt-bars { grid-template-columns: 1fr; }
+  }
+
+  /* COUNTER GRID */
+  .counter-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 14px;
+    margin-bottom: 40px;
+  }
+  .counter-card {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 18px;
+    padding: 22px;
+    transition: transform 0.3s;
+  }
+  .counter-card:hover { transform: translateY(-4px); }
+  .counter-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 12px;
+  }
+  .counter-val {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(26px, 3vw, 38px);
+    letter-spacing: -1.5px;
+    line-height: 1;
+    margin-bottom: 10px;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+  }
+  .counter-sub { color: var(--muted); font-size: 14px; }
+  @media (max-width: 900px) {
+    .counter-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .counter-grid { grid-template-columns: 1fr; }
+  }
+
+  /* BUDGET PIE */
+  .budget-box {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 24px;
+    padding: 36px;
+    margin-bottom: 40px;
+  }
+  .pie-rows { display: flex; flex-direction: column; gap: 14px; }
+  .pie-row {
+    display: grid;
+    grid-template-columns: 1.6fr 2fr 60px;
+    gap: 16px;
+    align-items: center;
+  }
+  .pie-label {
+    display: flex; flex-direction: column;
+  }
+  .pie-label strong { font-size: 16px; margin-bottom: 2px; }
+  .pie-label span { font-size: 13px; color: var(--muted); }
+  .pie-bar {
+    height: 16px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .pie-fill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 1.5s ease-out;
+    width: 0;
+  }
+  .pie-pct {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 20px;
+    text-align: right;
+    letter-spacing: -0.5px;
+  }
+  @media (max-width: 700px) {
+    .pie-row { grid-template-columns: 1fr; gap: 6px; }
+    .pie-pct { text-align: left; }
+    .budget-box { padding: 22px; }
+  }
+
+  /* CONTEXT ROW */
+  .context-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .ctx-card {
+    background: linear-gradient(135deg, rgba(255,224,61,0.08), rgba(185,133,255,0.05));
+    border: 1px solid var(--card-br);
+    border-radius: 20px;
+    padding: 26px;
+  }
+  .ctx-num {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(48px, 5vw, 64px);
+    letter-spacing: -2px;
+    line-height: 1;
+    margin-bottom: 14px;
+    background: linear-gradient(135deg, var(--yellow), var(--red));
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  .ctx-desc { color: var(--muted); font-size: 14px; line-height: 1.55; }
+  .ctx-desc strong { color: var(--ink); }
+  @media (max-width: 768px) {
+    .context-row { grid-template-columns: 1fr; }
+  }
+
+  /* YOUR REPS */
+  .print-link { color: var(--yellow) !important; }
+  .senators-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+  .senator-card {
+    background: linear-gradient(135deg, rgba(61,165,255,0.12), rgba(185,133,255,0.05));
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 32px;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .senator-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.2); }
+  .sen-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--yellow);
+    margin-bottom: 14px;
+  }
+  .sen-name {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: clamp(32px, 4vw, 44px);
+    letter-spacing: -1.5px;
+    line-height: 1;
+    margin-bottom: 10px;
+  }
+  .sen-party {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 100px;
+    margin-bottom: 16px;
+    letter-spacing: 0.5px;
+  }
+  .party-D { background: rgba(61,165,255,0.15); color: var(--blue); border: 1px solid rgba(61,165,255,0.3); }
+  .party-R { background: rgba(255,61,110,0.15); color: var(--red); border: 1px solid rgba(255,61,110,0.3); }
+  .senator-card p { color: var(--muted); font-size: 15px; margin-bottom: 16px; }
+  .sen-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--yellow);
+    text-decoration: none;
+    padding: 8px 14px;
+    background: rgba(255,224,61,0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(255,224,61,0.3);
+    transition: background 0.2s;
+  }
+  .sen-link:hover { background: rgba(255,224,61,0.2); }
+  @media (max-width: 768px) {
+    .senators-row { grid-template-columns: 1fr; }
+  }
+
+  .rep-lookup {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 32px;
+    align-items: center;
+    padding: 36px;
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    margin-bottom: 28px;
+  }
+  .zip-form {
+    display: flex; flex-direction: column; gap: 12px;
+  }
+  .zip-form label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+  .zip-form input {
+    padding: 16px 20px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--card-br);
+    border-radius: 14px;
+    color: var(--ink);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 22px;
+    letter-spacing: 4px;
+    text-align: center;
+    transition: border-color 0.2s;
+  }
+  .zip-form input:focus {
+    outline: none;
+    border-color: var(--yellow);
+    background: rgba(255,224,61,0.05);
+  }
+  @media (max-width: 768px) {
+    .rep-lookup { grid-template-columns: 1fr; padding: 24px; }
+  }
+
+  .action-box {
+    background: linear-gradient(135deg, rgba(94,234,212,0.1), rgba(185,133,255,0.05));
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 36px;
+  }
+  .action-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+  .action-grid > div {
+    padding: 18px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 14px;
+    border: 1px solid var(--card-br);
+  }
+  .action-grid strong {
+    display: block;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 16px;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+  }
+  .action-grid p { color: var(--muted); font-size: 14px; }
+  @media (max-width: 900px) {
+    .action-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 500px) {
+    .action-grid { grid-template-columns: 1fr; }
+  }
+
+  /* BILL GAME */
+  .game-status {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 24px;
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 100px;
+    margin-bottom: 24px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--muted);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .game-status strong { color: var(--yellow); font-size: 15px; }
+  .game-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .game-card {
+    background: var(--card);
+    border: 2px solid var(--card-br);
+    border-radius: 18px;
+    padding: 22px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    user-select: none;
+  }
+  .game-card:hover:not(.locked) {
+    border-color: var(--yellow);
+    transform: translateY(-4px);
+  }
+  .game-card h4 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+    line-height: 1.1;
+  }
+  .game-card p { color: var(--muted); font-size: 13px; }
+  .game-card.correct {
+    border-color: var(--mint);
+    background: rgba(94,234,212,0.12);
+    cursor: default;
+  }
+  .game-card.correct::after {
+    content: attr(data-order);
+    position: absolute;
+    top: 10px; right: 14px;
+    font-family: 'Archivo Black', sans-serif;
+    color: var(--mint);
+    font-size: 20px;
+  }
+  .game-card.wrong {
+    animation: shake 0.4s;
+    border-color: var(--red);
+    background: rgba(255,61,110,0.15);
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-8px); }
+    75% { transform: translateX(8px); }
+  }
+  .game-win {
+    text-align: center;
+    padding: 40px;
+    background: linear-gradient(135deg, rgba(94,234,212,0.15), rgba(255,224,61,0.1));
+    border: 2px solid var(--mint);
+    border-radius: 22px;
+    margin-top: 24px;
+  }
+  .win-burst {
+    font-size: 80px;
+    margin-bottom: 14px;
+    animation: spin 2s ease-in-out infinite;
+    display: inline-block;
+  }
+  @keyframes spin {
+    0%, 100% { transform: rotate(-10deg) scale(1); }
+    50% { transform: rotate(10deg) scale(1.1); }
+  }
+  .game-win h3 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 32px;
+    letter-spacing: -1px;
+    margin-bottom: 10px;
+  }
+  .game-win p { color: var(--muted); margin-bottom: 20px; }
+
+  /* LOBBYING */
+  .lobby-spenders {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 36px;
+    margin-bottom: 28px;
+  }
+  .lobby-bars { display: flex; flex-direction: column; gap: 10px; }
+  .lobby-row {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 16px;
+    align-items: center;
+  }
+  .lobby-name {
+    font-size: 14px;
+    color: var(--ink);
+    font-weight: 500;
+  }
+  .lobby-bar {
+    height: 32px;
+    width: var(--w, 100%);
+    background: linear-gradient(90deg, var(--red), var(--yellow));
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 14px;
+    color: #000;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 600;
+    font-size: 14px;
+    transition: width 1.2s ease-out;
+  }
+  .lobby-bar span { white-space: nowrap; }
+  @media (max-width: 600px) {
+    .lobby-row { grid-template-columns: 1fr; gap: 4px; }
+  }
+
+  .revolve {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 36px;
+    align-items: center;
+    padding: 36px;
+    background: linear-gradient(135deg, rgba(185,133,255,0.1), rgba(61,165,255,0.05));
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    margin-bottom: 28px;
+  }
+  .revolve-ring {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
+    gap: 8px;
+    align-items: center;
+    justify-items: center;
+  }
+  .ring-item {
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--card-br);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    font-size: 36px;
+    min-width: 90px;
+  }
+  .ring-item span {
+    display: block;
+    font-size: 11px;
+    color: var(--muted);
+    font-family: 'JetBrains Mono', monospace;
+    margin-top: 6px;
+    letter-spacing: 1px;
+  }
+  .ring-gov { border-color: rgba(61,165,255,0.4); }
+  .ring-lobby { border-color: rgba(255,224,61,0.4); }
+  .ring-back { border-color: rgba(94,234,212,0.4); }
+  .ring-congress { border-color: rgba(185,133,255,0.4); }
+  .ring-arrow {
+    font-size: 28px;
+    color: var(--yellow);
+    font-family: 'Archivo Black', sans-serif;
+    animation: arrowpulse 2s infinite;
+  }
+  .ring-arrow-1 { grid-column: 2; grid-row: 1; }
+  .ring-arrow-2 { grid-column: 3; grid-row: 2; }
+  .ring-arrow-3 { grid-column: 2; grid-row: 3; }
+  @keyframes arrowpulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+  @media (max-width: 768px) {
+    .revolve { grid-template-columns: 1fr; padding: 24px; }
+  }
+
+  .abramoff-box {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 36px;
+    margin-bottom: 28px;
+  }
+
+  .lobby-terms {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    padding: 36px;
+  }
+  .term-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 14px;
+  }
+  .term-card {
+    padding: 18px;
+    background: rgba(0,0,0,0.25);
+    border-radius: 14px;
+    border: 1px solid var(--card-br);
+  }
+  .term-card strong {
+    display: block;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 18px;
+    letter-spacing: -0.3px;
+    margin-bottom: 2px;
+  }
+  .term-meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .term-card p { color: var(--muted); font-size: 13px; line-height: 1.5; }
+
+  /* LIVE BILLS */
+  .bill-feed {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+  .live-bill {
+    background: var(--card);
+    border: 1px solid var(--card-br);
+    border-radius: 20px;
+    padding: 26px;
+    transition: transform 0.3s, border-color 0.3s;
+    position: relative;
+  }
+  .live-bill:hover {
+    transform: translateY(-4px);
+    border-color: var(--mint);
+  }
+  .bill-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+  }
+  .bill-id {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--yellow);
+    letter-spacing: 1px;
+    font-weight: 600;
+  }
+  .bill-status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    padding: 4px 10px;
+    border-radius: 100px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .status-pending { background: rgba(255,224,61,0.15); color: var(--yellow); border: 1px solid rgba(255,224,61,0.3); }
+  .status-passed { background: rgba(94,234,212,0.15); color: var(--mint); border: 1px solid rgba(94,234,212,0.3); }
+  .status-floor { background: rgba(185,133,255,0.15); color: var(--purple); border: 1px solid rgba(185,133,255,0.3); }
+  .live-bill h3 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 20px;
+    letter-spacing: -0.5px;
+    line-height: 1.15;
+    margin-bottom: 10px;
+  }
+  .live-bill p { color: var(--muted); font-size: 14px; margin-bottom: 16px; line-height: 1.55; }
+  .bill-link {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--mint);
+    text-decoration: none;
+    padding: 6px 12px;
+    background: rgba(94,234,212,0.08);
+    border: 1px solid rgba(94,234,212,0.3);
+    border-radius: 8px;
+    transition: background 0.2s;
+  }
+  .bill-link:hover { background: rgba(94,234,212,0.2); }
+
+  .live-cta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 36px;
+    background: linear-gradient(135deg, rgba(94,234,212,0.1), rgba(61,165,255,0.08));
+    border: 1px solid var(--card-br);
+    border-radius: 22px;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .live-cta h3 {
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 24px;
+    letter-spacing: -0.5px;
+  }
+
+  /* PRINT STYLES */
+  @media print {
+    * {
+      background: #fff !important;
+      color: #000 !important;
+      -webkit-text-fill-color: #000 !important;
+      text-shadow: none !important;
+      box-shadow: none !important;
+    }
+    body {
+      background: #fff !important;
+      background-image: none !important;
+      color: #000 !important;
+      font-size: 11pt;
+    }
+    nav, .marquee, .grain, video, .hero-cta, .btn,
+    .scroll-progress, .nav-toggle,
+    #billgame .game-status, #billgame .game-grid, #billgame .game-win,
+    #quiz, .print-link, .live-cta, #debt-counter, .live-dot,
+    .salamander, .win-burst {
+      display: none !important;
+    }
+    .hero {
+      padding: 20px 0 !important;
+      min-height: auto !important;
+      page-break-after: avoid;
+    }
+    h1.mega {
+      font-size: 30pt !important;
+      letter-spacing: 0 !important;
+      color: #000 !important;
+    }
+    h1.mega .red, h1.mega .shift, h1.mega .outline {
+      color: #000 !important;
+      -webkit-text-fill-color: #000 !important;
+      -webkit-text-stroke: 0 !important;
+    }
+    section {
+      padding: 12pt 0 !important;
+      max-width: 100% !important;
+      page-break-inside: avoid;
+      break-inside: avoid;
+    }
+    .section-title {
+      font-size: 20pt !important;
+      letter-spacing: 0 !important;
+      margin-bottom: 10pt !important;
+    }
+    .section-intro {
+      font-size: 11pt !important;
+      margin-bottom: 12pt !important;
+    }
+    .section-label { color: #666 !important; }
+    .card, .dirty-card, .flow-step, .pork-card, .ctx-card,
+    .senator-card, .rep-lookup, .action-box, .lobby-spenders,
+    .revolve, .abramoff-box, .lobby-terms, .live-bill, .logroll,
+    .takeaway, .map-frame, .origin, .pc-card, .video-wrap,
+    .quiz, .debt-hero, .counter-card, .budget-box, .context-row > div,
+    .vocab {
+      border: 1pt solid #999 !important;
+      border-radius: 4pt !important;
+      padding: 8pt !important;
+      margin-bottom: 6pt !important;
+      page-break-inside: avoid;
+    }
+    .vocab .def { display: block !important; }
+    .vocab .hint { color: #666 !important; }
+    .bento, .dirty-grid, .pc-grid, .pork-grid, .term-grid,
+    .bill-feed, .take-grid, .action-grid, .senators-row,
+    .counter-grid, .context-row, .lobby-bars, .vocab-grid {
+      display: block !important;
+      gap: 0 !important;
+    }
+    .card.wide, .card.half, .card.third, .card.full, .card.tall,
+    .pork-card.pork-hof, .pork-card.pork-total {
+      grid-column: auto !important;
+      grid-row: auto !important;
+    }
+    .hot-take, .pc-result, .pork-card p, .sen-link,
+    .bill-link, .sal-art { color: #000 !important; }
+    a { color: #000 !important; text-decoration: underline; }
+    a::after { content: " (" attr(href) ")"; font-size: 8pt; color: #666; }
+    /* Hide long-URL append for internal anchor links */
+    a[href^="#"]::after { content: ""; }
+    .pork-amount, .counter-val, .bar-val, .debt-counter,
+    .ctx-num, .stat { font-size: 18pt !important; }
+    img { max-width: 100% !important; page-break-inside: avoid; }
+    footer { border-top: 1pt solid #999 !important; margin-top: 12pt; padding-top: 8pt !important; }
+  }
+
+  /* GRAIN TEXTURE */
+  .grain {
+    position: fixed; inset: 0; pointer-events: none;
+    opacity: 0.04; z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* REVEAL ON SCROLL */
+  .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease; }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* MARQUEE */
+  .marquee {
+    overflow: hidden;
+    padding: 20px 0;
+    border-top: 1px solid var(--card-br);
+    border-bottom: 1px solid var(--card-br);
+    background: rgba(255,255,255,0.02);
+    margin: 60px 0;
+  }
+  .marquee-track {
+    display: flex; gap: 60px;
+    animation: scroll 40s linear infinite;
+    white-space: nowrap;
+    font-family: 'Archivo Black', sans-serif;
+    font-size: 40px;
+    letter-spacing: -1px;
+  }
+  .marquee-track span { color: var(--ink); }
+  .marquee-track span:nth-child(2n) { color: transparent; -webkit-text-stroke: 1px var(--ink); }
+  .marquee-track span:nth-child(3n) { color: var(--yellow); }
+  .marquee-track span:nth-child(5n) { color: var(--red); }
+  @keyframes scroll {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+  /* BALLOT CHECK */
+  .ballot-check {
+    background: linear-gradient(135deg, rgba(255,61,110,0.12), rgba(255,224,61,0.05));
+    border-color: rgba(255,61,110,0.3);
+  }
+  .zip-form input[type="date"] { letter-spacing: 1px; font-size: 18px; color-scheme: dark; }
+  .ballot-result {
+    margin-top: 14px; padding: 16px 18px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid var(--card-br);
+    border-radius: 14px;
+    font-size: 15px; color: var(--muted);
+  }
+  .ballot-result .br-head { font-family: 'Archivo Black', sans-serif; font-size: 18px; margin-bottom: 8px; letter-spacing: -0.3px; }
+  .ballot-result p { margin-bottom: 12px; }
+  .ballot-result strong { color: var(--ink); }
+
+  /* PROP 50 PLOT TWIST */
+  .plot-twist {
+    background: linear-gradient(135deg, rgba(255,61,110,0.14), rgba(185,133,255,0.06));
+    border: 1px solid rgba(255,61,110,0.35);
+    border-radius: 28px;
+    padding: 40px;
+    margin-bottom: 60px;
+  }
+  .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 24px 0; }
+  .timeline > div { padding: 18px; background: rgba(0,0,0,0.3); border-radius: 14px; border: 1px solid var(--card-br); }
+  .timeline .when { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: var(--yellow); text-transform: uppercase; margin-bottom: 8px; }
+  .timeline strong { display: block; font-family: 'Archivo Black', sans-serif; font-size: 16px; margin-bottom: 6px; letter-spacing: -0.3px; }
+  .timeline p { color: var(--muted); font-size: 14px; }
+  @media (max-width: 900px) { .timeline { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 500px) { .timeline { grid-template-columns: 1fr; } .plot-twist { padding: 24px; } }
+
+  /* SCROLL PROGRESS */
+  .scroll-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    width: 0;
+    background: linear-gradient(90deg, var(--yellow), var(--red), var(--purple));
+    z-index: 200;
+  }
+
+  /* KEYBOARD FOCUS */
+  .vocab:focus-visible, .game-card:focus-visible, .flow-step:focus-visible {
+    outline: 2px solid var(--yellow);
+    outline-offset: 2px;
+  }
+
+  /* REDUCED MOTION */
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .marquee-track, .sal-art, .win-burst, .eyebrow .dot,
+    .live-dot, .ring-arrow { animation: none !important; }
+    .reveal { opacity: 1; transform: none; transition: none; }
+    * { transition-duration: 0.01ms !important; }
+  }
+</style>
+<style>.guide-skip{position:fixed;top:-100px;left:12px;z-index:999;background:#ffe03d;color:#000;padding:12px}.guide-skip:focus{top:12px}:focus-visible{outline:3px solid #ffe03d;outline-offset:5px}section{scroll-margin-top:100px}#order-feedback{min-height:24px;color:var(--mint)}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation:none!important;transition:none!important}}@media print{nav,.guide-skip{display:none!important}section{opacity:1!important;transform:none!important}body{background:white;color:black}}</style></head>
+<body><a href="#basics" class="guide-skip">Skip to study guide</a>
+<div class="grain"></div>
+<div class="scroll-progress" id="scroll-progress"></div>
+
+<nav>
+  <div class="logo">CONGRESS<span>.</span>101</div>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
+  <ul id="nav-menu"><li><a href="./">← Civics Lab</a></li>
+    <li><a href="#basics">Basics</a></li>
+    <li><a href="#reps">Your Reps</a></li>
+    <li><a href="#bill">Bill Flow</a></li>
+    <li><a href="#billgame">Play</a></li>
+    <li><a href="#powers">Powers</a></li>
+    <li><a href="#gerrymander">Gerry</a></li>
+    <li><a href="#pork">Pork</a></li>
+    <li><a href="#lobby">Lobbying</a></li>
+    <li><a href="#money">Money</a></li>
+    <li><a href="#live">Live</a></li>
+    <li><a href="#vocab">Vocab</a></li>
+    <li><a href="#quiz">Quiz</a></li>
+    <li><a href="#" onclick="window.print(); return false;" class="print-link">⎙ Print</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="eyebrow">THE LEGISLATIVE BRANCH · STUDY GUIDE</div>
+  <h1 class="mega">
+    <span class="outline">CONGRESS</span><br>
+    <span class="red">isn't</span> <span>boring.</span><br>
+    <span class="shift">you just</span><br>
+    <span>never looked close.</span>
+  </h1>
+  <p class="hero-sub">
+    435 voting House seats. 100 Senate seats. Federal laws shape public life. Learn how Congress makes decisions, how its powers are limited, and how you can participate.
+  </p>
+  <div class="hero-cta">
+    <a href="#basics" class="btn btn-primary">let's go →</a>
+    <a href="#quiz" class="btn btn-ghost">skip to quiz</a>
+  </div>
+</section>
+
+<!-- BASICS -->
+<section id="basics">
+  <div class="section-label">// Chapter 01 — The Setup</div>
+  <h2 class="section-title">Two rooms,<br>one vibe shift.</h2>
+  <p class="section-intro">Congress is a bicameral legislature — fancy word for "two chambers." Together they make federal law. Apart, they feel like two entirely different schools.</p>
+
+  <div class="bento">
+    <div class="card card-house half">
+      <span class="tag">The House</span>
+      <div class="stat">435</div>
+      <h3>More members. More chaos.</h3>
+      <p>Reps serve 2-year terms. Every single one is up for re-election every other year, so they're in <em>constant</em> campaign mode. House = loud, fast, populist.</p>
+    </div>
+    <div class="card card-senate half">
+      <span class="tag">The Senate</span>
+      <div class="stat">100</div>
+      <h3>Fewer members. More swag.</h3>
+      <p>Two per state, no matter if it's Wyoming or California. 6-year terms mean senators can play the long game. Senate = slower, older, filibuster-heavy.</p>
+    </div>
+
+    <div class="card card-yellow third">
+      <div class="stat">25</div>
+      <h3>House minimum age</h3>
+      <p>Citizen for 7 years, live in the state.</p>
+    </div>
+    <div class="card card-yellow third">
+      <div class="stat">30</div>
+      <h3>Senate minimum age</h3>
+      <p>Citizen for 9 years. Older club, longer dues.</p>
+    </div>
+    <div class="card card-mint third">
+      <div class="stat">2</div><h3>Chambers, one Congress</h3><p>Both must agree on the text of a bill before it reaches the president.</p>
+    </div>
+
+    <div class="card card-purple full">
+      <span class="tag">Who's in charge?</span>
+      <h3 style="font-size: 28px; margin-bottom: 18px;">Leadership cheat sheet</h3>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px;">
+        <div>
+          <div style="color: var(--blue); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; margin-bottom: 4px;">HOUSE BOSS</div>
+          <strong style="font-size: 18px;">Speaker of the House</strong>
+          <p style="margin-top: 6px;">Runs the House floor. 2nd in line for presidency. Elected by the House.</p>
+        </div>
+        <div>
+          <div style="color: var(--red); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; margin-bottom: 4px;">SENATE BOSS (on paper)</div>
+          <strong style="font-size: 18px;">President of the Senate</strong>
+          <p style="margin-top: 6px;">Literally the VP. Only votes to break ties. Mostly ceremonial.</p>
+        </div>
+        <div>
+          <div style="color: var(--yellow); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; margin-bottom: 4px;">SENATE BOSS (actually)</div>
+          <strong style="font-size: 18px;">Majority Leader</strong>
+          <p style="margin-top: 6px;">Controls what bills get voted on. The real shot-caller.</p>
+        </div>
+        <div>
+          <div style="color: var(--mint); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; margin-bottom: 4px;">WHIPS</div>
+          <strong style="font-size: 18px;">Majority / Minority Whip</strong>
+          <p style="margin-top: 6px;">Counts votes. Pressures their party to vote the line. Basically peer pressure, but legal.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- YOUR REPS -->
+<section id="reps"><div class="section-label">// Your community</div><h2 class="section-title">Who represents you?</h2><p class="section-intro">Residents of each state have two U.S. senators and a House member for their congressional district. D.C. and U.S. territories have different representation and do not have voting senators. A ZIP code may overlap more than one House district.</p><div class="bento"><div class="card half"><h3>Find your current House member</h3><p>Use the official lookup and provide your address there if needed. Current districts may differ from those used for an upcoming election. <a href="https://www.house.gov/representatives/find-your-representative" target="_blank" rel="noopener noreferrer">Open House lookup ↗</a></p></div><div class="card half"><h3>Find your senators</h3><p>Every state has two senators. Use the official current directory rather than an undated classroom roster. <a href="https://www.senate.gov/senators/" target="_blank" rel="noopener noreferrer">Open Senate directory ↗</a></p></div><div class="card half"><h3>Speak up, at any age</h3><p>Ask a specific question, explain the issue that matters to you, and support your request with evidence. You do not need to claim that you vote to contact an office. Check office hours and visitor policies before visiting.</p></div><div class="card half" id="ballot"><h3>California election information</h3><p>Check eligibility, registration, election dates, and official maps with the Secretary of State. Age alone does not establish voting eligibility. <a href="https://www.sos.ca.gov/elections" target="_blank" rel="noopener noreferrer">Official election information ↗</a></p></div></div></section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span>filibuster</span><span>★</span><span>gerrymander</span><span>★</span><span>pork barrel</span><span>★</span><span>veto override</span><span>★</span><span>cloture</span><span>★</span>
+    <span>filibuster</span><span>★</span><span>gerrymander</span><span>★</span><span>pork barrel</span><span>★</span><span>veto override</span><span>★</span><span>cloture</span><span>★</span>
+  </div>
+</div>
+
+<!-- HOW A BILL -->
+<section id="bill"><div class="section-label">// How legislation works</div><h2 class="section-title">A bill’s path<br>is not a straight line.</h2><p class="section-intro">Here is a common route. Bills may stall, be amended, or follow special procedures. Both chambers must pass identical text before presenting a bill to the president.</p><div class="bento"><div class="card half"><h3>01 · Introduction</h3><p>People and organizations can suggest policies. A member introduces a bill in Congress. Revenue-raising bills must originate in the House; the Senate may amend them.</p></div><div class="card half"><h3>02 · Committee</h3><p>Committees specialize in topics, hold hearings, and may amend and report legislation. A bill can remain in committee without advancing.</p></div><div class="card half"><h3>03 · First chamber</h3><p>Members debate and vote under their chamber’s rules. Ordinary passage generally needs a majority of those voting, with a quorum present.</p></div><div class="card half"><h3>04 · Other chamber</h3><p>The other chamber considers the bill and may change it. The Senate’s cloture procedure for most legislation usually needs 60 votes when all 100 seats are filled; final passage is a separate vote.</p></div><div class="card half"><h3>05 · Agree on text</h3><p>Both chambers must agree on the same version. They can exchange amendments or use a conference committee. A conference is not required for every bill.</p></div><div class="card half"><h3>06 · President</h3><p>The president may sign or veto. After 10 days, excluding Sundays, without a signature, a bill becomes law unless Congress’s adjournment prevents its return; that exception is a pocket veto.</p></div><div class="card half"><h3>07 · After a veto</h3><p>Congress may override with two-thirds in each chamber. The override is conditional, not a step every bill takes.</p></div><div class="card half"><h3>Committee vocabulary</h3><p>Standing: continuing subject-matter work. Select/special: assigned a particular purpose; duration varies. Joint: members from both chambers. Conference: resolves differences on legislation. Some committees have distinctive powers.</p></div></div><p style="margin-top:24px"><a href="https://www.archives.gov/founding-docs/constitution-transcript" target="_blank" rel="noopener noreferrer">National Archives: Constitution ↗</a> · <a href="https://www.senate.gov/about/powers-procedures/filibusters-cloture.htm" target="_blank" rel="noopener noreferrer">Senate: cloture ↗</a></p><a class="btn btn-primary" href="./#missions">Try the bill simulation →</a></section>
+
+<!-- BILL GAME -->
+<section id="billgame">
+  <div class="section-label">// Mini-Game — Order the Bill</div>
+  <h2 class="section-title">Think you got it?<br><span style="color:var(--yellow);">Put the steps in order.</span></h2>
+  <p class="section-intro">This game models one common route. Click the steps in order; a conference committee is optional and a veto override is conditional. Wrong click = red flash. Get all 7 in order to win. No pressure — try as many times as you want.</p>
+
+  <div class="game-status" id="game-status">
+    <span class="game-progress">Step <strong id="game-step">1</strong> of 7</span>
+    <span class="game-timer">Attempts: <strong id="game-attempts">0</strong></span>
+    <button class="btn btn-ghost" onclick="resetGame()" style="padding:8px 16px; font-size:13px;">↺ Reset</button>
+  </div>
+
+  <p id="order-feedback" role="status"></p><div class="game-grid" id="game-grid">
+    <!-- populated by JS -->
+  </div>
+
+  <div class="game-win" id="game-win" style="display:none;">
+    <div class="win-burst">🏆</div>
+    <h3>You got it!</h3>
+    <p>Nailed all 7 steps in order. Explain why both chambers must pass identical text.</p>
+    <button class="btn btn-primary" onclick="resetGame()">play again</button>
+  </div>
+</section>
+
+<!-- POWERS -->
+<section id="powers"><div class="section-label">// Article I</div><h2 class="section-title">What Congress<br>can actually do.</h2><p class="section-intro">The Constitution grants Congress specified powers and provides checks among the branches. A constitutional power is not a blank check; the way it is exercised can be challenged.</p><div class="bento"><div class="card half"><h3>Taxes and spending</h3><p>Congress can levy federal taxes, borrow, and authorize spending. State and local governments have their own tax powers; a sales tax at a local store is not generally a federal tax.</p></div><div class="card half"><h3>War and commerce</h3><p>Congress can declare war and regulate commerce with foreign nations and among states. The president is commander in chief. Their roles can create difficult separation-of-powers questions.</p></div><div class="card half"><h3>Impeachment and oversight</h3><p>The House impeaches; the Senate tries impeachments. Conviction requires two-thirds of senators present. Impeachment itself does not remove an official. Congress also conducts oversight and investigations.</p></div><div class="card half"><h3>Appointments and treaties</h3><p>The Senate provides advice and consent on many presidential appointments. Treaty consent requires two-thirds of senators present; the president carries out ratification.</p></div><div class="card half"><h3>Constitutional amendments</h3><p>Congress can propose an amendment with two-thirds in each chamber. Ratification by three-fourths of the states is then required. Article V also provides a convention route.</p></div><div class="card half"><h3>Necessary and proper</h3><p>Congress may enact laws necessary and proper for carrying its constitutional powers into execution. This clause does not erase constitutional limits.</p></div></div><p style="margin-top:24px"><a href="https://www.archives.gov/founding-docs/constitution-transcript" target="_blank" rel="noopener noreferrer">National Archives: Constitution ↗</a></p></section>
+
+<!-- DIRTY SIDE -->
+<section id="dirty"><div class="section-label">// Power and incentives</div><h2 class="section-title">Follow the decision.<br>Ask who benefits.</h2><p class="section-intro">Representation involves competing interests. Distinguish a legal process, a criticism of that process, and evidence of wrongdoing.</p><div class="bento"><div class="card half"><h3>Gerrymandering</h3><p>Drawing districts to advantage a political group can change how votes translate into seats. Unusual shapes alone do not establish unfairness.</p></div><div class="card half"><h3>Earmarks and “pork”</h3><p>An earmark directs funds to a specified recipient or project. “Pork barrel” is a critical label for spending viewed as serving narrow political interests. Evaluate costs, beneficiaries, and alternatives before judging.</p></div><div class="card half"><h3>Lobbying</h3><p>People and organizations try to influence officials. Lobbying is not inherently bribery; students, businesses, unions, and nonprofits may advocate for policy. Disclosure rules and access are important questions.</p></div><div class="card half"><h3>Logrolling</h3><p>Members exchange support for one another’s proposals. Ask whether the compromise advances public goals or mainly protects insiders.</p></div></div></section>
+
+<!-- GERRYMANDER DEEP DIVE -->
+<section id="gerrymander"><div class="section-label">// District experiment</div><h2 class="section-title">Same voters.<br>Different outcomes.</h2><p class="section-intro">Packing concentrates a group in fewer districts. Cracking spreads it across districts where it is outnumbered. Try all three groupings in the lab and explain why seat totals change even though no votes change.</p><a class="btn btn-primary" href="./#missions">Open the district experiment →</a><div class="bento" style="margin-top:28px"><div class="card half"><h3>A model, not a real map</h3><p>The lab uses five groups of ten voters. It does not evaluate geography, contiguity, compactness, community boundaries, or legal compliance. Proportionality alone does not prove a map is fair.</p></div><div class="card half"><h3>Who draws the lines?</h3><p>States use different processes, including legislatures and commissions. Courts may review maps under applicable law. Computer-generated plans still reflect choices about data, constraints, and objectives; algorithms are not automatically free of bias.</p></div></div><p style="margin-top:24px">Current California maps and election details: <a href="https://www.sos.ca.gov/elections" target="_blank" rel="noopener noreferrer">Secretary of State ↗</a></p><div style="margin-top:28px"><h3>Watch, then evaluate the explanation</h3><iframe width="560" height="315" style="max-width:100%;border:0" loading="lazy" src="https://www.youtube-nocookie.com/embed/Mky11UJb9AY" title="CGP Grey: Why Your Politicians Don’t Fear Your Vote" allowfullscreen></iframe><p><a href="https://www.youtube.com/watch?v=Mky11UJb9AY" target="_blank" rel="noopener noreferrer">Watch on YouTube ↗</a> · What does the model explain well? What does it leave out?</p></div></section>
+
+<!-- PORK HALL OF SHAME -->
+<section id="pork"><div class="section-label">// Spending and accountability</div><h2 class="section-title">Public investment<br>or political favor?</h2><p class="section-intro">“Pork” is a judgment, not a neutral budget category. A small population or unusual project name does not settle whether spending is worthwhile. Investigate before deciding.</p><div class="bento"><div class="card half"><h3>Define the project</h3><p>What precisely is funded? Is the number a proposal, an appropriation, or actual spending? Over how many years?</p></div><div class="card half"><h3>Identify who benefits</h3><p>Consider direct users, wider economic effects, public safety, and people outside the project’s location.</p></div><div class="card half"><h3>Compare alternatives</h3><p>What would happen without the project? Are there less expensive ways to achieve the goal?</p></div><div class="card half"><h3>Look for accountability</h3><p>Read the official project description, recipient, sponsor, selection process, and evaluation requirements.</p></div></div><p style="margin-top:24px"><a href="https://www.congress.gov/browse" target="_blank" rel="noopener noreferrer">Find the underlying legislation ↗</a> · <a href="./#missions">Try the budget challenge →</a></p></section>
+
+<!-- LOBBYING DEEP DIVE -->
+<section id="lobby"><div class="section-label">// Influence and evidence</div><h2 class="section-title">Who gets heard?</h2><p class="section-intro">Lobbying is an attempt to influence government decisions. Campaign donations and lobbying are different activities with different rules. The question is not only whether advocacy is legal, but how access and accountability work.</p><div class="bento"><div class="card half"><h3>Compare the arguments</h3><p>A group may bring expertise and information officials need. Another concern is that organizations with more resources can gain greater access. What evidence would help evaluate each claim?</p></div><div class="card half"><h3>Look for disclosures</h3><p>Federal lobbying rules require covered lobbyists and organizations to register and report certain activity. <a href="https://www.senate.gov/legislative/Lobbying/Lobby_Disclosure_Act/TOC.htm" target="_blank" rel="noopener noreferrer">Read the disclosure framework ↗</a></p></div><div class="card half"><h3>PACs and Super PACs</h3><p>Political action committees participate in campaign finance. Super PACs may raise unlimited contributions for independent political activity but cannot contribute directly to candidates. Check the FEC for the rules that apply to each committee type. <a href="https://www.fec.gov/help-candidates-and-committees/registering-pac/" target="_blank" rel="noopener noreferrer">FEC explanation ↗</a></p></div><div class="card half"><h3>Your voice</h3><p>Advocacy is also a student explaining a transit problem or a community group asking for safer streets. Identify your issue, document the need, and make a specific request.</p></div></div></section>
+
+<!-- THE MONEY - LIVE DEBT -->
+<section id="money"><div class="section-label">// Budget literacy</div><h2 class="section-title">A deficit is a flow.<br>Debt is a stock.</h2><p class="section-intro">A deficit is spending above revenue over a period, usually a fiscal year. Debt is accumulated borrowing outstanding at a point in time. They are related but not interchangeable.</p><div class="bento"><div class="card half"><h3>Try a budget</h3><p>The lab gives you 100 fictional revenue credits and five spending categories. Explain the tradeoffs in your choices. A balanced allocation is not automatically a good policy.</p></div><div class="card half"><h3>Read the real numbers</h3><p>Use official data and record its date. Gross federal debt and debt held by the public are different measures, so label the one you use. <a href="https://fiscaldata.treasury.gov/americas-finance-guide/" target="_blank" rel="noopener noreferrer">Treasury finance guide ↗</a> · <a href="https://fiscaldata.treasury.gov/datasets/debt-to-the-penny/debt-to-the-penny" target="_blank" rel="noopener noreferrer">Debt to the Penny ↗</a></p></div></div><p style="margin-top:24px">This page does not show a live debt feed. A counter made by adding a fixed number every second is a model, not a Treasury measurement.</p><a class="btn btn-primary" href="./#missions">Build your budget →</a></section>
+
+<!-- LIVE NOW -->
+<section id="live"><div class="section-label">// Current events research</div><h2 class="section-title">Find the bill.<br>Check the record.</h2><p class="section-intro">Choose a topic that matters to you. Use Congress.gov to identify an actual bill, then record its Congress, number, title, sponsor, latest action, and the date you checked. Distinguish “introduced,” “passed one chamber,” and “became law.”</p><a class="btn btn-primary" href="https://www.congress.gov/browse" target="_blank" rel="noopener noreferrer">Explore Congress.gov ↗</a><div class="card full" style="margin-top:28px"><h3>Questions for your field notes</h3><p>What would change if this proposal became law? Who supports it, who raises concerns, and what evidence do they use? Which constitutional power is involved? What still needs to happen?</p></div></section>
+
+<!-- VOCAB -->
+<section id="vocab">
+  <div class="section-label">// Chapter 05 — Terms to Know</div>
+  <h2 class="section-title">Vocab drop.<br><span style="color: var(--mint);">Tap to flip.</span></h2>
+  <p class="section-intro">These show up on every quiz. Click a card to reveal the definition. Make them make sense before test day.</p>
+
+  <div class="vocab-grid" id="vocab-grid">
+    <!-- populated by JS -->
+  </div>
+</section>
+
+<!-- QUIZ -->
+<section id="quiz">
+  <div class="section-label">// Chapter 06 — Prove It</div>
+  <h2 class="section-title">The <span style="color: var(--yellow);">10-question</span> gauntlet.</h2>
+  <p class="section-intro">No pressure, no grade. Just you vs. Congress. See if you were actually paying attention.</p>
+
+  <div class="quiz" id="quiz-box">
+    <!-- rendered by JS -->
+  </div>
+</section>
+
+<footer><p><a href="./">← Back to Civics Lab</a> · <a href="sources.html">Sources & model notes</a></p>
+  <div class="foot-logo">CONGRESS<span>.</span>101</div>
+  <p>Built with care for the homies in government class.</p>
+  <p style="margin-top: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px;">// Mr. James · Granite Hills HS · <span id="year"></span></p>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // MOBILE NAV
+  const navToggle = document.getElementById('nav-toggle');
+  const navMenu = document.getElementById('nav-menu');
+  navToggle.addEventListener('click', () => {
+    const open = navMenu.classList.toggle('open');
+    navToggle.setAttribute('aria-expanded', open);
+    navToggle.textContent = open ? '✕' : '☰';
+    navToggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+  });
+  navMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    navMenu.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+    navToggle.textContent = '☰';
+  }));
+
+  // SCROLL PROGRESS BAR
+  const progressBar = document.getElementById('scroll-progress');
+  function updateProgress() {
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    progressBar.style.width = (max > 0 ? (window.scrollY / max) * 100 : 0) + '%';
+  }
+  window.addEventListener('scroll', updateProgress, { passive: true });
+  updateProgress();
+
+  // VOCAB DATA
+  const vocab = [
+    { term: "Bicameral", hint: "structure", def: "A legislature with two chambers. Congress has the House and Senate." },
+    { term: "Filibuster", hint: "senate trick", def: "A tactic to prolong debate and delay or prevent a vote in the Senate; it need not involve a continuous speech." },
+    { term: "Cloture", hint: "the shutdown", def: "A procedure to limit debate. Most legislation needs three-fifths of senators duly chosen and sworn, usually 60; exceptions exist." },
+    { term: "Quorum", hint: "minimum crowd", def: "The minimum number of members needed to officially do business." },
+    { term: "Veto", hint: "presidential no", def: "The president's power to reject a bill passed by Congress." },
+    { term: "Override", hint: "the clapback", def: "Congress overruling a veto with a 2/3 vote in both chambers." },
+    { term: "Pocket Veto", hint: "ghosting", def: "A bill fails to become law when the president does not sign within 10 days, excluding Sundays, and adjournment prevents its return." },
+    { term: "Impeachment", hint: "the charge", def: "The House brings charges under the constitutional impeachment standard. The Senate holds a trial; impeachment itself does not remove an official." },
+    { term: "Cloakroom", hint: "the hallway", def: "Private lounges off the House/Senate floor where deals and trades get made." },
+    { term: "Incumbent", hint: "already in", def: "A person who currently holds an office." },
+    { term: "Gerrymander", hint: "map magic", def: "Drawing districts to give one party an unfair electoral advantage." },
+    { term: "Pork Barrel", hint: "hometown goodies", def: "Spending targeted to a member's district — often tacked onto unrelated bills." },
+    { term: "Logrolling", hint: "trade", def: "'Vote for my bill, I'll vote for yours.' Mutual backscratching in action." },
+    { term: "Lobbyist", hint: "the influencer", def: "Paid pro who tries to sway lawmakers toward a client's interests." },
+    { term: "Caucus", hint: "the group chat", def: "A group of members with shared interests meeting to plan strategy." },
+    { term: "Rider", hint: "sneaky add-on", def: "An unrelated provision attached to a bill likely to pass — like a Trojan horse." },
+    { term: "Franking", hint: "free mail", def: "Official congressional mail is publicly funded under rules that restrict campaign use." },
+    { term: "Gridlock", hint: "nothing moves", def: "When political disagreement stalls government — no bills pass, no progress." },
+    { term: "Expressed Powers", hint: "the list", def: "Powers literally written out for Congress in Article I, Section 8." },
+    { term: "Elastic Clause", hint: "the stretch", def: "'Necessary and proper' clause — lets Congress make laws that stretch beyond the expressed list." },
+    { term: "Midterm Election", hint: "nov 3, 2026", def: "The election halfway through a president's term. All 435 House seats + about a third of the Senate. The president's party usually loses seats." },
+    { term: "Continuing Resolution", hint: "the stopgap", def: "A temporary funding measure used when regular appropriations are not yet enacted. Its terms can vary; a funding lapse affects activities without other funding authority." },
+    { term: "Redistricting", hint: "redrawing lines", def: "Redrawing electoral district boundaries, commonly after the census. Redistricting is the process; gerrymandering describes manipulating boundaries to advantage a group." },
+  ];
+
+  const grid = document.getElementById('vocab-grid');
+  vocab.forEach(v => {
+    const el = document.createElement('div');
+    el.className = 'vocab';
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    el.setAttribute('aria-expanded', 'false');
+    el.innerHTML = `
+      <div class="hint">${v.hint}</div>
+      <div class="term">${v.term}</div>
+      <div class="def">${v.def}</div>
+    `;
+    const flip = () => {
+      const on = el.classList.toggle('flipped');
+      el.setAttribute('aria-expanded', on);
+    };
+    el.addEventListener('click', flip);
+    el.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); flip(); }
+    });
+    grid.appendChild(el);
+  });
+
+  // QUIZ DATA
+  const questions = [
+    {
+      q: "How many voting seats are there in Congress when all are filled?",
+      options: ["100", "435", "535", "538"],
+      correct: 2,
+      why: "435 voting House seats + 100 Senate seats = 535. The House also has nonvoting delegates and a resident commissioner."
+    },
+    {
+      q: "How long is a term in the House of Representatives?",
+      options: ["2 years", "4 years", "6 years", "Lifetime"],
+      correct: 0,
+      why: "Reps run every 2 years — that's why they're always campaigning."
+    },
+    {
+      q: "Who is second in line to the presidency?",
+      options: ["Vice President", "Speaker of the House", "Secretary of State", "Senate Majority Leader"],
+      correct: 1,
+      why: "VP is first, Speaker of the House is second."
+    },
+    {
+      q: "What procedure generally limits debate on ordinary Senate legislation?",
+      options: ["The president vetoes", "A majority (51) votes", "Cloture (usually 60 votes)", "A 2/3 override"],
+      correct: 2,
+      why: "For most legislation, cloture requires three-fifths of senators duly chosen and sworn, usually 60. Exceptions exist."
+    },
+    {
+      q: "Drawing district lines to favor one party is called...",
+      options: ["Packing", "Logrolling", "Gerrymandering", "Franking"],
+      correct: 2,
+      why: "Gerrymandering. Packing + cracking are two methods of doing it."
+    },
+    {
+      q: "Which chamber holds impeachment trials?",
+      options: ["The House", "The Senate", "The Supreme Court", "Both chambers"],
+      correct: 1,
+      why: "House charges (impeaches), Senate tries. Conviction requires two-thirds of senators present."
+    },
+    {
+      q: "To override a presidential veto, Congress needs...",
+      options: ["Simple majority", "60 votes in Senate", "Two-thirds in each chamber", "Unanimous vote"],
+      correct: 2,
+      why: "Two-thirds in both chambers; 290 House and 67 Senate votes if all members vote."
+    },
+    {
+      q: "What's the minimum age to serve as a US Senator?",
+      options: ["25", "30", "35", "40"],
+      correct: 1,
+      why: "30 for Senate, 25 for House, 35 for President. Stair steps."
+    },
+    {
+      q: "A 'rider' is...",
+      options: ["A new member of Congress", "An unrelated add-on to a bill", "A type of lobbyist", "A campaign staffer"],
+      correct: 1,
+      why: "Riders are unrelated provisions sneaked onto bills likely to pass."
+    },
+    {
+      q: "The 'elastic clause' lets Congress...",
+      options: ["Raise its own pay", "Override the president easily", "Make laws that are 'necessary and proper'", "Declare war without voting"],
+      correct: 2,
+      why: "Article I, Section 8 — Congress can do what's 'necessary and proper' beyond the expressed list."
+    },
+  ];
+
+  let current = 0, score = 0, answered = false;
+  const quizBox = document.getElementById('quiz-box');
+
+  function renderQ() {
+    if (current >= questions.length) return renderDone();
+    answered = false;
+    const q = questions[current];
+    quizBox.innerHTML = `
+      <div class="q-num">// question ${current + 1} / ${questions.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="options" id="opts">
+        ${q.options.map((o, i) => `<button class="opt" data-i="${i}">${o}</button>`).join('')}
+      </div>
+      <div id="why" style="display:none; margin-top:20px; padding:14px 16px; background:rgba(94,234,212,0.08); border-left:3px solid var(--mint); border-radius:6px; color:var(--mint); font-family:'JetBrains Mono', monospace; font-size:13px;"></div>
+      <div class="quiz-footer">
+        <div class="score-display">score: <strong style="color:var(--yellow)">${score}</strong> / ${questions.length}</div>
+        <button class="btn btn-primary" id="next-btn" style="display:none;">next →</button>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" style="width:${(current / questions.length) * 100}%"></div></div>
+    `;
+    document.querySelectorAll('.opt').forEach(btn => btn.addEventListener('click', handle));
+    document.getElementById('next-btn').addEventListener('click', () => { current++; renderQ(); });
+  }
+
+  function handle(e) {
+    if (answered) return;
+    answered = true;
+    const q = questions[current];
+    const picked = parseInt(e.target.dataset.i);
+    document.querySelectorAll('.opt').forEach((b, i) => {
+      b.disabled = true;
+      if (i === q.correct) b.classList.add('correct');
+      else if (i === picked) b.classList.add('wrong');
+    });
+    if (picked === q.correct) score++;
+    const why = document.getElementById('why');
+    why.textContent = '> ' + q.why;
+    why.style.display = 'block';
+    document.getElementById('next-btn').style.display = 'inline-flex';
+  }
+
+  function renderDone() {
+    const pct = Math.round((score / questions.length) * 100);
+    let msg = '';
+    if (pct === 100) msg = "flawless. you're running for Congress next.";
+    else if (pct >= 80) msg = "low-key a pro. test is gonna be easy.";
+    else if (pct >= 60) msg = "decent. scroll back, hit the vocab, try again.";
+    else if (pct >= 40) msg = "room to grow. flip some vocab cards, come back.";
+    else msg = "bestie. read the whole page and retake. you got this.";
+
+    quizBox.innerHTML = `
+      <div class="quiz-done">
+        <div class="q-num">// results</div>
+        <div class="big-score">${score} / ${questions.length}</div>
+        <p style="font-size:18px; color:var(--ink); margin: 20px 0 30px;">${msg}</p>
+        <button class="btn btn-primary" onclick="current=0;score=0;renderQ();">run it back</button>
+      </div>
+    `;
+  }
+
+  renderQ();
+
+  // BILL ORDERING GAME
+  const billSteps = [
+    { order: 1, title: "Idea introduced", desc: "A member of Congress officially introduces the bill." },
+    { order: 2, title: "Committee review", desc: "Assigned to a committee that debates, amends, or kills it." },
+    { order: 3, title: "Floor debate + vote", desc: "The full chamber debates and votes on the bill." },
+    { order: 4, title: "Other chamber", desc: "Whole process repeats in the OTHER chamber (House or Senate)." },
+    { order: 5, title: "Agreement on identical text", desc: "Both chambers pass identical text, by agreeing to amendments or resolving differences through a conference." },
+    { order: 6, title: "President's desk", desc: "The president signs, vetoes, or lets it sit." },
+    { order: 7, title: "Becomes law", desc: "Signed, or a veto is overridden, or 10 days pass (excluding Sundays) without an adjournment preventing return." },
+  ];
+
+  let gameNext = 1;
+  let gameAttempts = 0;
+  const gameGrid = document.getElementById('game-grid');
+  const gameStep = document.getElementById('game-step');
+  const gameAttemptsEl = document.getElementById('game-attempts');
+  const gameWin = document.getElementById('game-win');
+  const gameStatus = document.getElementById('game-status');
+
+  function shuffle(arr) {
+    const a = arr.slice();
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  window.resetGame = function() {
+    gameNext = 1;
+    gameAttempts = 0;
+    document.getElementById('order-feedback').textContent = '';
+    gameStep.textContent = '1';
+    gameAttemptsEl.textContent = '0';
+    gameWin.style.display = 'none';
+    gameGrid.style.display = 'grid';
+    gameStatus.style.display = 'flex';
+    renderGame();
+  };
+
+  function renderGame() {
+    gameGrid.innerHTML = '';
+    shuffle(billSteps).forEach(step => {
+      const card = document.createElement('div');
+      card.className = 'game-card';
+      card.setAttribute('role','button');
+      card.tabIndex = 0;
+      card.addEventListener('keydown', e => { if(e.key === 'Enter' || e.key === ' '){e.preventDefault();handleGameClick(card,step);} });
+      card.dataset.order = step.order;
+      card.innerHTML = `<h4>${step.title}</h4><p>${step.desc}</p>`;
+      card.addEventListener('click', () => handleGameClick(card, step));
+      gameGrid.appendChild(card);
+    });
+  }
+
+  function handleGameClick(card, step) {
+    if (card.classList.contains('correct')) return;
+    gameAttempts++;
+    gameAttemptsEl.textContent = gameAttempts;
+    if (step.order === gameNext) {
+      card.classList.add('correct');
+      card.setAttribute('aria-disabled', 'true');
+      document.getElementById('order-feedback').textContent = step.title + ': correct.';
+      gameNext++;
+      gameStep.textContent = Math.min(gameNext, 7);
+      if (gameNext > 7) {
+        setTimeout(() => {
+          gameGrid.style.display = 'none';
+          gameStatus.style.display = 'none';
+          gameWin.style.display = 'block';
+          gameWin.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 500);
+      }
+    } else {
+      card.classList.add('wrong');
+      document.getElementById('order-feedback').textContent = 'Not yet. Next: ' + billSteps.find(s => s.order === gameNext).title;
+      setTimeout(() => card.classList.remove('wrong'), 500);
+    }
+  }
+  renderGame();
+
+  // REVEAL ON SCROLL
+  const sections = document.querySelectorAll('section');
+  // Keep educational content visible even when scroll animation is unavailable.
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  sections.forEach(s => obs.observe(s));
+</script>
+</body>
+</html>
