@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="San Diego County's five U.S. House races on the new Prop 50 map: precinct-by-precinct red and blue maps, candidates, and what the numbers say.">
+  <meta name="theme-color" content="#142d32"><title>Election Lab — San Diego's 2026 House races | Congress 101</title>
+  <link rel="icon" href="assets/mark.svg" type="image/svg+xml"><link rel="stylesheet" href="lab.css">
+<style>
+/* Layout: precinct atlas — district strip, a map bench with tally, one feature dossier for the open seat, compact cards for the rest, then the redistricting charts. */
+:root{
+  --bg:#f7f7ef; --surface:#fffef8; --sunk:#eef1e6; --ink:#172e33; --ink-2:#4d5c5e; --muted:#6b7778; --line:#d7ddd2; --line-2:#b9c2b3;
+  --focus:#bd492b; --mid:#e3e6dc;
+  --d1:#d3e0f1; --d2:#a3c0e4; --d3:#6b98d2; --d4:#2f6bb5; --d5:#173f7a;
+  --r1:#f6d3cf; --r2:#eda39c; --r3:#dd6a61; --r4:#be3a30; --r5:#85201a;
+  --y1:#d9ebd3; --y2:#a8d19a; --y3:#5fa548; --n1:#f1e2c6; --n2:#ddb876; --n3:#ae7b22;
+  --m1:#172e33; --m2:#c77d16; --m3:#2e8a83; --m4:#8a4fbf;
+  --display:'Space Grotesk',sans-serif; --body:'DM Sans',system-ui,sans-serif; --mono:'DM Sans',system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+.rpage{font-family:var(--body);line-height:1.5}
+.rwrap{width:min(1220px,calc(100% - 80px));margin:0 auto;padding-block:40px 64px;display:flex;flex-direction:column;gap:44px}
+@media(max-width:1050px){.rwrap{width:calc(100% - 48px)}}
+@media(max-width:760px){.rwrap{width:calc(100% - 32px)}}
+h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.05;text-wrap:balance;margin:0;letter-spacing:.005em}
+.rpage h1{font-size:clamp(46px,6.5vw,84px);letter-spacing:-3px;line-height:1;margin-bottom:0} .rpage h2{font-size:clamp(28px,3.2vw,40px);letter-spacing:-1.2px;margin-bottom:0} .rpage h3{font-size:22px;letter-spacing:-.5px;margin-bottom:0}
+.rpage h1 em,.rpage h2 em{font-style:normal;color:#557143}
+p{margin:0}
+.kicker{font-size:11px;font-weight:700;letter-spacing:1.6px;text-transform:uppercase;color:var(--ink)}
+.dek{max-width:68ch;color:var(--ink-2);font-size:17px;margin:0}
+.num,.mono{font-variant-numeric:tabular-nums}
+.rpage p{margin:0}
+.rpage .card h3{font-size:26px}
+.sub{font-size:.88rem;color:var(--ink-2)}
+header{display:flex;flex-direction:column;gap:14px}
+.strip{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+.dcard{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px 15px;display:flex;flex-direction:column;gap:8px;min-width:0;text-decoration:none;color:inherit}
+.dcard:hover{border-color:var(--line-2)}
+.dcard.hot{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.dcard .top{display:flex;justify-content:space-between;align-items:baseline;gap:6px;flex-wrap:wrap}
+.dcard .cd{font-family:var(--display);font-weight:700;font-size:1.8rem;line-height:1}
+.dcard .who{font-size:.9rem;color:var(--ink-2);line-height:1.3}
+.chip{font-size:.8rem;padding:2px 7px;border-radius:3px;white-space:nowrap;font-variant-numeric:tabular-nums;color:var(--ink)}
+.chip.R{background:var(--r1)} .chip.D{background:var(--d1)} .chip.T{background:var(--mid)}
+.rating{font-size:.78rem;font-weight:600;padding:2px 8px;border-radius:3px;white-space:nowrap;border:1px solid var(--line-2);background:var(--sunk);color:var(--ink);align-self:flex-start}
+.regbar{display:flex;height:9px;border-radius:2px;overflow:hidden;gap:2px;background:var(--surface)}
+.regbar span{display:block;height:100%}
+.reglegend{display:flex;gap:10px;flex-wrap:wrap;font-family:var(--mono);font-size:.72rem;color:var(--ink-2)}
+.reglegend i{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:5px;vertical-align:-1px}
+
+.bench{display:grid;grid-template-columns:minmax(0,1fr) 330px;background:var(--surface);border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.mapcol{display:flex;flex-direction:column;min-width:0;border-right:1px solid var(--line)}
+.controls{display:flex;flex-direction:column;gap:10px;padding:14px 16px;border-bottom:1px solid var(--line)}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font:600 .86rem/1 var(--body);color:var(--ink-2);background:var(--sunk);border:1px solid var(--line);border-radius:4px;padding:7px 10px;cursor:pointer}
+.seg button:hover{color:var(--ink);border-color:var(--line-2)}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+.seg button:focus-visible,a:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.mapbox{position:relative;background:var(--sunk);touch-action:none}
+#map{display:block;width:100%;height:auto;cursor:grab}
+.prec{stroke:var(--surface);stroke-width:.3;vector-effect:non-scaling-stroke}
+.prec:hover{stroke:var(--ink);stroke-width:1.4}
+.under{fill:var(--mid)}
+.dline{fill:none;stroke:var(--ink);stroke-width:2;vector-effect:non-scaling-stroke;pointer-events:none}
+.cline{fill:none;stroke:var(--ink-2);stroke-width:1;stroke-dasharray:5 4;vector-effect:non-scaling-stroke;pointer-events:none}
+.dlabel{font-family:var(--display);font-weight:700;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:4px;stroke-linejoin:round;pointer-events:none;text-anchor:middle}
+.plabel{font-family:var(--body);font-weight:600;fill:var(--ink);paint-order:stroke;stroke:var(--surface);stroke-width:3px;stroke-linejoin:round;pointer-events:none;text-anchor:middle}
+.legend{display:flex;flex-direction:column;gap:6px;padding:12px 16px;border-top:1px solid var(--line)}
+.legend .ramp{display:flex;gap:2px;max-width:520px}
+.legend .ramp span{flex:1;height:12px;border-radius:2px}
+.legend .ticks{display:flex;justify-content:space-between;max-width:520px;font-family:var(--mono);font-size:.72rem;color:var(--ink-2)}
+.legend .cap{font-size:.84rem;color:var(--ink-2)}
+.zoomhint{position:absolute;right:10px;bottom:10px;font-family:var(--mono);font-size:.7rem;color:var(--muted);background:var(--surface);border:1px solid var(--line);padding:3px 7px;border-radius:3px}
+.tip{position:absolute;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--line-2);border-radius:5px;padding:9px 11px;font-size:.84rem;line-height:1.35;box-shadow:0 6px 18px rgba(0,0,0,.18);min-width:200px;max-width:260px;z-index:5}
+.tip b{font-family:var(--display);font-size:1.05rem}
+.tip .row{display:flex;justify-content:space-between;gap:12px;font-family:var(--mono);font-size:.76rem;color:var(--ink-2)}
+.tip .row span:last-child{color:var(--ink)}
+.panel{padding:16px 18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.tally{width:100%;border-collapse:collapse;font-size:.88rem}
+.tally th{font:600 .7rem/1.2 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:4px 0;border-bottom:1px solid var(--line)}
+.tally td{padding:8px 0;border-bottom:1px solid var(--line);vertical-align:middle}
+.tally tr.sel td{background:var(--sunk)}
+.tally td.v{font-family:var(--mono);font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;padding-left:8px}
+.mbar{position:relative;height:12px;background:var(--sunk);border-radius:2px}
+.mbar .c{position:absolute;left:50%;top:-2px;bottom:-2px;width:1px;background:var(--line-2)}
+.mbar .f{position:absolute;top:0;bottom:0;border-radius:2px}
+.note{font-size:.8rem;color:var(--muted)}
+
+.feature{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:22px;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:22px 30px}
+.feature .head{grid-column:1/-1;display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:10px;border-bottom:1px solid var(--line);padding-bottom:14px}
+.feature .head h2 span{color:var(--muted);font-weight:600}
+.col{display:flex;flex-direction:column;gap:14px;min-width:0}
+.matchup{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cand{background:var(--sunk);border-radius:6px;padding:12px 14px;display:flex;flex-direction:column;gap:3px;border-top:4px solid var(--mid)}
+.cand.D{border-top-color:var(--d4)} .cand.R{border-top-color:var(--r4)}
+.cand .nm{font-family:var(--display);font-weight:700;font-size:1.3rem;line-height:1.1}
+.cand .ds{font-size:.85rem;color:var(--ink-2)}
+.cand .money{font-family:var(--mono);font-size:.76rem;color:var(--ink-2);margin-top:4px}
+.prim{display:flex;flex-direction:column;gap:4px}
+.prim .r{display:grid;grid-template-columns:minmax(0,10rem) minmax(0,1fr) 3.4rem;gap:8px;align-items:center;font-size:.84rem}
+.prim .r .nm{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.prim .r .bar{height:10px;border-radius:2px}
+.prim .r .v{font-family:var(--mono);font-size:.76rem;text-align:right}
+.prim .r.adv .nm{font-weight:700}
+.measures{width:100%;border-collapse:collapse;font-size:.9rem}
+.measures th{font:600 .7rem/1.2 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted);text-align:left;padding:5px 0;border-bottom:1px solid var(--line)}
+.measures td{padding:7px 0;border-bottom:1px solid var(--line)}
+.measures td.v{font-family:var(--mono);text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap;padding-left:8px}
+.measures .sm{color:var(--ink-2);font-size:.8rem}
+.read{font-size:.95rem;max-width:62ch}
+.tablewrap{overflow-x:auto}
+.grid4{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:18px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.card .head{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:10px}
+.card h3{font-size:1.6rem}
+.card h3 span{font-weight:500;color:var(--muted);font-size:1.15rem}
+.vs{display:flex;flex-direction:column;gap:2px;font-size:.95rem}
+.vs .p{font-family:var(--mono);font-size:.74rem;padding:1px 6px;border-radius:3px;margin-left:6px}
+.vs .p.D{background:var(--d1)} .vs .p.R{background:var(--r1)}
+
+.chartcard{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.chartcard svg{display:block;width:100%;height:auto}
+.chartcard .axis text{font-family:var(--mono);font-size:11px;fill:var(--ink-2)}
+.mlegend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.85rem;color:var(--ink-2)}
+.mlegend span{display:inline-flex;align-items:center;gap:6px}
+.chartcard .mlegend svg{width:16px;height:16px;flex:none}
+#shift,#ladder{min-width:600px}
+.callout{background:var(--sunk);border-radius:6px;padding:14px 16px;font-size:.95rem;max-width:80ch}
+.caveats{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:.88rem;color:var(--ink-2);max-width:80ch}
+.sources{font-size:.86rem;color:var(--ink-2);display:flex;flex-direction:column;gap:8px;max-width:80ch}
+.sources a{color:var(--ink)}
+.sources ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px}
+.ratings{width:100%;border-collapse:collapse;font-size:.9rem}
+.ratings th,.ratings td{padding:7px 8px;border-bottom:1px solid var(--line);text-align:left}
+.ratings th{font:600 .7rem/1.2 var(--mono);text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+
+.investigate{background:#e8eddc;border:1px solid #d5deca;border-radius:6px;padding:26px;display:flex;flex-direction:column;gap:14px}
+.investigate ol{margin:0;padding-left:22px;display:flex;flex-direction:column;gap:10px;max-width:80ch}
+.investigate li{color:var(--ink)}
+.backlinks{display:flex;gap:18px;flex-wrap:wrap;font-size:13px;font-weight:700}
+.rpage .read,.rpage .cand .nm{color:var(--ink)}
+@media (max-width:1000px){.strip{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:900px){
+  .bench{grid-template-columns:minmax(0,1fr)}
+  .mapcol{border-right:0;border-bottom:1px solid var(--line)}
+  .feature{grid-template-columns:minmax(0,1fr)}
+  .grid4{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  .strip{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .feature{padding:16px}
+  .matchup{grid-template-columns:minmax(0,1fr)}
+  .legend .ticks span:nth-child(even){visibility:hidden}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#main">Skip to content</a>
+<header class="site-header"><div class="nav-wrap">
+  <a class="brand" href="./" aria-label="Congress 101 home"><img src="assets/mark.svg" alt="" width="35" height="35"><span>CONGRESS<span class="brand-light">101</span><small>MR. JAMES’S GOVERNMENT CLASS</small></span></a>
+  <nav aria-label="Main navigation"><a href="./#missions">The lab</a><a href="congress.html">Study guide</a><a href="congress.html#gerrymander">Gerrymandering</a><a href="sources.html">Sources</a></nav>
+</div></header>
+<main id="main" class="rpage"><div class="rwrap">
+  <header>
+    <span class="kicker">Election lab · U.S. House · San Diego County · Nov 3, 2026</span>
+    <h1>Five seats.<br><em>One real race.</em></h1>
+    <p class="dek" id="dek"></p>
+    <div class="strip" id="strip"></div>
+    <div class="reglegend"><span><i style="background:var(--d3)"></i>Democratic</span><span><i style="background:var(--r3)"></i>Republican</span><span><i style="background:var(--line-2)"></i>No party preference</span><span><i style="background:var(--mid)"></i>Other</span><span>Registration as of the June 2, 2026 primary, whole district</span></div>
+  </header>
+
+  <section class="bench" aria-label="Precinct map">
+    <div class="mapcol">
+      <div class="controls">
+        <div class="seg" id="layerbtns" role="group" aria-label="Map layer"></div>
+        <div class="seg" id="areabtns" role="group" aria-label="Zoom to district"></div>
+      </div>
+      <div class="mapbox" id="mapbox">
+        <svg id="map" viewBox="0 0 900 760" role="img" aria-label="Precinct map of San Diego-area congressional districts"></svg>
+        <div class="tip" id="tip" hidden></div>
+        <div class="zoomhint">scroll or pinch to zoom · drag to pan</div>
+      </div>
+      <div class="legend" id="legend"></div>
+    </div>
+    <aside class="panel" id="panel"></aside>
+  </section>
+
+  <section id="cd-48" class="feature" aria-label="CA-48"></section>
+  <section class="grid4" id="others" aria-label="CA-49 through CA-52"></section>
+
+  <section class="chartcard" aria-labelledby="shiftH">
+    <span class="kicker">What Prop 50 did</span>
+    <h2 id="shiftH">One seat moved 19 points. Three others gave up votes to make it happen.</h2>
+    <p class="dek">The same 2024 presidential votes, counted two ways: under the 2022–2024 district lines and under the new lines voters approved in November 2025. Democratic voters were moved out of safe seats (50, 51 and 52) and into the 48th, which went from Trump +15.7 to Harris +3.3.</p>
+    <div class="mlegend"><span><svg viewBox="-8 -8 16 16"><circle r="5" style="fill:var(--surface);stroke:var(--ink-2);stroke-width:2"></circle></svg>Old lines (2024 election)</span><span><svg viewBox="-8 -8 16 16"><circle r="6" style="fill:var(--ink)"></circle></svg>New lines (2026 election)</span></div>
+    <div class="tablewrap"><svg id="shift" viewBox="0 0 900 300" aria-label="2024 presidential margin, old vs new district lines"></svg></div>
+  </section>
+
+  <section class="chartcard" aria-labelledby="ladderH">
+    <span class="kicker">Partisan lean, four ways</span>
+    <h2 id="ladderH">Only the 48th is close on any measure</h2>
+    <p class="dek">Each mark is one measure of lean for the whole district, in percentage points. Left of center leans Democratic, right leans Republican.</p>
+    <div class="mlegend" id="ladderLegend"></div>
+    <div class="tablewrap"><svg id="ladder" viewBox="0 0 900 290" aria-label="Partisan lean by district"></svg></div>
+  </section>
+
+  <section class="chartcard" id="outlook" aria-labelledby="outH">
+    <span class="kicker">Outlook · as of Oct 5, 2026</span>
+    <h2 id="outH">The raters call the 48th <em>Lean Democratic.</em> The other four are safe.</h2>
+    <div class="tablewrap"><table class="ratings" id="ratings"></table></div>
+    <p class="dek" id="outDek"></p>
+    <div class="tablewrap"><svg id="est" viewBox="0 0 900 210" aria-label="CA-48 estimate inputs" style="min-width:600px"></svg></div>
+    <div class="callout" id="outCall"></div>
+    <ul class="caveats">
+      <li>The ratings come from the raters' published tables (Cook Sep 25, Sabato Sep 29, Inside Elections Oct 1, 2026), as compiled on Wikipedia because the raters' own sites block automated reads.</li>
+      <li>Primary voters are older and more partisan than November voters. All-Democratic vs all-Republican primary totals point the right way in most years but miss by several points.</li>
+      <li>Fundraising figures run through June 30, 2026. Third-quarter reports are due to the FEC on Oct 15.</li>
+      <li>About half of the 48th's votes come from Riverside County (Palm Springs and the Coachella Valley), which this map includes.</li>
+    </ul>
+  </section>
+
+  <section class="investigate" aria-labelledby="invH">
+    <span class="kicker">Investigate</span>
+    <h2 id="invH">Use the map to answer these.</h2>
+    <ol>
+      <li>Switch the map to <b>Prop 50</b>. Which district voted most strongly for the new map? Which voted least? Why might that be?</li>
+      <li>The 50th, 51st and 52nd each became less Democratic under the new lines, while the 48th became much more Democratic. Use the words <b>packing</b> and <b>cracking</b> to explain what the mapmakers did.</li>
+      <li>Zoom in on your own neighborhood. Which district are you in? How did your precinct vote in 2024, and how does it compare with the whole district?</li>
+      <li>Compare the <b>June 2026 House primary</b> layer with the <b>2024 President</b> layer for the 48th. Which looks better for each candidate, and why might a primary electorate differ from a November one?</li>
+      <li>Desmond and von Wilpert each raised more than $2 million by June 30. The Republicans in the other four seats raised almost nothing. What does that tell you about where money goes in House races?</li>
+    </ol>
+  </section>
+
+  <section class="sources" aria-labelledby="srcH">
+    <h3 id="srcH">Method and sources</h3>
+    <ul>
+      <li><b>District lines:</b> built by merging the precincts the Secretary of State assigned to each district for the June 2, 2026 primary, the first election held under the Prop 50 map. Only CA-48 (with Riverside County) and CA-49 (with Orange County) cross the county line. Imperial County is in CA-25, which has no San Diego territory.</li>
+      <li><b>Results and registration:</b> Statewide Database, UC Berkeley (<a href="https://statewidedatabase.org/">statewidedatabase.org</a>) precinct files for San Diego, Riverside and Orange counties: Nov 2024 general, Nov 2025 special (Prop 50) and June 2026 primary. Nov 2024 and Nov 2025 precincts are placed in the new district that holds most of their land. San Diego County totals land within 0.1% of the county's precinct totals.</li>
+      <li><b>Certified primary results:</b> California Secretary of State, <a href="https://elections.cdn.sos.ca.gov/sov/2026-primary/sov/76-us-rep.xlsx">Statement of Vote, U.S. Representative</a> (certified July 10, 2026). Prop 50: <a href="https://elections.cdn.sos.ca.gov/sov/2025-special/sov/complete-sov.pdf">Statement of Vote, Nov 4, 2025 special</a>.</li>
+      <li><b>Margins</b> are two-party: (Republican − Democrat) ÷ (Republican + Democrat). Primary measures sum every Democratic candidate against every Republican candidate. Registration margin is Republican minus Democratic registration as a share of all voters.</li>
+      <li><b>Money:</b> FEC candidate totals through June 30, 2026. <b>Poll:</b> SurveyUSA for KGTV/San Diego Union-Tribune, Aug 27–Sep 1, 2026, 522 likely voters, ±5.2 (<a href="https://www.10news.com/americavotes/poll-von-wilpert-holds-slight-edge-in-48th-district-race-inflation-economy-top-issue">10News</a>). Background: <a href="https://calmatters.org/politics/2025/11/san-diego-redistricting-midterm-election/">CalMatters</a>, <a href="https://calmatters.org/politics/2026/03/darrell-issa-retires/">CalMatters on Issa's retirement</a>, <a href="https://www.kqed.org/news/12099698/the-race-for-californias-48th-congressional-district">KQED</a>.</li>
+    </ul>
+  </section>
+</div></main>
+<footer class="wrap footer"><div><a class="brand" href="./">CONGRESS<span class="brand-light">101</span></a><p>Mr. James · Granite Hills High School<br> Learn it. Question it. Participate.</p></div><div><div class="backlinks"><a href="./">← Back to Civics Lab</a><a href="congress.html#gerrymander">Gerrymandering guide</a><a href="sources.html">Sources</a></div><p>Election data checked Oct 5, 2026. Precinct results: UC Berkeley Statewide Database.</p></div></footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/3.0.2/topojson.min.js"></script>
+<script>
+const INFO = {"48": {"open": true, "cook": "Lean D", "sabato": "Lean D", "inside": "Tilt D", "mine": "Lean D", "gen": [{"n": "Marni von Wilpert", "s": "von Wilpert", "p": "D", "d": "San Diego City Council member", "raised": "$2.17M", "cash": "$825K"}, {"n": "Jim Desmond", "s": "Desmond", "p": "R", "d": "San Diego County supervisor, former San Marcos mayor", "raised": "$2.26M", "cash": "$1.23M"}], "prim": [["Jim Desmond", "R", 73508, 1], ["Marni von Wilpert", "D", 39327, 1], ["Ammar Campa-Najjar", "D", 20095, 0], ["Kevin Patrick O'Neil", "R", 13132, 0], ["Brandon Riker", "D", 11892, 0], ["Abel Chavez", "D", 10339, 0], ["Corinna Contreras", "D", 10056, 0], ["Mike Schaefer", "D", 4770, 0], ["Luis F. Reyna", "NPP", 1690, 0], ["Stephen Clemons", "D", 1542, 0], ["Ferguson Porter", "D", 1301, 0], ["Eric Shaw", "D", 1299, 0]], "read": "Darrell Issa retired in March rather than run in the redrawn seat and endorsed Desmond, who also has Donald Trump's endorsement. Desmond is running on local service and affordability. Von Wilpert is running on national issues, including immigration enforcement, tariffs and health care. A SurveyUSA poll for KGTV and the Union-Tribune (Aug 27\u2013Sep 1, 522 likely voters, \u00b15.2) had von Wilpert 45%, Desmond 42%, with 13% undecided."}, "49": {"area": "North County coast and south Orange County", "cook": "Solid D", "sabato": "Safe D", "inside": "Solid D", "mine": "Safe D", "gen": [{"n": "Mike Levin", "s": "Levin", "p": "D", "inc": true, "raised": "$3.16M"}, {"n": "Armen Kurdian", "s": "Kurdian", "p": "R", "raised": "$59K"}], "prim": [["Mike Levin", "D", 125869, 1], ["Armen Kurdian", "R", 58822, 1], ["Star Parker", "R", 40661, 0]], "note": "The new lines moved the seat south; San Diego County's share of the district rose from about 65% to 81% (CalMatters). Levin won the old version by 4.4 points in 2024."}, "50": {"area": "Inland North County to downtown and Coronado", "cook": "Solid D", "sabato": "Safe D", "inside": "Solid D", "mine": "Safe D", "gen": [{"n": "Scott Peters", "s": "Peters", "p": "D", "inc": true, "raised": "$1.81M"}, {"n": "Steve Cohen", "s": "Cohen", "p": "R", "raised": "$0 reported"}], "prim": [["Scott Peters", "D", 102057, 1], ["Steve Cohen", "R", 84340, 1], ["Aishwarya \"Sparky\" Mitra", "D", 16982, 0], ["Tim Arnous", "D", 3793, 0], ["Joe Shea", "LIB", 3667, 0], ["Lucinda KWH Jahn", "NPP", 1125, 0]], "note": "Prop 50 gave up the most Democratic margin here: inland, Republican-leaning areas were added. Cohen, a former KUSI news director, took 39.8% in the primary, the best Republican showing in the four Democratic-held seats."}, "51": {"area": "East County and mid-city", "cook": "Solid D", "sabato": "Safe D", "inside": "Solid D", "mine": "Safe D", "gen": [{"n": "Sara Jacobs", "s": "Jacobs", "p": "D", "inc": true, "raised": "$1.64M"}, {"n": "Ricardo Cabrera", "s": "Cabrera", "p": "R", "raised": "$0 reported"}], "prim": [["Sara Jacobs", "D", 111765, 1], ["Ricardo Cabrera", "R", 71692, 1], ["David W. Engel", "D", 6173, 0], ["Stan Caplan", "D", 3943, 0]], "note": "Now reaches deep into East County. Most of the Grossmont Union district lies here, including Granite Hills High (CA-51); Santee is in the 50th and Jamul in the 52nd."}, "52": {"area": "South Bay and the border", "cook": "Solid D", "sabato": "Safe D", "inside": "Solid D", "mine": "Safe D", "gen": [{"n": "Juan Vargas", "s": "Vargas", "p": "D", "inc": true, "raised": "$569K"}, {"n": "Jeff Belle", "s": "Belle", "p": "R", "raised": "$25K"}], "prim": [["Juan Vargas", "D", 71608, 1], ["Jeff Belle", "R", 42090, 1], ["Deborah Calhoun Rhodes", "D", 12070, 0], ["Frances Yasmeen Motiwalla", "D", 1010, 0]], "note": "Holds the South Bay and the border crossings, with rural Jamul and Campo to the east."}, "old": {"48": 15.7, "49": -8.0, "50": -30.6, "51": -24.2, "52": -21.8}, "labels": {"48": [-116.72, 33.33], "49": [-117.33, 33.32], "50": [-116.95, 33.13], "51": [-116.67, 32.96], "52": [-116.68, 32.7]}, "places": [{"n": "Oceanside", "c": [-117.37948, 33.19587], "cd": "49", "z": 1}, {"n": "Carlsbad", "c": [-117.32913, 33.1352], "cd": "49", "z": 1}, {"n": "Encinitas", "c": [-117.28498, 33.04318], "cd": "49", "z": 1}, {"n": "Vista", "c": [-117.24248, 33.20214], "cd": "48", "z": 1}, {"n": "San Marcos", "c": [-117.17434, 33.1353], "cd": "48", "z": 2.6}, {"n": "Escondido", "c": [-117.08148, 33.12168], "cd": "48", "z": 1}, {"n": "Poway", "c": [-117.03586, 32.96282], "cd": "50", "z": 1}, {"n": "Ramona", "c": [-116.8776, 33.04728], "cd": "50", "z": 1}, {"n": "Julian", "c": [-116.58785, 33.07396], "cd": "51", "z": 1}, {"n": "Fallbrook", "c": [-117.22327, 33.36631], "cd": "49", "z": 2.6}, {"n": "Valley Center", "c": [-117.02919, 33.22724], "cd": "50", "z": 2.6}, {"n": "Borrego Springs", "c": [-116.35695, 33.25486], "cd": "48", "z": 1}, {"n": "Alpine", "c": [-116.76011, 32.84386], "cd": "51", "z": 1}, {"n": "Lakeside", "c": [-116.89601, 32.85032], "cd": "51", "z": 2.6}, {"n": "Santee", "c": [-116.97392, 32.83838], "cd": "50", "z": 1}, {"n": "El Cajon", "c": [-116.96253, 32.79477], "cd": "51", "z": 1}, {"n": "La Mesa", "c": [-117.02308, 32.76783], "cd": "51", "z": 2.6}, {"n": "Chula Vista", "c": [-117.08419, 32.64005], "cd": "52", "z": 1}, {"n": "National City", "c": [-117.0992, 32.67811], "cd": "52", "z": 2.6}, {"n": "Imperial Beach", "c": [-117.11305, 32.58389], "cd": "52", "z": 2.6}, {"n": "Coronado", "c": [-117.17669, 32.69152], "cd": "50", "z": 2.6}, {"n": "La Jolla", "c": [-117.25757, 32.84585], "cd": "50", "z": 1}, {"n": "Downtown SD", "c": [-117.16426, 32.70893], "cd": "50", "z": 1}, {"n": "Rancho Bernardo", "c": [-117.0744, 33.02283], "cd": "50", "z": 2.6}, {"n": "Del Mar", "c": [-117.26531, 32.95949], "cd": "49", "z": 2.6}, {"n": "Solana Beach", "c": [-117.26781, 32.99191], "cd": "49", "z": 2.6}, {"n": "Spring Valley", "c": [-116.96689, 32.72957], "cd": "51", "z": 2.6}, {"n": "Otay Mesa", "c": [-116.98783, 32.56288], "cd": "52", "z": 2.6}, {"n": "Pine Valley", "c": [-116.51509, 32.84184], "cd": "51", "z": 2.6}, {"n": "Jamul", "c": [-116.8668, 32.71551], "cd": "52", "z": 2.6}, {"n": "Campo", "c": [-116.47165, 32.65261], "cd": "52", "z": 1}, {"n": "Lemon Grove", "c": [-117.03142, 32.74255], "cd": "51", "z": 2.6}, {"n": "Mira Mesa", "c": [-117.14392, 32.9156], "cd": "50", "z": 2.6}, {"n": "Clairemont", "c": [-117.18234, 32.81951], "cd": "50", "z": 2.6}, {"n": "Rancho Santa Fe", "c": [-117.19798, 33.02423], "cd": "49", "z": 2.6}, {"n": "San Ysidro", "c": [-117.04308, 32.552], "cd": "52", "z": 2.6}, {"n": "Temecula", "c": [-117.14737, 33.49464], "cd": "48", "z": 1}, {"n": "Hemet", "c": [-116.97197, 33.74752], "cd": "48", "z": 1}, {"n": "Anza", "c": [-116.69786, 33.57638], "cd": "48", "z": 2.6}, {"n": "San Clemente", "c": [-117.61242, 33.42703], "cd": "49", "z": 1}, {"n": "San Juan Capistrano", "c": [-117.66255, 33.50169], "cd": "49", "z": 2.6}, {"n": "Camp Pendleton", "c": [-117.38868, 33.22185], "cd": "49", "z": 2.6}, {"n": "Palm Springs", "c": [-116.5403, 33.82463], "cd": "48", "z": 1}, {"n": "Idyllwild", "c": [-116.71894, 33.74028], "cd": "48", "z": 2.6}, {"n": "Aguanga", "c": [-116.85944, 33.4556], "cd": "48", "z": 2.6}, {"n": "Bonita", "c": [-117.01703, 32.66491], "cd": "52", "z": 2.6}, {"n": "Point Loma", "c": [-117.24445, 32.72653], "cd": "50", "z": 2.6}, {"n": "Torrey Pines", "c": [-117.24026, 32.89196], "cd": "49", "z": 2.6}, {"n": "Mission Hills", "c": [-117.18352, 32.75295], "cd": "51", "z": 2.6}]};
+fetch("assets/sd-races.json").then(r=>r.json()).then(DATA=>{
+const CDS=["48","49","50","51","52"];
+const fmt=d3.format(","), pct1=v=>(v*100).toFixed(1)+"%";
+function two(r,d){const t=r+d;return t?(r-d)/t*100:null}
+function leanTxt(m,R="R",D="D"){if(m==null)return"–";if(Math.abs(m)<0.05)return"Even";return (m>0?R:D)+" +"+Math.abs(m).toFixed(1)}
+function leanCls(m){return m==null||Math.abs(m)<1?"T":m>0?"R":"D"}
+const BINS=[1,5,15,30,45];
+function partyFill(m){if(m==null)return"var(--mid)";const a=Math.abs(m);if(a<BINS[0])return"var(--mid)";const i=Math.min(BINS.filter(t=>a>=t).length,5);return`var(--${m>0?"r":"d"}${i})`}
+const YB=[2,10,20];
+function yesFill(m){if(m==null)return"var(--mid)";const a=Math.abs(m);if(a<YB[0])return"var(--mid)";const i=YB.filter(t=>a>=t).length;return`var(--${m>0?"y":"n"}${i})`}
+const AG=DATA.agg, P=AG.p26, G=AG.g24, S=AG.s25;
+const COUNTY={"073":"San Diego Co.","065":"Riverside Co.","059":"Orange Co."};
+function topName(cd,i){return DATA.top[cd][i].name}
+
+const LAYERS={
+  pres24:{label:"2024 President",yr:"g24",fill:partyFill,val:p=>two(p.R_,p.D_),
+    cap:"Trump margin over Harris, two-party, Nov 2024, counted on the new district lines",
+    tip:p=>[["Trump",fmt(p.R_)],["Harris",fmt(p.D_)],["Margin",leanTxt(two(p.R_,p.D_),"Trump","Harris")]],
+    agg:a=>two(a.R_,a.D_),aggTxt:m=>leanTxt(m,"Trump","Harris"),title:"2024 president, new lines",legend:"party"},
+  house26:{label:"June 2026 House primary",yr:"p26",fill:partyFill,val:p=>two(p.hR,p.hD),
+    cap:"All Republican vs all Democratic House candidates, June 2, 2026 primary",
+    tip:p=>[[topName(p.cd,0),fmt(p.t1)],[topName(p.cd,1),fmt(p.t2)],["All Dem House votes",fmt(p.hD)],["All GOP House votes",fmt(p.hR)]],
+    agg:a=>two(a.hR,a.hD),aggTxt:m=>leanTxt(m),title:"June 2026 House primary, party totals",legend:"party"},
+  reg26:{label:"Party registration",yr:"p26",fill:partyFill,val:p=>p.reg?(p.rep-p.dem)/p.reg*100:null,
+    cap:"Republican minus Democratic registration, share of all voters, June 2026",
+    tip:p=>[["Registered",fmt(p.reg)],["Democratic",pct1(p.dem/p.reg)],["Republican",pct1(p.rep/p.reg)],["No party pref.",pct1(p.npp/p.reg)]],
+    agg:a=>(a.rep-a.dem)/a.reg*100,aggTxt:m=>leanTxt(m),title:"Registration gap, June 2026",legend:"party"},
+  prop50:{label:"Prop 50 (redistricting)",yr:"s25",fill:yesFill,val:p=>{const t=p.Y+p.N;return t?p.Y/t*100-50:null},
+    cap:"Prop 50, the Nov 2025 measure that adopted these district lines, Yes share",
+    tip:p=>{const t=p.Y+p.N;return[["Yes",`${fmt(p.Y)} · ${t?pct1(p.Y/t):"–"}`],["No",`${fmt(p.N)} · ${t?pct1(p.N/t):"–"}`]]},
+    agg:a=>a.Y/(a.Y+a.N)*100-50,aggTxt:m=>(m+50).toFixed(1)+"% yes",title:"Prop 50, Yes share",legend:"yes"},
+  gov26:{label:"June 2026 Governor primary",yr:"p26",fill:partyFill,val:p=>two(p.gR,p.gD),
+    cap:"All Republican vs all Democratic governor candidates, June 2, 2026 primary",
+    tip:p=>[["All GOP gov. votes",fmt(p.gR)],["All Dem gov. votes",fmt(p.gD)],["Margin",leanTxt(two(p.gR,p.gD))]],
+    agg:a=>two(a.gR,a.gD),aggTxt:m=>leanTxt(m),title:"June 2026 governor primary, party totals",legend:"party"},
+};
+let state={layer:"pres24",cd:null};
+try{const s=JSON.parse(localStorage.getItem("c101-races")||"{}");if(s.layer in LAYERS)state.layer=s.layer}catch(e){}
+
+/* header */
+function regbar(a){const o=a.reg-a.dem-a.rep-a.npp;return`<div class="regbar"><span style="width:${a.dem/a.reg*100}%;background:var(--d3)"></span><span style="width:${a.rep/a.reg*100}%;background:var(--r3)"></span><span style="width:${a.npp/a.reg*100}%;background:var(--line-2)"></span><span style="width:${o/a.reg*100}%;background:var(--mid)"></span></div>`}
+document.getElementById("dek").textContent=`San Diego County votes in five House districts, all redrawn by Prop 50 for 2026. Harris carried all five under the new lines in 2024, but only one is close: the open 48th, which now runs from Escondido and San Marcos to Palm Springs and was built to flip. Democratic incumbents in the 49th through 52nd face lightly funded Republicans.`;
+document.getElementById("strip").innerHTML=CDS.map(cd=>{const m=two(G[cd].R_,G[cd].D_),I=INFO[cd];
+  return`<a class="dcard ${cd==="48"?"hot":""}" href="#cd-${cd}"><div class="top"><span class="cd">CA-${cd}</span><span class="chip ${leanCls(m)}">${leanTxt(m,"Trump","Harris")}</span></div>
+  <div class="who">${I.gen.map(c=>`${c.s} (${c.p})`).join(" vs ")}${I.open?" · open seat":""}</div>${regbar(P[cd])}
+  <span class="rating">${I.cook}</span></a>`}).join("");
+
+/* map */
+const svg=d3.select("#map"),W=900,H=760;
+const outline=DATA.outline;
+const lat0=33.2*Math.PI/180;
+let sc=1,tx=0,ty=0;
+const proj=d3.geoTransform({point(x,y){this.stream.point(x*Math.cos(lat0)*sc+tx,-y*sc+ty)}});
+(function fit(){const b=d3.geoPath(d3.geoTransform({point(x,y){this.stream.point(x*Math.cos(lat0),-y)}})).bounds(outline);
+  const pad=18,k=Math.min((W-2*pad)/(b[1][0]-b[0][0]),(H-2*pad)/(b[1][1]-b[0][1]));sc=k;tx=(W-k*(b[1][0]+b[0][0]))/2;ty=(H-k*(b[1][1]+b[0][1]))/2;})();
+const path=d3.geoPath(proj);
+const pt=c=>[c[0]*Math.cos(lat0)*sc+tx,-c[1]*sc+ty];
+const root=svg.append("g");
+const gU=root.append("g"),gP=root.append("g"),gC=root.append("g"),gL=root.append("g"),gT=root.append("g");
+gU.selectAll("path").data(outline.features).join("path").attr("class","under").attr("d",path);
+gC.append("path").datum(DATA.county).attr("class","cline").attr("d",path);
+gL.selectAll("path").data(outline.features).join("path").attr("class","dline").attr("d",path);
+const FEATS={};for(const y of ["g24","p26","s25"]){const t=DATA.topo[y];FEATS[y]=topojson.feature(t,t.objects[Object.keys(t.objects)[0]]).features}
+const labelAt=INFO.labels;
+const dLab=gT.selectAll("text.dlabel").data(CDS).join("text").attr("class","dlabel").text(cd=>cd).attr("x",cd=>pt(labelAt[cd])[0]).attr("y",cd=>pt(labelAt[cd])[1]);
+const pLab=gT.selectAll("text.plabel").data(INFO.places).join("text").attr("class","plabel").text(d=>d.n).attr("x",d=>pt(d.c)[0]).attr("y",d=>pt(d.c)[1]);
+function sizeLabels(k){dLab.attr("font-size",(k<2?46:34)/k);pLab.attr("font-size",11.5/k).attr("display",d=>d.z>k+0.01?"none":null)}
+const zoom=d3.zoom().scaleExtent([1,30]).translateExtent([[-300,-300],[W+300,H+300]]).on("zoom",e=>{root.attr("transform",e.transform);sizeLabels(e.transform.k)});
+svg.call(zoom);
+const tip=document.getElementById("tip"),mapbox=document.getElementById("mapbox");
+function drawPrecincts(){const L=LAYERS[state.layer];
+  gP.selectAll("path.prec").data(FEATS[L.yr],d=>L.yr+d.properties.co+d.properties.id).join("path").attr("class","prec").attr("d",path)
+    .style("fill",d=>L.fill(L.val(d.properties))).on("mousemove",showTip).on("click",showTip).on("mouseleave",()=>tip.hidden=true)}
+function showTip(e,d){const L=LAYERS[state.layer],p=d.properties;
+  tip.innerHTML=`<b>Precinct ${p.id}</b> <span class="mono" style="font-size:.74rem;color:var(--ink-2)">CA-${p.cd} · ${COUNTY[p.co]}</span>`+L.tip(p).map(([k,v])=>`<div class="row"><span>${k}</span><span>${v}</span></div>`).join("");
+  tip.hidden=false;const r=mapbox.getBoundingClientRect();let x=e.clientX-r.left+14,y=e.clientY-r.top+14;
+  if(x+tip.offsetWidth>r.width-6)x=e.clientX-r.left-tip.offsetWidth-14;if(y+tip.offsetHeight>r.height-6)y=e.clientY-r.top-tip.offsetHeight-14;
+  tip.style.left=Math.max(4,x)+"px";tip.style.top=Math.max(4,y)+"px"}
+function legend(){const L=LAYERS[state.layer];let c,t;
+  if(L.legend==="party"){c=["d5","d4","d3","d2","d1","mid","r1","r2","r3","r4","r5"];t=["D+45","+30","+15","+5","+1","Even","+1","+5","+15","+30","R+45"]}
+  else{c=["n3","n2","n1","mid","y1","y2","y3"];t=["No 70%+","60%","52%","Even","52%","60%","Yes 70%+"]}
+  document.getElementById("legend").innerHTML=`<div class="ramp">${c.map(x=>`<span style="background:var(--${x})"></span>`).join("")}</div><div class="ticks">${t.map(x=>`<span>${x}</span>`).join("")}</div><div class="cap">${L.cap}. Dashed line = San Diego County boundary.</div>`}
+function panel(){const L=LAYERS[state.layer],A=AG[L.yr];
+  const rows=[...CDS.map(cd=>({k:cd,lab:"CA-"+cd,m:L.agg(A[cd])})),{k:"sd",lab:"SD County",m:L.agg(A.sd)}];
+  document.getElementById("panel").innerHTML=`<span class="kicker">Whole district</span><h3>${L.title}</h3>
+  <table class="tally"><thead><tr><th>District</th><th style="width:42%"></th><th style="text-align:right">Result</th></tr></thead><tbody>${rows.map(r=>{const w=Math.min(Math.abs(r.m),50);
+    return`<tr class="${state.cd===r.k?"sel":""}"><td style="font-weight:${r.k==="48"?700:400}">${r.lab}</td><td><div class="mbar"><div class="f" style="left:${r.m<0?50-w:50}%;width:${w}%;background:${L.fill(r.m)}"></div><div class="c"></div></div></td><td class="v">${L.aggTxt(r.m)}</td></tr>`}).join("")}</tbody></table>
+  <p class="note">District rows include the Riverside (CA-48) and Orange (CA-49) County portions. Bars run from even at center to 50 points at the edge.</p>
+  ${state.cd&&state.cd!=="sd"?`<p class="sub"><b>CA-${state.cd}</b>: ${fmt(P[state.cd].reg)} registered voters; ${pct1(P["sd"+state.cd].reg/P[state.cd].reg)} of them in San Diego County.</p>`:`<p class="sub">Choose a district above to zoom in. Hover or tap any precinct for its numbers.</p>`}`}
+function zoomTo(cd){state.cd=cd;
+  if(!cd)svg.transition().duration(650).call(zoom.transform,d3.zoomIdentity);
+  else{const f=outline.features.find(x=>x.properties.cd===cd);const[[x0,y0],[x1,y1]]=path.bounds(f);const k=Math.min(30,.9/Math.max((x1-x0)/W,(y1-y0)/H));
+    svg.transition().duration(750).call(zoom.transform,d3.zoomIdentity.translate(W/2,H/2).scale(k).translate(-(x0+x1)/2,-(y0+y1)/2))}
+  document.querySelectorAll("#areabtns button").forEach(b=>b.setAttribute("aria-pressed",String((b.dataset.cd||null)===cd)));panel()}
+document.getElementById("layerbtns").innerHTML=Object.entries(LAYERS).map(([k,L])=>`<button type="button" id="ly-${k}" data-k="${k}" aria-pressed="${k===state.layer}">${L.label}</button>`).join("");
+document.getElementById("areabtns").innerHTML=`<button type="button" id="cd-all" data-cd="" aria-pressed="true">All five</button>`+CDS.map(cd=>`<button type="button" id="cd-btn-${cd}" data-cd="${cd}" aria-pressed="false">CA-${cd}</button>`).join("");
+document.getElementById("layerbtns").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;state.layer=b.dataset.k;try{localStorage.setItem("c101-races",JSON.stringify({layer:state.layer}))}catch(_){}
+  document.querySelectorAll("#layerbtns button").forEach(x=>x.setAttribute("aria-pressed",String(x===b)));render()});
+document.getElementById("areabtns").addEventListener("click",e=>{const b=e.target.closest("button");if(b)zoomTo(b.dataset.cd||null)});
+function render(){drawPrecincts();legend();panel()}
+sizeLabels(1);render();
+
+/* measures */
+function measureRows(cd){const r=[
+  ["Registration gap","June 2026",(P[cd].rep-P[cd].dem)/P[cd].reg*100],
+  ["House primary, party totals","June 2026",two(P[cd].hR,P[cd].hD)],
+  ["Governor primary, party totals","June 2026",two(P[cd].gR,P[cd].gD)],
+  ["President, new lines","Nov 2024",two(G[cd].R_,G[cd].D_)],
+  ["President, old lines","Nov 2024",INFO.old[cd]]];
+  return r.map(x=>`<tr><td>${x[0]} <span class="sm">· ${x[1]}</span></td><td class="v"><span class="chip ${leanCls(x[2])}">${leanTxt(x[2])}</span></td></tr>`).join("")+
+  `<tr><td>Prop 50 <span class="sm">· Nov 2025</span></td><td class="v">${pct1(S[cd].Y/(S[cd].Y+S[cd].N))} yes</td></tr>`}
+function primBlock(cd){const I=INFO[cd],tot=d3.sum(I.prim,c=>c[2]),mx=d3.max(I.prim,c=>c[2]);
+  return`<div class="prim">${I.prim.map(c=>`<div class="r ${c[3]?"adv":""}"><span class="nm" title="${c[0]}">${c[0]} <span class="mono" style="font-size:.7rem;color:var(--ink-2)">${c[1]}</span></span><span class="bar" style="width:${c[2]/mx*100}%;background:${c[1]==="D"?"var(--d3)":c[1]==="R"?"var(--r3)":"var(--line-2)"}"></span><span class="v">${(c[2]/tot*100).toFixed(1)}%</span></div>`).join("")}</div>`}
+function places(cd){return INFO.places.filter(p=>p.cd===cd).map(p=>p.n).join(", ")}
+
+/* CA-48 feature */
+(function(){const cd="48",I=INFO[cd];
+  document.getElementById("cd-48").innerHTML=`<div class="head"><h2>CA-48 <span>· open seat · North County to the Coachella Valley</span></h2><span class="rating">Cook ${I.cook} · Sabato ${I.sabato} · Inside ${I.inside}</span></div>
+  <div class="col">
+    <div class="matchup">${I.gen.map(c=>`<div class="cand ${c.p}"><span class="kicker">${c.p==="D"?"Democrat":"Republican"}</span><span class="nm">${c.n}</span><span class="ds">${c.d}</span><span class="money">Raised ${c.raised} · cash ${c.cash} (Jun 30)</span></div>`).join("")}</div>
+    <p class="read">${I.read}</p>
+    <span class="kicker">June 2 primary, whole district (certified)</span>${primBlock(cd)}
+    <p class="sub">Top two advance regardless of party. Democrats split ${I.prim.filter(c=>c[1]==="D").length} ways; their combined vote (${pct1(P[cd].hD/(P[cd].hD+P[cd].hR))} of the two-party total) beat the Republicans' combined vote.</p>
+  </div>
+  <div class="col">
+    <div class="tablewrap"><table class="measures"><thead><tr><th>Measure</th><th style="text-align:right">CA-48</th></tr></thead><tbody>${measureRows(cd)}</tbody></table></div>
+    <dl class="sub" style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 12px;margin:0">
+      <dt class="kicker">Places</dt><dd style="margin:0">${places(cd)}</dd>
+      <dt class="kicker">Voters</dt><dd style="margin:0" class="num">${fmt(P[cd].reg)} registered · ${pct1(P.sd48.reg/P[cd].reg)} in SD County</dd>
+      <dt class="kicker">Was</dt><dd style="margin:0">Darrell Issa (R), won 59.3% in 2024 on the old lines; retired March 2026</dd>
+    </dl>
+  </div>`})();
+
+/* other four */
+document.getElementById("others").innerHTML=["49","50","51","52"].map(cd=>{const I=INFO[cd];
+  return`<article class="card" id="cd-${cd}"><div class="head"><h3>CA-${cd} <span>· ${I.area}</span></h3><span class="rating">${I.cook}</span></div>
+  <div class="vs">${I.gen.map(c=>`<div><b>${c.n}</b><span class="p ${c.p}">${c.p}</span>${c.inc?" <span class=\"sub\">incumbent</span>":""} <span class="sub">· raised ${c.raised}</span></div>`).join("")}</div>
+  <span class="kicker">June 2 primary (certified)</span>${primBlock(cd)}
+  <div class="tablewrap"><table class="measures"><tbody>${measureRows(cd)}</tbody></table></div>
+  <p class="sub">${I.note} Places on the map: ${places(cd)}.</p></article>`}).join("");
+
+/* shift chart */
+(function(){const s=d3.select("#shift"),w=900,h=300,ml=90,mr=30,mt=34,mb=36;
+  const x=d3.scaleLinear().domain([-35,20]).range([ml,w-mr]),y=d3.scaleBand().domain(CDS).range([mt,h-mb]).padding(.4);
+  s.append("rect").attr("x",ml).attr("y",mt-14).attr("width",x(0)-ml).attr("height",h-mb-mt+14).style("fill","var(--d1)").attr("opacity",.45);
+  s.append("rect").attr("x",x(0)).attr("y",mt-14).attr("width",w-mr-x(0)).attr("height",h-mb-mt+14).style("fill","var(--r1)").attr("opacity",.45);
+  const ax=s.append("g").attr("class","axis");
+  [-30,-20,-10,0,10,20].forEach(t=>{s.append("line").attr("x1",x(t)).attr("x2",x(t)).attr("y1",mt-14).attr("y2",h-mb).style("stroke",t===0?"var(--ink-2)":"var(--line)");ax.append("text").attr("x",x(t)).attr("y",h-mb+18).attr("text-anchor","middle").text(t===0?"Even":(t<0?"Harris +":"Trump +")+Math.abs(t))});
+  CDS.forEach(cd=>{const o=INFO.old[cd],n=two(G[cd].R_,G[cd].D_),yy=y(cd)+y.bandwidth()/2,d=n-o;
+    s.append("text").attr("x",ml-12).attr("y",yy+6).attr("text-anchor","end").style("font-family","var(--display)").style("font-weight",700).style("font-size","19px").style("fill","var(--ink)").text("CA-"+cd);
+    s.append("line").attr("x1",x(o)).attr("x2",x(n)).attr("y1",yy).attr("y2",yy).style("stroke","var(--ink-2)").attr("stroke-width",2);
+    s.append("circle").attr("cx",x(o)).attr("cy",yy).attr("r",5).style("fill","var(--surface)").style("stroke","var(--ink-2)").attr("stroke-width",2).append("title").text(`Old lines: ${leanTxt(o,"Trump","Harris")}`);
+    s.append("circle").attr("cx",x(n)).attr("cy",yy).attr("r",7).style("fill","var(--ink)").append("title").text(`New lines: ${leanTxt(n,"Trump","Harris")}`);
+    const rightRoom=w-mr-Math.max(x(o),x(n))>150;
+    s.append("text").attr("x",rightRoom?Math.max(x(o),x(n))+14:Math.min(x(o),x(n))-14).attr("text-anchor",rightRoom?"start":"end").attr("y",yy+4).style("font-family","var(--mono)").style("font-size","12px").style("fill","var(--ink)")
+      .text(`${Math.abs(d).toFixed(1)} pts toward ${d<0?"D":"R"}`)});
+})();
+
+/* lean ladder */
+(function(){const M=[
+  {lab:"Registration gap (Jun 2026)",col:"var(--m1)",sh:d3.symbolCircle,f:cd=>(P[cd].rep-P[cd].dem)/P[cd].reg*100},
+  {lab:"House primary, party totals (Jun 2026)",col:"var(--m2)",sh:d3.symbolSquare,f:cd=>two(P[cd].hR,P[cd].hD)},
+  {lab:"President, new lines (Nov 2024)",col:"var(--m3)",sh:d3.symbolDiamond,f:cd=>two(G[cd].R_,G[cd].D_)},
+  {lab:"Prop 50 No margin (Nov 2025)",col:"var(--m4)",sh:d3.symbolTriangle,f:cd=>two(S[cd].N,S[cd].Y)}];
+  const rows=[...CDS,"sd"],s=d3.select("#ladder"),w=900,h=290,ml=110,mr=24,mt=34,mb=36;
+  const x=d3.scaleLinear().domain([-45,15]).range([ml,w-mr]),y=d3.scaleBand().domain(rows).range([mt,h-mb]).padding(.35);
+  s.append("rect").attr("x",ml).attr("y",mt-12).attr("width",x(0)-ml).attr("height",h-mb-mt+12).style("fill","var(--d1)").attr("opacity",.45);
+  s.append("rect").attr("x",x(0)).attr("y",mt-12).attr("width",w-mr-x(0)).attr("height",h-mb-mt+12).style("fill","var(--r1)").attr("opacity",.45);
+  const ax=s.append("g").attr("class","axis");
+  [-45,-30,-15,0,15].forEach(t=>{s.append("line").attr("x1",x(t)).attr("x2",x(t)).attr("y1",mt-12).attr("y2",h-mb).style("stroke",t===0?"var(--ink-2)":"var(--line)");ax.append("text").attr("x",x(t)).attr("y",h-mb+18).attr("text-anchor","middle").text(t===0?"Even":(t<0?"D+":"R+")+Math.abs(t))});
+  ax.append("text").attr("x",x(-22)).attr("y",mt-18).attr("text-anchor","middle").text("← leans Democratic");
+  ax.append("text").attr("x",x(7.5)).attr("y",mt-18).attr("text-anchor","middle").text("leans Republican →");
+  rows.forEach(r=>{const yy=y(r)+y.bandwidth()/2,vals=M.map(m=>m.f(r));
+    s.append("text").attr("x",ml-12).attr("y",yy+5).attr("text-anchor","end").style("font-family","var(--display)").style("font-weight",r==="48"?700:500).style("font-size","18px").style("fill",r==="sd"?"var(--ink-2)":"var(--ink)").text(r==="sd"?"SD County":"CA-"+r);
+    s.append("line").attr("x1",x(d3.min(vals))).attr("x2",x(d3.max(vals))).attr("y1",yy).attr("y2",yy).style("stroke","var(--line-2)").attr("stroke-width",2);
+    M.forEach((m,i)=>s.append("path").attr("d",d3.symbol().type(m.sh).size(110)).attr("transform",`translate(${x(vals[i])},${yy})`).style("fill",m.col).style("stroke","var(--surface)").attr("stroke-width",2).append("title").text(`${m.lab}: ${leanTxt(vals[i])}`))});
+  document.getElementById("ladderLegend").innerHTML=M.map(m=>`<span><svg viewBox="-8 -8 16 16"><path d="${d3.symbol().type(m.sh).size(90)()}" style="fill:${m.col}"/></svg>${m.lab}</span>`).join("");
+})();
+
+/* outlook */
+(function(){
+  document.getElementById("ratings").innerHTML=`<thead><tr><th>District</th><th>Matchup</th><th>Cook</th><th>Sabato</th><th>Inside Elections</th></tr></thead><tbody>`+
+    CDS.map(cd=>{const I=INFO[cd];return`<tr><td style="font-family:var(--display);font-weight:700;font-size:1.1rem">CA-${cd}</td><td>${I.gen.map(c=>`${c.s} (${c.p})`).join(" vs ")}</td><td>${I.cook}</td><td>${I.sabato}</td><td>${I.inside}</td></tr>`}).join("")+`</tbody>`;
+  const pres=G["48"].D_/(G["48"].D_+G["48"].R_)*100, prim=P["48"].hD/(P["48"].hD+P["48"].hR)*100, poll=45/(45+42)*100;
+  const inputs=[["2024 president, new lines (Harris share)",pres],["June 2026 House primary, all Dem vs all GOP",prim],["SurveyUSA poll, Aug 27–Sep 1 (von Wilpert, two-way)",poll]];
+  const avg=d3.mean(inputs,d=>d[1]);
+  document.getElementById("outDek").textContent=`Three independent readings of the 48th all put von Wilpert slightly ahead in a two-way race. Averaged, they give her about ${avg.toFixed(1)}% of the two-party vote. That fits the raters' Lean D calls, and the margin is small enough that turnout in Riverside County, outside money and Desmond's local name could close it.`;
+  const s=d3.select("#est"),w=900,h=210,ml=330,mr=30,mt=36,mb=30,x=d3.scaleLinear().domain([44,60]).range([ml,w-mr]);
+  const y=d3.scaleBand().domain([...inputs.map(d=>d[0]),"Average"]).range([mt,h-mb]).padding(.35);
+  s.append("rect").attr("x",ml).attr("y",mt-12).attr("width",x(50)-ml).attr("height",h-mb-mt+12).style("fill","var(--r1)").attr("opacity",.45);
+  s.append("rect").attr("x",x(50)).attr("y",mt-12).attr("width",w-mr-x(50)).attr("height",h-mb-mt+12).style("fill","var(--d1)").attr("opacity",.45);
+  const ax=s.append("g").attr("class","axis");
+  [44,47,50,53,56,59].forEach(t=>{s.append("line").attr("x1",x(t)).attr("x2",x(t)).attr("y1",mt-12).attr("y2",h-mb).style("stroke",t===50?"var(--ink-2)":"var(--line)");ax.append("text").attr("x",x(t)).attr("y",h-mb+16).attr("text-anchor","middle").text(t+"%")});
+  ax.append("text").attr("x",x(47)).attr("y",mt-16).attr("text-anchor","middle").text("← Desmond ahead");ax.append("text").attr("x",x(55)).attr("y",mt-16).attr("text-anchor","middle").text("von Wilpert ahead →");
+  [...inputs,["Average",avg]].forEach(([lab,v])=>{const yy=y(lab)+y.bandwidth()/2;
+    s.append("text").attr("x",ml-12).attr("y",yy+4).attr("text-anchor","end").style("font-family","var(--body)").style("font-size","13px").style("font-weight",lab==="Average"?700:400).style("fill","var(--ink)").text(lab);
+    if(lab==="Average")s.append("rect").attr("x",x(avg-4)).attr("y",yy-8).attr("width",x(avg+4)-x(avg-4)).attr("height",16).attr("rx",4).style("fill","var(--line-2)").attr("opacity",.6);
+    s.append("circle").attr("cx",x(v)).attr("cy",yy).attr("r",lab==="Average"?7:5.5).style("fill",lab==="Average"?"var(--d4)":"var(--d3)").style("stroke","var(--surface)").attr("stroke-width",2);
+    s.append("text").attr("x",x(v)+12).attr("y",yy+4).style("font-family","var(--mono)").style("font-size","12px").style("fill","var(--ink)").text(v.toFixed(1)+"%")});
+  document.getElementById("outCall").innerHTML=`<b>What the numbers say.</b> On these three readings, von Wilpert starts as a modest favorite in the 48th, roughly ${avg.toFixed(0)}–${(100-avg).toFixed(0)} with a range of about ±4 points (the shaded band). Peters, Levin, Jacobs and Vargas are safe: the closest of them, Peters, carried ${pct1(P["50"].hD/(P["50"].hD+P["50"].hR))} of the two-party House primary vote, and none of their Republican opponents had reported meaningful fundraising as of June 30.`;
+})();
+}).catch(()=>{document.getElementById("mapbox").insertAdjacentHTML("beforeend","<p style=\"padding:20px\">The map data did not load. Refresh the page to try again.</p>")});
+</script>
+</body>
+</html>
