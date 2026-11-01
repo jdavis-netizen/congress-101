@@ -13,6 +13,10 @@ Six interactive activities for Mr. James’s government classes at Granite Hills
 
 The hub also includes an exit ticket, printable 50-minute teacher plan, official-source links, and a maintained version of the original Congress guide with vocabulary cards and the ordering game.
 
+## Design
+
+November 2026 re-theme: a "tactical display" look inspired by fighter-jet and command-center screens: near-black console, phosphor-green HUD, amber cautions, red warnings, corner-bracketed panels, a radar scope on the hub where the six missions appear as contacts, and an optional student callsign (stored under `congress101-callsign`). Fonts: Barlow / Barlow Condensed / IBM Plex Mono via Google Fonts with system fallbacks. `lab.css` owns the tokens; `congress.html` and `races.html` share the palette through their own `:root` blocks. All mission logic, storage keys, and class names in `lab.js` are unchanged.
+
 ## Files and local preview
 
 - `index.html`: student hub

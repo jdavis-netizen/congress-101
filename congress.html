@@ -9,25 +9,26 @@
 <meta property="og:description" content="Interactive civics: bill flow, gerrymandering, pork, lobbying, a live debt counter, vocab cards, and a quiz. Built for government class at Granite Hills HS." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://jdavis-gov.com" />
-<meta name="theme-color" content="#0a0a14" />
-<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>" />
+<meta name="theme-color" content="#04080b" />
+<link rel="icon" href="assets/mark.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Archivo+Black&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600&family=Barlow+Condensed:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0a0a14;
-    --bg-2: #12122a;
-    --ink: #f4f4f8;
-    --muted: #9a9ab0;
-    --red: #ff3d6e;
-    --blue: #3da5ff;
-    --yellow: #ffe03d;
-    --mint: #5eead4;
-    --purple: #b985ff;
-    --grid: rgba(255,255,255,0.06);
-    --card: rgba(255,255,255,0.04);
-    --card-br: rgba(255,255,255,0.09);
+    /* Tactical display palette — shared with lab.css */
+    --bg: #04080b;
+    --bg-2: #0c1b17;
+    --ink: #eef8f1;
+    --muted: #93b09f;
+    --red: #ff4f4f;
+    --blue: #5fd3ff;
+    --yellow: #ffb347;
+    --mint: #5cff8f;
+    --purple: #7fa6ff;
+    --grid: rgba(92,255,143,0.06);
+    --card: rgba(92,255,143,0.035);
+    --card-br: rgba(92,255,143,0.16);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -35,15 +36,15 @@
   html { scroll-behavior: smooth; }
 
   body {
-    font-family: 'Space Grotesk', system-ui, sans-serif;
+    font-family: 'Barlow', system-ui, sans-serif;
     background: var(--bg);
     color: var(--ink);
     line-height: 1.55;
     overflow-x: hidden;
     background-image:
-      radial-gradient(1200px 600px at 10% -10%, rgba(255,61,110,0.15), transparent 60%),
-      radial-gradient(1000px 700px at 110% 10%, rgba(61,165,255,0.18), transparent 60%),
-      radial-gradient(900px 500px at 50% 120%, rgba(185,133,255,0.15), transparent 60%);
+      radial-gradient(1200px 600px at 10% -10%, rgba(255,79,79,0.15), transparent 60%),
+      radial-gradient(1000px 700px at 110% 10%, rgba(95,211,255,0.18), transparent 60%),
+      radial-gradient(900px 500px at 50% 120%, rgba(127,166,255,0.15), transparent 60%);
   }
 
   ::selection { background: var(--yellow); color: #000; }
@@ -59,7 +60,7 @@
     z-index: 100;
   }
   nav .logo {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 18px; letter-spacing: -0.5px;
   }
   nav .logo span { color: var(--red); }
@@ -113,7 +114,7 @@
     position: relative;
   }
   .eyebrow {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 13px; letter-spacing: 2px; text-transform: uppercase;
     color: var(--yellow); margin-bottom: 24px;
     display: flex; align-items: center; gap: 10px;
@@ -128,7 +129,7 @@
   }
 
   h1.mega {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: clamp(48px, 9vw, 140px);
     line-height: 0.9;
     letter-spacing: -3px;
@@ -161,7 +162,7 @@
   .btn {
     display: inline-flex; align-items: center; gap: 10px;
     padding: 14px 26px; border-radius: 100px;
-    font-family: 'Space Grotesk', sans-serif;
+    font-family: 'Barlow', sans-serif;
     font-weight: 600; font-size: 15px;
     text-decoration: none; cursor: pointer; border: none;
     transition: transform 0.2s, box-shadow 0.2s;
@@ -169,9 +170,9 @@
   .btn:hover { transform: translateY(-2px); }
   .btn-primary {
     background: var(--yellow); color: #000;
-    box-shadow: 0 10px 40px rgba(255,224,61,0.3);
+    box-shadow: 0 10px 40px rgba(255,179,71,0.3);
   }
-  .btn-primary:hover { box-shadow: 0 14px 48px rgba(255,224,61,0.5); }
+  .btn-primary:hover { box-shadow: 0 14px 48px rgba(255,179,71,0.5); }
   .btn-ghost {
     background: transparent; color: var(--ink);
     border: 1px solid var(--card-br);
@@ -186,12 +187,12 @@
     position: relative;
   }
   .section-label {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
     color: var(--mint); margin-bottom: 16px;
   }
   .section-title {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: clamp(36px, 5.5vw, 72px);
     line-height: 1; letter-spacing: -2px;
     margin-bottom: 24px;
@@ -222,13 +223,13 @@
     background: rgba(255,255,255,0.06);
   }
   .card h3 {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 22px; letter-spacing: -0.5px;
     margin-bottom: 10px;
   }
   .card p { color: var(--muted); font-size: 15px; }
   .card .stat {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: clamp(44px, 6vw, 88px);
     line-height: 1; letter-spacing: -2px;
     margin-bottom: 8px;
@@ -240,29 +241,29 @@
   .card.tall { grid-row: span 2; }
 
   .card-house {
-    background: linear-gradient(135deg, rgba(61,165,255,0.15), rgba(61,165,255,0.02));
-    border-color: rgba(61,165,255,0.3);
+    background: linear-gradient(135deg, rgba(95,211,255,0.15), rgba(95,211,255,0.02));
+    border-color: rgba(95,211,255,0.3);
   }
   .card-senate {
-    background: linear-gradient(135deg, rgba(255,61,110,0.15), rgba(255,61,110,0.02));
-    border-color: rgba(255,61,110,0.3);
+    background: linear-gradient(135deg, rgba(255,79,79,0.15), rgba(255,79,79,0.02));
+    border-color: rgba(255,79,79,0.3);
   }
   .card-yellow {
-    background: linear-gradient(135deg, rgba(255,224,61,0.15), rgba(255,224,61,0.02));
-    border-color: rgba(255,224,61,0.3);
+    background: linear-gradient(135deg, rgba(255,179,71,0.15), rgba(255,179,71,0.02));
+    border-color: rgba(255,179,71,0.3);
   }
   .card-mint {
-    background: linear-gradient(135deg, rgba(94,234,212,0.15), rgba(94,234,212,0.02));
-    border-color: rgba(94,234,212,0.3);
+    background: linear-gradient(135deg, rgba(92,255,143,0.15), rgba(92,255,143,0.02));
+    border-color: rgba(92,255,143,0.3);
   }
   .card-purple {
-    background: linear-gradient(135deg, rgba(185,133,255,0.15), rgba(185,133,255,0.02));
-    border-color: rgba(185,133,255,0.3);
+    background: linear-gradient(135deg, rgba(127,166,255,0.15), rgba(127,166,255,0.02));
+    border-color: rgba(127,166,255,0.3);
   }
 
   .card .tag {
     display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px;
     padding: 4px 10px; border-radius: 100px;
     background: rgba(255,255,255,0.08);
@@ -290,14 +291,14 @@
     transform: translateY(-4px);
   }
   .flow-step .num {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 14px;
     color: var(--yellow);
     margin-bottom: 10px;
     letter-spacing: 2px;
   }
   .flow-step h4 {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 20px;
     margin-bottom: 10px;
     letter-spacing: -0.5px;
@@ -306,12 +307,12 @@
   .flow-step .hot-take {
     margin-top: 14px;
     padding: 10px 12px;
-    background: rgba(255,224,61,0.1);
+    background: rgba(255,179,71,0.1);
     border-left: 3px solid var(--yellow);
     font-size: 13px;
     border-radius: 4px;
     color: var(--yellow);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
   }
 
   /* VOCAB CARDS */
@@ -333,12 +334,12 @@
   }
   .vocab:hover { transform: translateY(-3px); }
   .vocab .term {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 18px; letter-spacing: -0.5px;
     margin-bottom: 8px;
   }
   .vocab .hint {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     color: var(--muted);
     text-transform: uppercase;
@@ -364,12 +365,12 @@
     margin: 0 auto;
   }
   .quiz .q-num {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 12px; letter-spacing: 2px; color: var(--yellow);
     margin-bottom: 14px;
   }
   .quiz .q-text {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 24px;
     line-height: 1.2;
     margin-bottom: 28px;
@@ -393,12 +394,12 @@
     border-color: var(--ink);
   }
   .quiz .opt.correct {
-    background: rgba(94,234,212,0.15);
+    background: rgba(92,255,143,0.15);
     border-color: var(--mint);
     color: var(--mint);
   }
   .quiz .opt.wrong {
-    background: rgba(255,61,110,0.15);
+    background: rgba(255,79,79,0.15);
     border-color: var(--red);
     color: var(--red);
   }
@@ -420,7 +421,7 @@
     transition: width 0.4s;
   }
   .score-display {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 14px;
     color: var(--muted);
   }
@@ -429,7 +430,7 @@
     padding: 20px 0;
   }
   .quiz-done .big-score {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 80px;
     line-height: 1;
     background: linear-gradient(135deg, var(--yellow), var(--red));
@@ -458,7 +459,7 @@
     display: block;
   }
   .dirty-card h3 {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 26px;
     margin-bottom: 12px;
     letter-spacing: -0.5px;
@@ -466,14 +467,14 @@
   .dirty-card p { color: var(--muted); font-size: 15px; margin-bottom: 14px; }
   .dirty-card .pill {
     display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     padding: 5px 12px;
     border-radius: 100px;
     text-transform: uppercase;
     letter-spacing: 1.5px;
   }
-  .pill-sus { background: rgba(255,61,110,0.15); color: var(--red); border: 1px solid rgba(255,61,110,0.3); }
+  .pill-sus { background: rgba(255,79,79,0.15); color: var(--red); border: 1px solid rgba(255,79,79,0.3); }
 
   /* FOOTER */
   footer {
@@ -485,7 +486,7 @@
   }
   footer p { color: var(--muted); font-size: 14px; }
   footer .foot-logo {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 32px;
     margin-bottom: 12px;
   }
@@ -505,7 +506,7 @@
     max-width: 1100px;
   }
   .map-frame {
-    background: linear-gradient(135deg, rgba(255,61,110,0.08), rgba(61,165,255,0.06));
+    background: linear-gradient(135deg, rgba(255,79,79,0.08), rgba(95,211,255,0.06));
     border: 1px solid var(--card-br);
     border-radius: 28px;
     padding: 36px;
@@ -546,11 +547,11 @@
   .salamander {
     text-align: center;
     padding: 30px;
-    background: radial-gradient(circle at center, rgba(255,224,61,0.15), transparent 70%);
+    background: radial-gradient(circle at center, rgba(255,179,71,0.15), transparent 70%);
     border-radius: 20px;
   }
   .sal-label {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     letter-spacing: 2px;
     color: var(--yellow);
@@ -560,7 +561,7 @@
   .sal-art {
     font-size: 140px;
     line-height: 1;
-    filter: drop-shadow(0 10px 20px rgba(255,224,61,0.3));
+    filter: drop-shadow(0 10px 20px rgba(255,179,71,0.3));
     animation: wobble 3s ease-in-out infinite;
     transform-origin: center;
   }
@@ -570,7 +571,7 @@
   }
   .sal-sub {
     margin-top: 14px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
     color: var(--muted);
   }
@@ -593,18 +594,18 @@
     transition: transform 0.3s, border-color 0.3s;
   }
   .pc-card:hover { transform: translateY(-4px); }
-  .pc-fair { border-color: rgba(94,234,212,0.3); }
-  .pc-pack { border-color: rgba(255,61,110,0.3); }
-  .pc-crack { border-color: rgba(255,224,61,0.3); }
+  .pc-fair { border-color: rgba(92,255,143,0.3); }
+  .pc-pack { border-color: rgba(255,79,79,0.3); }
+  .pc-crack { border-color: rgba(255,179,71,0.3); }
   .pc-label {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     letter-spacing: 2px;
     color: var(--mint);
     margin-bottom: 10px;
   }
   .pc-card h4 {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 20px;
     letter-spacing: -0.5px;
     margin-bottom: 18px;
@@ -652,14 +653,14 @@
     border: 1.5px solid rgba(255,255,255,0.15);
     position: relative;
   }
-  .pc-district-row.win-blue { border-color: rgba(61,165,255,0.8); }
-  .pc-district-row.win-red { border-color: rgba(255,61,110,0.8); }
+  .pc-district-row.win-blue { border-color: rgba(95,211,255,0.8); }
+  .pc-district-row.win-red { border-color: rgba(255,79,79,0.8); }
   .pc-district-row::after {
     content: attr(data-result);
     position: absolute;
     right: -4px; top: 50%;
     transform: translate(100%, -50%);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 10px;
     color: var(--muted);
     padding-left: 10px;
@@ -710,7 +711,7 @@
 
   /* TAKEAWAY */
   .takeaway {
-    background: linear-gradient(135deg, rgba(94,234,212,0.08), rgba(185,133,255,0.06));
+    background: linear-gradient(135deg, rgba(92,255,143,0.08), rgba(127,166,255,0.06));
     border: 1px solid var(--card-br);
     border-radius: 28px;
     padding: 40px;
@@ -729,7 +730,7 @@
   }
   .take-grid strong {
     display: block;
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 18px;
     letter-spacing: -0.3px;
     margin-bottom: 8px;
@@ -768,8 +769,8 @@
     border-color: rgba(255,255,255,0.2);
   }
   .pork-card.pork-hof {
-    background: linear-gradient(180deg, rgba(255,224,61,0.12), rgba(255,61,110,0.05));
-    border-color: rgba(255,224,61,0.35);
+    background: linear-gradient(180deg, rgba(255,179,71,0.12), rgba(255,79,79,0.05));
+    border-color: rgba(255,179,71,0.35);
     grid-column: span 2;
     grid-row: span 2;
   }
@@ -781,14 +782,14 @@
     font-size: clamp(80px, 10vw, 140px);
   }
   .pork-card.pork-total {
-    background: linear-gradient(180deg, rgba(255,61,110,0.15), rgba(255,61,110,0.02));
-    border-color: rgba(255,61,110,0.4);
+    background: linear-gradient(180deg, rgba(255,79,79,0.15), rgba(255,79,79,0.02));
+    border-color: rgba(255,79,79,0.4);
     grid-column: span 2;
   }
   .pork-card.pork-total .pork-amount { font-size: clamp(70px, 9vw, 110px); }
   .pork-tag {
     display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -800,7 +801,7 @@
     border: 1px solid rgba(255,255,255,0.1);
   }
   .pork-amount {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: clamp(56px, 7vw, 80px);
     line-height: 1;
     letter-spacing: -3px;
@@ -817,7 +818,7 @@
     letter-spacing: -1px;
   }
   .pork-card h3 {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 22px;
     letter-spacing: -0.5px;
     line-height: 1.1;
@@ -825,7 +826,7 @@
   }
   .pork-card.pork-hof h3 { font-size: 32px; }
   .pork-meta {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
     color: var(--muted);
     margin-bottom: 14px;
@@ -854,7 +855,7 @@
     gap: 36px;
     align-items: center;
     padding: 40px;
-    background: linear-gradient(135deg, rgba(255,224,61,0.08), rgba(185,133,255,0.05));
+    background: linear-gradient(135deg, rgba(255,179,71,0.08), rgba(127,166,255,0.05));
     border: 1px solid var(--card-br);
     border-radius: 28px;
   }
@@ -868,7 +869,7 @@
   .quote-mark {
     position: absolute;
     top: -20px; left: 20px;
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 100px;
     line-height: 1;
     color: var(--yellow);
@@ -882,7 +883,7 @@
   }
   .quote-box em { color: var(--yellow); font-style: italic; }
   .quote-cite {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
     color: var(--muted);
     letter-spacing: 0.5px;
@@ -893,8 +894,8 @@
 
   /* LIVE DEBT */
   .debt-hero {
-    background: linear-gradient(135deg, rgba(255,61,110,0.18), rgba(0,0,0,0.4));
-    border: 2px solid rgba(255,61,110,0.3);
+    background: linear-gradient(135deg, rgba(255,79,79,0.18), rgba(0,0,0,0.4));
+    border: 2px solid rgba(255,79,79,0.3);
     border-radius: 28px;
     padding: 44px 36px;
     margin-bottom: 32px;
@@ -906,11 +907,11 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 50% 0%, rgba(255,61,110,0.2), transparent 60%);
+    background: radial-gradient(circle at 50% 0%, rgba(255,79,79,0.2), transparent 60%);
     pointer-events: none;
   }
   .debt-label {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
     letter-spacing: 2.5px;
     color: var(--red);
@@ -923,16 +924,16 @@
     width: 10px; height: 10px;
     border-radius: 50%;
     background: var(--red);
-    box-shadow: 0 0 0 0 rgba(255,61,110,0.6);
+    box-shadow: 0 0 0 0 rgba(255,79,79,0.6);
     animation: live 1.5s infinite;
   }
   @keyframes live {
-    0% { box-shadow: 0 0 0 0 rgba(255,61,110,0.7); }
-    70% { box-shadow: 0 0 0 14px rgba(255,61,110,0); }
-    100% { box-shadow: 0 0 0 0 rgba(255,61,110,0); }
+    0% { box-shadow: 0 0 0 0 rgba(255,79,79,0.7); }
+    70% { box-shadow: 0 0 0 14px rgba(255,79,79,0); }
+    100% { box-shadow: 0 0 0 0 rgba(255,79,79,0); }
   }
   .debt-counter {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: clamp(36px, 7.5vw, 96px);
     letter-spacing: -3px;
     line-height: 1;
@@ -942,7 +943,7 @@
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 60px rgba(255,61,110,0.2);
+    text-shadow: 0 0 60px rgba(255,79,79,0.2);
   }
   .debt-sub {
     color: var(--muted);
@@ -964,7 +965,7 @@
     border: 1px solid var(--card-br);
   }
   .bar-label {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     color: var(--muted);
     letter-spacing: 1px;
@@ -972,7 +973,7 @@
     margin-bottom: 6px;
   }
   .bar-val {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 28px;
     letter-spacing: -1px;
     margin-bottom: 8px;
@@ -1004,7 +1005,7 @@
   }
   .counter-card:hover { transform: translateY(-4px); }
   .counter-tag {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
@@ -1012,7 +1013,7 @@
     margin-bottom: 12px;
   }
   .counter-val {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: clamp(26px, 3vw, 38px);
     letter-spacing: -1.5px;
     line-height: 1;
@@ -1061,7 +1062,7 @@
     width: 0;
   }
   .pie-pct {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 20px;
     text-align: right;
     letter-spacing: -0.5px;
@@ -1079,13 +1080,13 @@
     gap: 18px;
   }
   .ctx-card {
-    background: linear-gradient(135deg, rgba(255,224,61,0.08), rgba(185,133,255,0.05));
+    background: linear-gradient(135deg, rgba(255,179,71,0.08), rgba(127,166,255,0.05));
     border: 1px solid var(--card-br);
     border-radius: 20px;
     padding: 26px;
   }
   .ctx-num {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: clamp(48px, 5vw, 64px);
     letter-spacing: -2px;
     line-height: 1;
@@ -1110,7 +1111,7 @@
     margin-bottom: 28px;
   }
   .senator-card {
-    background: linear-gradient(135deg, rgba(61,165,255,0.12), rgba(185,133,255,0.05));
+    background: linear-gradient(135deg, rgba(95,211,255,0.12), rgba(127,166,255,0.05));
     border: 1px solid var(--card-br);
     border-radius: 22px;
     padding: 32px;
@@ -1118,7 +1119,7 @@
   }
   .senator-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.2); }
   .sen-badge {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -1126,7 +1127,7 @@
     margin-bottom: 14px;
   }
   .sen-name {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: clamp(32px, 4vw, 44px);
     letter-spacing: -1.5px;
     line-height: 1;
@@ -1134,29 +1135,29 @@
   }
   .sen-party {
     display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
     padding: 4px 12px;
     border-radius: 100px;
     margin-bottom: 16px;
     letter-spacing: 0.5px;
   }
-  .party-D { background: rgba(61,165,255,0.15); color: var(--blue); border: 1px solid rgba(61,165,255,0.3); }
-  .party-R { background: rgba(255,61,110,0.15); color: var(--red); border: 1px solid rgba(255,61,110,0.3); }
+  .party-D { background: rgba(95,211,255,0.15); color: var(--blue); border: 1px solid rgba(95,211,255,0.3); }
+  .party-R { background: rgba(255,79,79,0.15); color: var(--red); border: 1px solid rgba(255,79,79,0.3); }
   .senator-card p { color: var(--muted); font-size: 15px; margin-bottom: 16px; }
   .sen-link {
     display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
     color: var(--yellow);
     text-decoration: none;
     padding: 8px 14px;
-    background: rgba(255,224,61,0.1);
+    background: rgba(255,179,71,0.1);
     border-radius: 8px;
-    border: 1px solid rgba(255,224,61,0.3);
+    border: 1px solid rgba(255,179,71,0.3);
     transition: background 0.2s;
   }
-  .sen-link:hover { background: rgba(255,224,61,0.2); }
+  .sen-link:hover { background: rgba(255,179,71,0.2); }
   @media (max-width: 768px) {
     .senators-row { grid-template-columns: 1fr; }
   }
@@ -1176,7 +1177,7 @@
     display: flex; flex-direction: column; gap: 12px;
   }
   .zip-form label {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     letter-spacing: 2px;
     color: var(--muted);
@@ -1188,7 +1189,7 @@
     border: 1px solid var(--card-br);
     border-radius: 14px;
     color: var(--ink);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 22px;
     letter-spacing: 4px;
     text-align: center;
@@ -1197,14 +1198,14 @@
   .zip-form input:focus {
     outline: none;
     border-color: var(--yellow);
-    background: rgba(255,224,61,0.05);
+    background: rgba(255,179,71,0.05);
   }
   @media (max-width: 768px) {
     .rep-lookup { grid-template-columns: 1fr; padding: 24px; }
   }
 
   .action-box {
-    background: linear-gradient(135deg, rgba(94,234,212,0.1), rgba(185,133,255,0.05));
+    background: linear-gradient(135deg, rgba(92,255,143,0.1), rgba(127,166,255,0.05));
     border: 1px solid var(--card-br);
     border-radius: 22px;
     padding: 36px;
@@ -1222,7 +1223,7 @@
   }
   .action-grid strong {
     display: block;
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 16px;
     letter-spacing: -0.3px;
     margin-bottom: 8px;
@@ -1245,7 +1246,7 @@
     border: 1px solid var(--card-br);
     border-radius: 100px;
     margin-bottom: 24px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
     color: var(--muted);
     flex-wrap: wrap;
@@ -1272,7 +1273,7 @@
     transform: translateY(-4px);
   }
   .game-card h4 {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 18px;
     letter-spacing: -0.3px;
     margin-bottom: 8px;
@@ -1281,21 +1282,21 @@
   .game-card p { color: var(--muted); font-size: 13px; }
   .game-card.correct {
     border-color: var(--mint);
-    background: rgba(94,234,212,0.12);
+    background: rgba(92,255,143,0.12);
     cursor: default;
   }
   .game-card.correct::after {
     content: attr(data-order);
     position: absolute;
     top: 10px; right: 14px;
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     color: var(--mint);
     font-size: 20px;
   }
   .game-card.wrong {
     animation: shake 0.4s;
     border-color: var(--red);
-    background: rgba(255,61,110,0.15);
+    background: rgba(255,79,79,0.15);
   }
   @keyframes shake {
     0%, 100% { transform: translateX(0); }
@@ -1305,7 +1306,7 @@
   .game-win {
     text-align: center;
     padding: 40px;
-    background: linear-gradient(135deg, rgba(94,234,212,0.15), rgba(255,224,61,0.1));
+    background: linear-gradient(135deg, rgba(92,255,143,0.15), rgba(255,179,71,0.1));
     border: 2px solid var(--mint);
     border-radius: 22px;
     margin-top: 24px;
@@ -1321,7 +1322,7 @@
     50% { transform: rotate(10deg) scale(1.1); }
   }
   .game-win h3 {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 32px;
     letter-spacing: -1px;
     margin-bottom: 10px;
@@ -1358,7 +1359,7 @@
     justify-content: flex-end;
     padding: 0 14px;
     color: #000;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-weight: 600;
     font-size: 14px;
     transition: width 1.2s ease-out;
@@ -1374,7 +1375,7 @@
     gap: 36px;
     align-items: center;
     padding: 36px;
-    background: linear-gradient(135deg, rgba(185,133,255,0.1), rgba(61,165,255,0.05));
+    background: linear-gradient(135deg, rgba(127,166,255,0.1), rgba(95,211,255,0.05));
     border: 1px solid var(--card-br);
     border-radius: 22px;
     margin-bottom: 28px;
@@ -1400,18 +1401,18 @@
     display: block;
     font-size: 11px;
     color: var(--muted);
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     margin-top: 6px;
     letter-spacing: 1px;
   }
-  .ring-gov { border-color: rgba(61,165,255,0.4); }
-  .ring-lobby { border-color: rgba(255,224,61,0.4); }
-  .ring-back { border-color: rgba(94,234,212,0.4); }
-  .ring-congress { border-color: rgba(185,133,255,0.4); }
+  .ring-gov { border-color: rgba(95,211,255,0.4); }
+  .ring-lobby { border-color: rgba(255,179,71,0.4); }
+  .ring-back { border-color: rgba(92,255,143,0.4); }
+  .ring-congress { border-color: rgba(127,166,255,0.4); }
   .ring-arrow {
     font-size: 28px;
     color: var(--yellow);
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     animation: arrowpulse 2s infinite;
   }
   .ring-arrow-1 { grid-column: 2; grid-row: 1; }
@@ -1452,13 +1453,13 @@
   }
   .term-card strong {
     display: block;
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 18px;
     letter-spacing: -0.3px;
     margin-bottom: 2px;
   }
   .term-meta {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 11px;
     color: var(--muted);
     letter-spacing: 1px;
@@ -1493,25 +1494,25 @@
     margin-bottom: 14px;
   }
   .bill-id {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 13px;
     color: var(--yellow);
     letter-spacing: 1px;
     font-weight: 600;
   }
   .bill-status {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 10px;
     padding: 4px 10px;
     border-radius: 100px;
     letter-spacing: 1px;
     text-transform: uppercase;
   }
-  .status-pending { background: rgba(255,224,61,0.15); color: var(--yellow); border: 1px solid rgba(255,224,61,0.3); }
-  .status-passed { background: rgba(94,234,212,0.15); color: var(--mint); border: 1px solid rgba(94,234,212,0.3); }
-  .status-floor { background: rgba(185,133,255,0.15); color: var(--purple); border: 1px solid rgba(185,133,255,0.3); }
+  .status-pending { background: rgba(255,179,71,0.15); color: var(--yellow); border: 1px solid rgba(255,179,71,0.3); }
+  .status-passed { background: rgba(92,255,143,0.15); color: var(--mint); border: 1px solid rgba(92,255,143,0.3); }
+  .status-floor { background: rgba(127,166,255,0.15); color: var(--purple); border: 1px solid rgba(127,166,255,0.3); }
   .live-bill h3 {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 20px;
     letter-spacing: -0.5px;
     line-height: 1.15;
@@ -1520,31 +1521,31 @@
   .live-bill p { color: var(--muted); font-size: 14px; margin-bottom: 16px; line-height: 1.55; }
   .bill-link {
     display: inline-block;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
     color: var(--mint);
     text-decoration: none;
     padding: 6px 12px;
-    background: rgba(94,234,212,0.08);
-    border: 1px solid rgba(94,234,212,0.3);
+    background: rgba(92,255,143,0.08);
+    border: 1px solid rgba(92,255,143,0.3);
     border-radius: 8px;
     transition: background 0.2s;
   }
-  .bill-link:hover { background: rgba(94,234,212,0.2); }
+  .bill-link:hover { background: rgba(92,255,143,0.2); }
 
   .live-cta {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 28px 36px;
-    background: linear-gradient(135deg, rgba(94,234,212,0.1), rgba(61,165,255,0.08));
+    background: linear-gradient(135deg, rgba(92,255,143,0.1), rgba(95,211,255,0.08));
     border: 1px solid var(--card-br);
     border-radius: 22px;
     gap: 20px;
     flex-wrap: wrap;
   }
   .live-cta h3 {
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 24px;
     letter-spacing: -0.5px;
   }
@@ -1663,7 +1664,7 @@
     display: flex; gap: 60px;
     animation: scroll 40s linear infinite;
     white-space: nowrap;
-    font-family: 'Archivo Black', sans-serif;
+    font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif;
     font-size: 40px;
     letter-spacing: -1px;
   }
@@ -1678,8 +1679,8 @@
 
   /* BALLOT CHECK */
   .ballot-check {
-    background: linear-gradient(135deg, rgba(255,61,110,0.12), rgba(255,224,61,0.05));
-    border-color: rgba(255,61,110,0.3);
+    background: linear-gradient(135deg, rgba(255,79,79,0.12), rgba(255,179,71,0.05));
+    border-color: rgba(255,79,79,0.3);
   }
   .zip-form input[type="date"] { letter-spacing: 1px; font-size: 18px; color-scheme: dark; }
   .ballot-result {
@@ -1689,22 +1690,22 @@
     border-radius: 14px;
     font-size: 15px; color: var(--muted);
   }
-  .ballot-result .br-head { font-family: 'Archivo Black', sans-serif; font-size: 18px; margin-bottom: 8px; letter-spacing: -0.3px; }
+  .ballot-result .br-head { font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif; font-size: 18px; margin-bottom: 8px; letter-spacing: -0.3px; }
   .ballot-result p { margin-bottom: 12px; }
   .ballot-result strong { color: var(--ink); }
 
   /* PROP 50 PLOT TWIST */
   .plot-twist {
-    background: linear-gradient(135deg, rgba(255,61,110,0.14), rgba(185,133,255,0.06));
-    border: 1px solid rgba(255,61,110,0.35);
+    background: linear-gradient(135deg, rgba(255,79,79,0.14), rgba(127,166,255,0.06));
+    border: 1px solid rgba(255,79,79,0.35);
     border-radius: 28px;
     padding: 40px;
     margin-bottom: 60px;
   }
   .timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin: 24px 0; }
   .timeline > div { padding: 18px; background: rgba(0,0,0,0.3); border-radius: 14px; border: 1px solid var(--card-br); }
-  .timeline .when { font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: var(--yellow); text-transform: uppercase; margin-bottom: 8px; }
-  .timeline strong { display: block; font-family: 'Archivo Black', sans-serif; font-size: 16px; margin-bottom: 6px; letter-spacing: -0.3px; }
+  .timeline .when { font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 1.5px; color: var(--yellow); text-transform: uppercase; margin-bottom: 8px; }
+  .timeline strong { display: block; font-family: 'Barlow Condensed', 'Arial Narrow', sans-serif; font-size: 16px; margin-bottom: 6px; letter-spacing: -0.3px; }
   .timeline p { color: var(--muted); font-size: 14px; }
   @media (max-width: 900px) { .timeline { grid-template-columns: repeat(2, 1fr); } }
   @media (max-width: 500px) { .timeline { grid-template-columns: 1fr; } .plot-twist { padding: 24px; } }
@@ -1734,15 +1735,43 @@
     * { transition-duration: 0.01ms !important; }
   }
 </style>
-<style>.guide-skip{position:fixed;top:-100px;left:12px;z-index:999;background:#ffe03d;color:#000;padding:12px}.guide-skip:focus{top:12px}:focus-visible{outline:3px solid #ffe03d;outline-offset:5px}section{scroll-margin-top:100px}#order-feedback{min-height:24px;color:var(--mint)}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation:none!important;transition:none!important}}@media print{nav,.guide-skip{display:none!important}section{opacity:1!important;transform:none!important}body{background:white;color:black}}</style></head>
+<style>.guide-skip{position:fixed;top:-100px;left:12px;z-index:999;background:#ffb347;color:#000;padding:12px}.guide-skip:focus{top:12px}:focus-visible{outline:3px solid #ffb347;outline-offset:5px}section{scroll-margin-top:100px}#order-feedback{min-height:24px;color:var(--mint)}@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation:none!important;transition:none!important}}@media print{nav,.guide-skip{display:none!important}section{opacity:1!important;transform:none!important}body{background:white;color:black}}</style><style>
+  /* ===== Tactical display overrides (Nov 2026 re-theme) ===== */
+  body {
+    background-image:
+      radial-gradient(ellipse 70% 45% at 50% -5%, rgba(92,255,143,0.09), transparent 70%),
+      repeating-linear-gradient(0deg, transparent 0 47px, rgba(92,255,143,0.035) 47px 48px),
+      repeating-linear-gradient(90deg, transparent 0 47px, rgba(92,255,143,0.035) 47px 48px);
+  }
+  body::after {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 90;
+    background: linear-gradient(rgba(255,255,255,0.015) 50%, rgba(0,0,0,0.08) 50%), radial-gradient(ellipse at center, transparent 60%, rgba(0,0,0,0.5) 100%);
+    background-size: 100% 3px, 100% 100%;
+  }
+  h1.mega, .section-title, .card h3, .flow-step h4, .vocab .term, .quiz .q-text, .dirty-card h3, .pork-card h3, .live-bill h3, .sen-name, .game-card h4, .game-win h3, .pc-card h4, .foot-logo, nav .logo, .card .stat, .pork-amount, .counter-val, .bar-val, .debt-counter, .ctx-num, .quiz-done .big-score, .take-grid strong, .action-grid strong, .term-card strong, .live-cta h3, .timeline strong, .ballot-result .br-head {
+    text-transform: uppercase; letter-spacing: 0.02em !important;
+  }
+  h1.mega { letter-spacing: 0.01em !important; line-height: 0.92; }
+  h1.mega .shift { background: linear-gradient(135deg, var(--mint), var(--blue)); -webkit-background-clip: text; background-clip: text; }
+  .section-label, .eyebrow, .tag, .hot-take, .num, .bill-id, .counter-tag, .debt-label, .sen-badge, .pork-tag { letter-spacing: 0.18em; }
+  .card, .flow-step, .vocab, .quiz, .dirty-card, .pork-card, .live-bill, .senator-card, .counter-card, .ctx-card, .pc-card, .term-card, .game-card, .budget-box, .lobby-spenders, .abramoff-box, .lobby-terms, .takeaway, .origin, .map-frame, .video-wrap, .logroll, .revolve, .rep-lookup, .action-box, .debt-hero, .live-cta, .plot-twist, .quote-box, .bar-item, .ring-item, .timeline > div, .take-grid > div, .action-grid > div, .ballot-result, .game-status { border-radius: 2px !important; }
+  .btn, .sen-link, .bill-link, .card .tag, .pork-tag, .bill-status, .sen-party, .pill, .tag { border-radius: 2px !important; font-family: 'IBM Plex Mono', monospace; text-transform: uppercase; letter-spacing: 0.12em; }
+  .btn-primary { background: var(--mint); color: var(--bg); box-shadow: 0 0 24px rgba(92,255,143,0.3); }
+  .btn-primary:hover { box-shadow: 0 0 36px rgba(92,255,143,0.45); }
+  nav { background: rgba(4,8,11,0.9); }
+  nav .logo span { color: var(--mint); }
+  .debt-counter { background: linear-gradient(135deg, #fff, var(--mint)); -webkit-background-clip: text; background-clip: text; }
+  .grain { display: none; }
+  ::selection { background: var(--mint); color: var(--bg); }
+</style></head>
 <body><a href="#basics" class="guide-skip">Skip to study guide</a>
 <div class="grain"></div>
 <div class="scroll-progress" id="scroll-progress"></div>
 
 <nav>
-  <div class="logo">CONGRESS<span>.</span>101</div>
+  <div class="logo">CONGRESS<span>.</span>101 <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.2em;color:var(--muted);font-weight:400;">// INTEL</span></div>
   <button class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false">☰</button>
-  <ul id="nav-menu"><li><a href="./">← Civics Lab</a></li>
+  <ul id="nav-menu"><li><a href="./">◂ Civics Lab</a></li>
     <li><a href="#basics">Basics</a></li>
     <li><a href="#reps">Your Reps</a></li>
     <li><a href="#bill">Bill Flow</a></li>
@@ -1761,7 +1790,7 @@
 
 <!-- HERO -->
 <section class="hero">
-  <div class="eyebrow">THE LEGISLATIVE BRANCH · STUDY GUIDE</div>
+  <div class="eyebrow"><span class="dot"></span>Intel file // The legislative branch // Study guide</div>
   <h1 class="mega">
     <span class="outline">CONGRESS</span><br>
     <span class="red">isn't</span> <span>boring.</span><br>
@@ -1816,22 +1845,22 @@
       <h3 style="font-size: 28px; margin-bottom: 18px;">Leadership cheat sheet</h3>
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 18px;">
         <div>
-          <div style="color: var(--blue); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; margin-bottom: 4px;">HOUSE BOSS</div>
+          <div style="color: var(--blue); font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2px; margin-bottom: 4px;">HOUSE BOSS</div>
           <strong style="font-size: 18px;">Speaker of the House</strong>
           <p style="margin-top: 6px;">Runs the House floor. 2nd in line for presidency. Elected by the House.</p>
         </div>
         <div>
-          <div style="color: var(--red); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; margin-bottom: 4px;">SENATE BOSS (on paper)</div>
+          <div style="color: var(--red); font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2px; margin-bottom: 4px;">SENATE BOSS (on paper)</div>
           <strong style="font-size: 18px;">President of the Senate</strong>
           <p style="margin-top: 6px;">Literally the VP. Only votes to break ties. Mostly ceremonial.</p>
         </div>
         <div>
-          <div style="color: var(--yellow); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; margin-bottom: 4px;">SENATE BOSS (actually)</div>
+          <div style="color: var(--yellow); font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2px; margin-bottom: 4px;">SENATE BOSS (actually)</div>
           <strong style="font-size: 18px;">Majority Leader</strong>
           <p style="margin-top: 6px;">Controls what bills get voted on. The real shot-caller.</p>
         </div>
         <div>
-          <div style="color: var(--mint); font-family: 'JetBrains Mono', monospace; font-size: 11px; letter-spacing: 2px; margin-bottom: 4px;">WHIPS</div>
+          <div style="color: var(--mint); font-family: 'IBM Plex Mono', monospace; font-size: 11px; letter-spacing: 2px; margin-bottom: 4px;">WHIPS</div>
           <strong style="font-size: 18px;">Majority / Minority Whip</strong>
           <p style="margin-top: 6px;">Counts votes. Pressures their party to vote the line. Basically peer pressure, but legal.</p>
         </div>
@@ -1924,7 +1953,7 @@
 <footer><p><a href="./">← Back to Civics Lab</a> · <a href="sources.html">Sources & model notes</a></p>
   <div class="foot-logo">CONGRESS<span>.</span>101</div>
   <p>Built with care for the homies in government class.</p>
-  <p style="margin-top: 8px; font-family: 'JetBrains Mono', monospace; font-size: 12px;">// Mr. James · Granite Hills HS · <span id="year"></span></p>
+  <p style="margin-top: 8px; font-family: 'IBM Plex Mono', monospace; font-size: 12px;">// Mr. James · Granite Hills HS · <span id="year"></span></p>
 </footer>
 
 <script>
@@ -2081,7 +2110,7 @@
       <div class="options" id="opts">
         ${q.options.map((o, i) => `<button class="opt" data-i="${i}">${o}</button>`).join('')}
       </div>
-      <div id="why" style="display:none; margin-top:20px; padding:14px 16px; background:rgba(94,234,212,0.08); border-left:3px solid var(--mint); border-radius:6px; color:var(--mint); font-family:'JetBrains Mono', monospace; font-size:13px;"></div>
+      <div id="why" style="display:none; margin-top:20px; padding:14px 16px; background:rgba(92,255,143,0.08); border-left:3px solid var(--mint); border-radius:6px; color:var(--mint); font-family:'IBM Plex Mono', monospace; font-size:13px;"></div>
       <div class="quiz-footer">
         <div class="score-display">score: <strong style="color:var(--yellow)">${score}</strong> / ${questions.length}</div>
         <button class="btn btn-primary" id="next-btn" style="display:none;">next →</button>
